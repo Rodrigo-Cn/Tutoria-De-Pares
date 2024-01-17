@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="icon" href="imagens/cadastro/Frame1.png" type="image/png">
     <link rel="stylesheet" href="styles/login.css">
 </head>
 <body>
@@ -14,7 +15,7 @@
                 <div><img src="imagens/login/Frame 1.png" id="navbar-image" alt="frame.png"></div>
                 <div id="navbar-name"><p>Tutoria</p><p>De</p><p>Pares</p></div>
             </div>
-            <a href="" id="navbar-a">
+            <a href="main" id="navbar-a">
                 <div id="navbar-inicio">
                     <img id="navbar-image2" src="imagens/login/icons8-casa-384 1.png" alt="icons8-casa-384.png">
                     <p id="navbar-name2">IN&Iacute;CIO</p>
@@ -30,7 +31,7 @@
             <div class="section-login">
                 <h2 id="text-section">Fa&ccedil;a seu login</h2>
                 <form action="login" id="form-section" name="login">
-                    <input type="text" id="input-text1" placeholder="Email" name="email">
+                    <input type="text" id="input-text1" placeholder="   Email" name="email">
                     <img src="imagens/login/olho(1).png" alt="" id="img-password">
                     <input type="password" id="input-text2" placeholder="   Senha" name="senha">
                     <p id="entrada1"></p>

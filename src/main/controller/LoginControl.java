@@ -1,12 +1,10 @@
 package main.controller;
 
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import main.dao.UsuarioDao;
-import main.model.Professor;
-
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/login"})
@@ -20,29 +18,30 @@ public class LoginControl extends HttpServlet {
         if (action.equals("/login"))
         {
             realizarLogin(request,response);
-        }
-        else
-        {
-            response.sendRedirect("login.html");
+        }else {
+            response.sendRedirect("login.jsp");
         }
     }
 
     protected void realizarLogin(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-
-       if( usuarioDao.lerUsuario(request.getParameter("email"), request.getParameter("senha")) == null)
+        int tipoDeUsuario = usuarioDao.lerTipoUsuario(request.getParameter("email"), request.getParameter("senha"));
+       if(tipoDeUsuario  == 0)
         {
-            response.getWriter().write("<script>alert('Credenciais inválidas. Verifique seu email e senha.'); window.location='login.jsp';</script>");
-        }
-        else if(usuarioDao.lerUsuario(request.getParameter("email"), request.getParameter("senha")) instanceof Professor)
-        {
-            response.getWriter().write("<script>alert('Login bem-sucedido como professor.');</script>");
-            //response.sendRedirect("/telaProfessor");
+            response.getWriter().write("<script>alert('Credenciais invalidas. Verifique seu email e senha.'); window.location='login.jsp';</script>");
         }
         else
         {
-            response.getWriter().write("<script>alert('Login bem-sucedido como aluno.');</script>");
-            //response.sendReirect("/telaAluno");
+            if(tipoDeUsuario ==1){
+                //response.sendRedirect("professorhome");
+            } else if (tipoDeUsuario == 2) {
+                response.sendRedirect("tutorhome?id="+usuarioDao.lerIdUsuario(request.getParameter("email"), request.getParameter("senha")));
+            }
+            else if (tipoDeUsuario == 3) {
+                response.sendRedirect("tutoradohome?id="+usuarioDao.lerIdUsuario(request.getParameter("email"), request.getParameter("senha")));
+            }else {
+                //response.sendRedirect("napnehome");
+            }
         }
     }
 }

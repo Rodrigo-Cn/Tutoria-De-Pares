@@ -20,11 +20,11 @@ function validar() {
 var passwordInput = document.getElementById("img-password");
 var passwordText = document.getElementById("input-text2");
 passwordInput.addEventListener("click", function() {
-    if (passwordInput.src.endsWith("imagens/olho(1).png")) {
-        passwordInput.src = "imagens/olho.png";
+    if (passwordInput.src.endsWith("imagens/login/olho(1).png")) {
+        passwordInput.src = "imagens/login/olho.png";
         passwordText.type = "text";
     } else {
-        passwordInput.src = "imagens/olho(1).png";
+        passwordInput.src = "imagens/login/olho(1).png";
         passwordText.type = "password";
     }
 });
