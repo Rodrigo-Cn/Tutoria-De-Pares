@@ -1,5 +1,54 @@
 @import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
 
+.tracking-in-expand-forward-top{animation:tracking-in-expand-forward-top 0.5s linear both} @keyframes tracking-in-expand-forward-top{0%{letter-spacing:-.2em;transform:translateZ(-700px) translateY(-100px);opacity:0}40%{opacity:.6}100%{transform:translateZ(0) translateY(0);opacity:1}}
+
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /*Footer*/
+
+    #div-area{
+        position: relative;
+        display: flex;
+        flex-direction:row;
+        align-items:center;
+        min-width: 0;
+        max-width: 100%;
+        height: 190px;
+        box-shadow: 0px 0px 10px 1px black;
+        background-color: rgba(17,102,102,0.65);
+        padding-top: 2%;
+        padding-bottom: 1%;
+    }
+    #div-area-footer1{
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    #div-area-footer2{
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        font-size: 1rem;
+        word-spacing: 0.3rem;
+    }
+    #image-main-footer{
+        height: 4.5rem;
+        padding-bottom: 1rem;
+    }
+    #div-area-image2 img{
+        padding: 0.5rem;
+    }
+
+
 @media (min-width:1200px){
 
     /*Navbar*/
@@ -99,7 +148,7 @@
     #img-section{
         height: 40%;
         width: 85%;
-        box-shadow: 0px 0px 10px 2px #CB9624;
+        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
     }
     .section-login{
         width: 50%;
@@ -109,11 +158,11 @@
         align-items: center;
     }
     #text-section{
-        color: #CB9624;
+        color: rgb(140, 28, 50);
         font-size: 4.5rem;
         word-spacing: 40%;
         margin-bottom: 15%;
-        text-shadow: 2px 2px 3px rgb(122, 108, 108);
+        text-shadow: 2px 2px 3px rgb(140, 28, 50);
     }
     #form-section{
         width: 100%;
@@ -123,7 +172,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -131,7 +180,7 @@
         font-size: 1.5rem;
     }
     #input-text2{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -139,7 +188,7 @@
         font-size: 1.5rem;
     }
     #input-text1:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -147,7 +196,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -157,7 +206,7 @@
     #input-button1{
         width: 21.5%;
         height: 10.5%;
-        background-color: #CB9624;
+        background-color: rgb(140, 28, 50);
         color: white;
         font-family: Inter;
         font-size: 1.6rem;
@@ -169,13 +218,13 @@
         width: 22%;
         height: 11%;
         background-color: white;
-        color: #CB9624;
+        color: rgb(140, 28, 50);
         font-family: Inter;
         font-size: 1.6rem;
         text-transform: uppercase;
         border-radius: 14px;
         transition: 1s;
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         cursor: pointer;
     }
     #entrada1{
@@ -293,7 +342,7 @@
     #img-section{
         height: 100%;
         width: 95%;
-        box-shadow: 0px 0px 10px 2px #CB9624;
+        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
     }
     .section-login{
         width: 50%;
@@ -303,7 +352,7 @@
         align-items: center;
     }
     #text-section{
-        color: #CB9624;
+        color: rgb(140, 28, 50);
         font-size: 2.8rem;
         word-spacing: 15%;
         margin-bottom: 15%;
@@ -317,7 +366,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -325,7 +374,7 @@
         font-size: 1.5rem;
     }
     #input-text2{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -333,7 +382,7 @@
         font-size: 1.5rem;
     }
     #input-text1:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -341,7 +390,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -351,7 +400,7 @@
     #input-button1{
         width: 26.5%;
         height: 10.5%;
-        background-color: #CB9624;
+        background-color: rgb(140, 28, 50);
         color: white;
         font-family: Inter;
         font-size: 1.2rem;
@@ -473,7 +522,7 @@
         height: 100%;
         width: 95%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px #CB9624;
+        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
     }
     .section-login{
         width: 50%;
@@ -483,11 +532,11 @@
         align-items: center;
     }
     #text-section{
-        color: #CB9624;
+        color: rgb(140, 28, 50);
         font-size: 2.8rem;
         word-spacing: 15%;
         margin-bottom: 15%;
-        text-shadow: 2px 2px 3px rgb(122, 108, 108);
+        text-shadow: 2px 2px 3px rgb(140, 28, 50);
     }
     #form-section{
         width: 100%;
@@ -497,7 +546,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -505,7 +554,7 @@
         font-size: 1rem;
     }
     #input-text2{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -513,7 +562,7 @@
         font-size: 1.5rem;
     }
     #input-text1:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -521,7 +570,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -531,7 +580,7 @@
     #input-button1{
         width: 26.5%;
         height: 10.5%;
-        background-color: #CB9624;
+        background-color: rgb(140, 28, 50);
         color: white;
         font-family: Inter;
         font-size: 1.2rem;
@@ -631,7 +680,7 @@
     .section{
         display: flex;
         margin-left: 5%;
-        margin-bottom: 3%;
+        margin-bottom: 20%;
     }
     #section-image{
         display: none;
@@ -644,13 +693,13 @@
         height: 40%;
         width: 85%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px #CB9624;
+        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
     }
     #img-section:hover{
         height: 670px;
         width: 90%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px #CB9624;
+        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
         transition: 0.5s;
     }
     .section-login{
@@ -661,7 +710,7 @@
         align-items: center;
     }
     #text-section{
-        color: #CB9624;
+        color: rgb(140, 28, 50);
         font-size: 3rem;
         word-spacing: 20%;
         margin-bottom: 15%;
@@ -675,7 +724,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 50%;
         width: 55%;
@@ -683,7 +732,7 @@
         font-size: 1rem;
     }
     #input-text2{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 50%;
         width: 55%;
@@ -691,7 +740,7 @@
         font-size: 1rem;
     }
     #input-text1:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 50%;
         width: 58%;
@@ -699,7 +748,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 50%;
         width: 58%;
@@ -709,7 +758,7 @@
     #input-button1{
         width: 35%;
         height: 20%;
-        background-color: #CB9624;
+        background-color: rgb(140, 28, 50);
         color: white;
         font-family: Inter;
         font-size: 1.6rem;
@@ -721,13 +770,13 @@
         width: 35%;
         height: 20%;
         background-color: white;
-        color: #CB9624;
+        color: rgb(140, 28, 50);
         font-family: Inter;
         font-size: 1.6rem;
         text-transform: uppercase;
         border-radius: 14px;
         transition: 1s;
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         cursor: pointer;
     }
     #entrada1{
@@ -820,7 +869,7 @@
     .section{
         display: flex;
         margin-left: 5%;
-        margin-bottom: 3%;
+        margin-bottom: 20%;
     }
     #section-image{
         display: none;
@@ -833,13 +882,13 @@
         height: 40%;
         width: 85%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px #CB9624;
+        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
     }
     #img-section:hover{
         height: 670px;
         width: 90%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px #CB9624;
+        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
         transition: 0.5s;
     }
     .section-login{
@@ -850,7 +899,7 @@
         align-items: center;
     }
     #text-section{
-        color: #CB9624;
+        color: rgb(140, 28, 50);
         font-size: 3rem;
         word-spacing: 20%;
         margin-bottom: 15%;
@@ -864,7 +913,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 50%;
         width: 55%;
@@ -872,7 +921,7 @@
         font-size: 1rem;
     }
     #input-text2{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 50%;
         width: 55%;
@@ -880,7 +929,7 @@
         font-size: 1rem;
     }
     #input-text1:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 50%;
         width: 58%;
@@ -888,7 +937,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         border-radius: 20px;
         height: 50%;
         width: 58%;
@@ -898,7 +947,7 @@
     #input-button1{
         width: 37%;
         height: 22%;
-        background-color: #CB9624;
+        background-color: rgb(140, 28, 50);
         color: white;
         font-family: Inter;
         font-size: 1.6rem;
@@ -910,13 +959,13 @@
         width: 35%;
         height: 20%;
         background-color: white;
-        color: #CB9624;
+        color: rgb(140, 28, 50);
         font-family: Inter;
         font-size: 1.6rem;
         text-transform: uppercase;
         border-radius: 14px;
         transition: 1s;
-        border: 4px #CB9624 solid;
+        border: 4px rgb(140, 28, 50) solid;
         cursor: pointer;
     }
     #entrada1{

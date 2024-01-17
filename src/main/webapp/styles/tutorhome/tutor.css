@@ -4,11 +4,15 @@
     font-size: 1.5rem;
 }
 
+.blur-in{animation:blur-in 0.5s linear both} @keyframes blur-in{0%{filter:blur(12px);opacity:0}100%{filter:blur(0);opacity:1}}
+
+.tracking-in-expand-forward-top{animation:tracking-in-expand-forward-top 0.3s linear both} @keyframes tracking-in-expand-forward-top{0%{letter-spacing:-.2em;transform:translateZ(-700px) translateY(-100px);opacity:0}40%{opacity:.6}100%{transform:translateZ(0) translateY(0);opacity:1}}
+
+.rotate-scale-down-horizontal{animation:rotate-scale-down-horizontal 0.5s linear both} @keyframes rotate-scale-down-horizontal{0%{transform:scale(1) rotateX(0)}50%{transform:scale(.5) rotateX(-180deg)}100%{transform:scale(1) rotateX(-360deg)}}
+
 @media (min-width:1200px){
 
-    /*Navbar*/
-
-    #container{
+   #container{
         width: 100%;
         height: auto;
     }
@@ -423,8 +427,8 @@
     }
     #clip-card{
         position: absolute;
-        margin-left: 40%;
-        margin-bottom: 50%;
+        margin-left: 60%;
+        margin-bottom: 60%;
         height: 3.5rem;
     }
 
@@ -1763,6 +1767,10 @@
             width: 100%;
         }
         #container-cards{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
             height: 20rem;
             width: 22rem;
         }
@@ -2226,6 +2234,10 @@
             width: 100%;
         }
         #container-cards{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
             width: 15rem;
             height: 20rem;
         }

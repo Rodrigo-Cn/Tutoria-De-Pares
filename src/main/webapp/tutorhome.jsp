@@ -19,7 +19,7 @@
     <script src="scripts/tutorhome/verificar-entrar-tutoria.js"></script>
 
     <div id="container">
-        <div id="shadow-entrar-tutoria">
+        <div id="shadow-entrar-tutoria" class="blur-in">
             <div id="div-entrar-tutoria">
                 <div id="entrar-tutoria-exit">
                     <div id="entrar-tutoria-exit-space"></div>
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div id="barra-ferramentas">
+        <div id="barra-ferramentas" class="blur-in">
             <div id="shadow-zone"></div>
             <div id="nav-zone">
                 <div id="nav-lateral-image"><a href=""><img src="imagens/tutorhome/icons8-usuario-homem-com-círculo-100.png" alt="icons8-usuario-homem-com-círculo-100.png"></a></div>
@@ -51,13 +51,13 @@
 
         <div id="navbar">
             <div id="navbar-logo">
-                <div><img src="imagens/tutorhome/Frame 1.png" id="navbar-image" alt="frame.png"></div>
-                <div id="navbar-name"><p>Tutoria</p><p>De</p><p>Pares</p></div>
+                <div><img  class="tracking-in-expand-forward-top" src="imagens/tutorhome/Frame 1.png" id="navbar-image" alt="frame.png"></div>
+                <div id="navbar-name"><p class="tracking-in-expand-forward-top">Tutoria</p><p class="tracking-in-expand-forward-top">De</p><p class="tracking-in-expand-forward-top">Pares</p></div>
             </div>
                 <div id="navbar-inicio">
-                    <img  id="navbar-image2" src="imagens/tutorhome/icons8-soma-96.png" alt="icons8-soma-384.png">
-                    <img class="iniciar-barra" id="navbar-image3" src="imagens/tutorhome/icons8-usuario-96.png" alt="">
-                    <h2 class="iniciar-barra2" id="navbar-name2"><%= ((Tutor) request.getAttribute("tutor")).getNome().split(" ")[0] %></h2>
+                    <img  id="navbar-image2" class="tracking-in-expand-forward-top" src="imagens/tutorhome/icons8-soma-96.png" alt="icons8-soma-384.png">
+                    <img class="iniciar-barra tracking-in-expand-forward-top" id="navbar-image3" src="imagens/tutorhome/icons8-usuario-96.png" alt="">
+                    <h2 class="iniciar-barra2 tracking-in-expand-forward-top" id="navbar-name2"><%= ((Tutor) request.getAttribute("tutor")).getNome().split(" ")[0] %></h2>
                 </div>
         </div>
 
@@ -78,7 +78,7 @@
             <div id="container-cards">
                   <%
                         if (tutorias.size() == 0) { %>
-                              <div class="slider on">
+                              <div class="slider on rotate-scale-down-horizontal">
                                     <img src="imagens/tutorhome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
                                     <h1 id="titulo-card">Nenhuma Tutoria Cadastrada</h1>
                                     <hr>
@@ -88,7 +88,7 @@
                               </div>
                            <% } else if (tutorias.size() == 1){ %>
                                <a href="tutoria?id=<%= tutorias.get(0).getCodigo() %>">
-                                   <div class="slider on">
+                                   <div class="slider on rotate-scale-down-horizontal">
                                        <img src="imagens/tutorhome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
                                        <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina().getNome() %></h1>
                                        <hr>
@@ -99,8 +99,8 @@
                                </a>
                            <% } else { %>
                                <a href="tutoria?id=<%= tutorias.get(0).getCodigo() %>">
-                                   <div class="slider on">
-                                       <img src="imagens/tutorhome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
+                                   <div class="slider on rotate-scale-down-horizontal">
+                                       <img src="imagens/tutorhome/solar_pin-bold.png" alt="uiw_paper-clip.png"  class="rotate-scale-down-diagonal-left" id="clip-card">
                                        <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina().getNome() %></h1>
                                        <hr>
                                        <h1 id="titulo-card-ator">Tutorado: <%= tutorias.get(0).getTutorado().getNome() %></h1>
@@ -110,8 +110,8 @@
                                </a>
                                <% for (int i = 1; i < tutorias.size(); i++) { %>
                                    <a href="tutoria?id=<%= tutorias.get(i).getCodigo() %>">
-                                       <div class="slider">
-                                           <img src="imagens/tutorhome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
+                                       <div class="slider rotate-scale-down-horizontal">
+                                           <img src="imagens/tutorhome/solar_pin-bold.png" alt="uiw_paper-clip.png" class="rotate-scale-down-diagonal-left" id="clip-card">
                                            <h1 id="titulo-card"><%= tutorias.get(i).getDisciplina().getNome() %></h1>
                                            <hr>
                                            <h1 id="titulo-card-ator">Tutorado: <%= tutorias.get(i).getTutorado().getNome() %></h1>

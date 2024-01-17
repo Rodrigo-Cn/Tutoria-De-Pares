@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,13 +13,13 @@
     <nav>
         <div id="navbar">
             <div id="navbar-logo">
-                <div><img src="imagens/login/Frame 1.png" id="navbar-image" alt="frame.png"></div>
-                <div id="navbar-name"><p>Tutoria</p><p>De</p><p>Pares</p></div>
+                <div><img src="imagens/login/Frame 1.png" id="navbar-image" class="tracking-in-expand-forward-top" alt="frame.png"></div>
+                <div id="navbar-name" class="tracking-in-expand-forward-top"><p>Tutoria</p><p>De</p><p>Pares</p></div>
             </div>
             <a href="main" id="navbar-a">
                 <div id="navbar-inicio">
-                    <img id="navbar-image2" src="imagens/login/icons8-casa-384 1.png" alt="icons8-casa-384.png">
-                    <p id="navbar-name2">IN&Iacute;CIO</p>
+                    <img id="navbar-image2" class="tracking-in-expand-forward-top" src="imagens/login/icons8-casa-384 1.png" alt="icons8-casa-384.png">
+                    <p id="navbar-name2"  class="tracking-in-expand-forward-top" >IN&Iacute;CIO</p>
                 </div>
             </a>
         </div>
@@ -50,6 +51,23 @@
             %>
         </div>
     </section>
+    <div id="div-area">
+        <div id="div-area-footer1">
+            <div id="div-area-image1">
+                <img id="image-main-footer" src="imagens/tutorhome/Frame 1.png" alt="">
+            </div>
+            <div id="div-area-image2">
+                <a href=""><img src="imagens/tutorhome/icons8-facebook-50 1.png" alt=""></a>
+                <a href=""><img src="imagens/tutorhome/icons8-instagram-64 1.png" alt=""></a>
+                <a href=""><img src="imagens/tutorhome/icons8-linkedin-50 1.png" alt=""></a>
+            </div>
+        </div>
+        <div id="div-area-footer2">
+            <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
+            <a href=""><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
+            <a href=""><p style="height: 10%; text-decoration: underline;">Contato</p></a>
+        </div>
+    </div>
 </div>
 <script src="scripts/loginValidador.js"></script>
 </body>
