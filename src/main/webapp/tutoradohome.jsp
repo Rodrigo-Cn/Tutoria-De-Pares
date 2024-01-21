@@ -9,8 +9,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="icon" href="imagens/cadastro/Frame1.png" type="image/png">
+    <link rel="icon" href="imagens/cadastro/Frame 1.png" type="image/png">
     <link rel="stylesheet" href="styles/tutoradohome/tutorado.css">
+
 </head>
 <body>
     <script src="scripts/tutoradohome/barra-lateral.js"></script>
@@ -30,13 +31,27 @@
                         <h1>Entrar em Tutoria</h1>
                     </div>
                     <div>
-                        <form action="" id="form-entrar-tutoria">
-                            <input type="text" name="" id="input1-entrar-tutoria" placeholder=" ID">
-                            <input type="text" name="" id="input2-entrar-tutoria" placeholder=" Senha">
-                            <input type="button" name="" id="input3-entrar-tutoria" value="Entrar">
+                        <form action="loginTutoriaTutorado" id="form-entrar-tutoria" name="form-entrar-tutoria">
+                            <input type="hidden" name="id" id="input0-id-usuario" value="<%= request.getParameter("id") %>">
+                            <input type="number" name="codigo" id="input1-entrar-tutoria" placeholder=" Código">
+                            <input type="text" name="senha" id="input2-entrar-tutoria" placeholder=" Senha">
+                            <div id="mensagemDeErro" style="color: red; margin-bottom: 50px; font-size: 20px;"></div>
+                            <%
+                                String mensagemErro = (String) request.getAttribute("mensagemErro");
+                                if (mensagemErro != null) {
+                            %>
+                                    <div style="color: red; margin-bottom: 10px; font-size: 18px;">
+                                        <%= mensagemErro %>
+                                    </div>
+                            <%
+                                }
+                            %>
+
+                            <input type="button" name="" id="input3-entrar-tutoria" value="Entrar" onclick="validarLoginTutoria()">
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
         <div id="barra-ferramentas"  class="blur-in">
@@ -44,7 +59,12 @@
             <div id="nav-zone">
                 <div id="nav-lateral-image"><a href=""><img src="imagens/tutoradohome/icons8-usuario-homem-com-círculo-100.png" alt="icons8-usuario-homem-com-círculo-100.png"></a></div>
                 <div id="nav-lateral-name"><a href=""><p><%= ((Tutorado) request.getAttribute("tutorado")).getNome() %></p></a></div>
-                <div id="nav-lateral-option1"><a href="">Editar Perfil</a></div>
+
+
+                <div id="nav-lateral-option1"> <a href="edicaoTutorado?id=<%= request.getParameter("id")%>"> Editar Perfil </a> </div>
+
+
+
                 <div id="nav-lateral-option3"><a href="main">Sair</a></div>
             </div>
         </div>
@@ -90,9 +110,9 @@
                                <a href="tutoria?id=<%= tutorias.get(0).getCodigo() %>">
                                    <div class="slider on rotate-scale-down-horizontal">
                                        <img src="imagens/tutoradohome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
-                                       <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina().getNome() %></h1>
+                                       <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina() != null ? tutorias.get(0).getDisciplina().getNome() : "Disciplina não disponível" %></h1>
                                        <hr>
-                                       <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(0).getTutor().getNome() %></h1>
+                                       <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(0).getTutor() != null ? tutorias.get(0).getTutor().getNome() : "Tutor não disponível" %></h1>
                                        <hr>
                                        <hr style="margin-top: 6.7%;">
                                    </div>
@@ -140,12 +160,12 @@
             </div>
             <div id="div-area-footer2">
                 <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
-                <a href=""><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
-                <a href=""><p style="height: 10%; text-decoration: underline;">Contato</p></a>
+                <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
             </div>
         </div>
     </div>
 
+    <script src="scripts/loginTutoria/loginTutoriaValidador.js" ></script>
     <script src="scripts/tutoradohome/menu-entrar-tutoria.js"></script>
     <script src="scripts/tutoradohome/barra-lateral.js"></script>
     <script src="scripts/tutoradohome/cards.js"></script>

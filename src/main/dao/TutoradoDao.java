@@ -57,4 +57,61 @@ public class TutoradoDao {
             return null;
         }
     }
+
+    public void selecionarTutorado(Tutorado tutorado)
+    {
+        String read = "SELECT * FROM usuario WHERE id=?";
+
+        try
+        {
+            Connection con = conectionDB.conectar();
+           PreparedStatement ps = con.prepareStatement(read);
+           ps.setInt(1, tutorado.getId());
+           ResultSet rs = ps.executeQuery();
+
+           while(rs.next())
+           {
+               tutorado.setNome(rs.getString(1));
+               tutorado.setIdade(rs.getInt(2));
+               tutorado.setEmail(rs.getString(3));
+               tutorado.setSenha(rs.getString(4));
+               tutorado.setId(rs.getInt(5));
+               tutorado.setCurso(rs.getString(6));
+               tutorado.setSemestre(rs.getInt(7));
+               tutorado.setMatricula(rs.getString(8));
+               tutorado.setTipoDeDeficiencia((rs.getString(9)));
+               tutorado.setCargo(rs.getString(10));
+           }
+           con.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public void editarTutorado (Tutorado tutorado)
+    {
+        String update = "UPDATE usuario SET nome=?, email=?, senha=?, curso=?, semestre=?, matricula=?, tipo_de_deficiencia=? WHERE id=?";
+
+        try
+        {
+            Connection con = conectionDB.conectar();
+            PreparedStatement ps = con.prepareStatement(update);
+            ps.setString(1, tutorado.getNome());
+            ps.setString(2, tutorado.getEmail());
+            ps.setString(3, tutorado.getSenha());
+            ps.setString(4, tutorado.getCurso());
+            ps.setInt(5, tutorado.getSemestre());
+            ps.setString(6, tutorado.getMatricula());
+            ps.setString(7, tutorado.getTipoDeDeficiencia());
+            ps.setInt(8, tutorado.getId());
+            ps.executeUpdate();
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
 }

@@ -1,4 +1,5 @@
 package main.dao;
+import jdk.jshell.spi.ExecutionControl;
 import main.model.Tutoria;
 
 import java.sql.Connection;
@@ -61,6 +62,76 @@ public class TutoriaDao {
         }catch (Exception e){
             System.out.println(e);
             return null;
+        }
+    }
+
+    public static boolean lerTutoria (Tutoria tutoria)
+    {
+        ConectionDB con = new ConectionDB();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String read = "SELECT * FROM tutoria WHERE codigo = ? AND senha = ?";
+
+        try
+        {
+            ps = con.conectar().prepareStatement(read);
+            ps.setInt(1, tutoria.getCodigo());
+            ps.setString(2, tutoria.getSenha());
+            rs = ps.executeQuery();
+
+            if(rs.next())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public static void atualizarTutoriaTutorado(Tutoria tutoria, int id)
+    {
+        ConectionDB con = new ConectionDB();
+        String update = "UPDATE tutoria SET id_tutorado = ? WHERE codigo = ?";
+        PreparedStatement ps = null;
+
+        try
+        {
+            ps = con.conectar().prepareStatement(update);
+            ps.setInt(1, id);
+            ps.setInt(2, tutoria.getCodigo());
+            ps.execute();
+            ps.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public static void atualizarTutoriaTutor(Tutoria tutoria, int id)
+    {
+        ConectionDB con = new ConectionDB();
+        String update = "UPDATE tutoria SET id_tutor = ? WHERE codigo = ?";
+        PreparedStatement ps = null;
+
+        try
+        {
+            ps = con.conectar().prepareStatement(update);
+            ps.setInt(1, id);
+            ps.setInt(2, tutoria.getCodigo());
+            ps.execute();
+            ps.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
         }
     }
 }
