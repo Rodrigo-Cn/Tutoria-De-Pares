@@ -2,6 +2,7 @@ package main.dao;
 
 import main.model.Professor;
 import main.model.Tutor;
+import main.model.Tutorado;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,5 +63,59 @@ public class TutorDao {
         }
 
         return null;
+    }
+
+    public void selecionarTutor(Tutor tutor)
+    {
+        String read = "SELECT * FROM usuario WHERE id=?";
+
+        try
+        {
+            Connection con = conectionDB.conectar();
+            PreparedStatement ps = con.prepareStatement(read);
+            ps.setInt(1, tutor.getId());
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next())
+            {
+                tutor.setNome(rs.getString(1));
+                tutor.setIdade(rs.getInt(2));
+                tutor.setEmail(rs.getString(3));
+                tutor.setSenha(rs.getString(4));
+                tutor.setId(rs.getInt(5));
+                tutor.setCurso(rs.getString(6));
+                tutor.setSemestre(rs.getInt(7));
+                tutor.setMatricula(rs.getString(8));
+            }
+            con.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public void editarTutor (Tutor tutor)
+    {
+        String update = "UPDATE usuario SET nome=?, email=?, senha=?, curso=?, semestre=?, matricula=? WHERE id=?";
+
+        try
+        {
+            Connection con = conectionDB.conectar();
+            PreparedStatement ps = con.prepareStatement(update);
+            ps.setString(1, tutor.getNome());
+            ps.setString(2, tutor.getEmail());
+            ps.setString(3, tutor.getSenha());
+            ps.setString(4, tutor.getCurso());
+            ps.setInt(5, tutor.getSemestre());
+            ps.setString(6, tutor.getMatricula());
+            ps.setInt(7, tutor.getId());
+            ps.executeUpdate();
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
     }
 }

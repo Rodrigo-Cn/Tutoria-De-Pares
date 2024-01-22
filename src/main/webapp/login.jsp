@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="icon" href="imagens/cadastro/Frame1.png" type="image/png">
-    <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="styles/login/login.css">
 </head>
 <body>
 <div class="container">
@@ -64,8 +64,7 @@
         </div>
         <div id="div-area-footer2">
             <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
-            <a href=""><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
-            <a href=""><p style="height: 10%; text-decoration: underline;">Contato</p></a>
+            <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
         </div>
     </div>
 </div>

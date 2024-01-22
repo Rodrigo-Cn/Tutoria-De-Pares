@@ -8,6 +8,7 @@ public class Tutorado extends Usuario{
     private int semestre;
     private ArrayList<String> conteudosComDificuldade = new ArrayList<>();
     private String matricula;
+    private String cargo;
     public Tutorado(){
 
     }
@@ -59,5 +60,13 @@ public class Tutorado extends Usuario{
     public void cadastrar(String nome, String email, String senha, String matricula) {
         super.cadastrar(nome, email, senha);
         this.matricula = matricula;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 }

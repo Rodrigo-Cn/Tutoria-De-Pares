@@ -1,147 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/bfe249254a.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="imagens/cadastro/Frame1.png" type="image/png">
-    <link rel="stylesheet" href="styles/cadastrar.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <title>Tutoria de Pares</title>
+    <link rel="stylesheet" href="styles/cadastro/cadastrar.css">
+    <link rel="icon" href="imagens/cadastro/Frame 1.png" type="image/png">
+    <title>Tutoria</title>
 </head>
 <body>
-    <section class="primeiraMetade">
-      <img src="imagens/cadastro/PrimeiraPagina(2).png" alt="" id="img-section1">
-        <img src="imagens/cadastro/PrimeiraPagina(3).png" alt="" id="img-section2">
-        <header class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#"> <img src="imagens/cadastro/Frame1.png"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="#cadastro"> <i class="fa-solid fa-person-circle-plus"></i>Cadastrar</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="login.jsp"> <i class="fa-solid fa-door-open"></i>Entrar</a>
-                </li>
-              </ul>  
-            </div>
-          </nav>
-          
-        </header>
-        </section>
 
-        <section class="segundaMetade" id="cadastro">
-        
-                <section class="vh-100" style="background-color: #eee;">
-                    <div class="container h-100">
-                      <div class="row d-flex justify-content-center align-items-center h-100">
-                        <div class="col-lg-12 col-xl-11">
-                          <div class="card text-black" style="border-radius: 25px;">
-                            <div class="card-body p-md-5">
-                              <div class="row justify-content-center">
-                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+<section id="first-half">
+    <header id="header">
+        <nav>
+            <ul class="sidebar">
+                <li onclick=hideSidebar()> <a href="#"> <img src="imagens/cadastro/fechar2.png"> </a> </li>
+                <li>  <a href="login.jsp"> <i class="fa-solid fa-right-to-bracket"></i> Entrar </a> </li>
+                <li>  <a href="#form"> <i class="fa-solid fa-user-plus"></i> Cadastrar </a> </li>
+            </ul>
 
-                                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: #CB9624; font-size: 4rem;">Bem vindo(a)!</p>
-                  
-                                  <form class="mx-1 mx-md-4" id="formulario" name="frmUsuario" action="cadastrar">
+            <ul>
+                <li id="logo-id"> <a href="#"> <img src="imagens/cadastro/Frame 1.png" id="logo"> </a> </li>
+                <li class="hideOnMobile"> <a href="login.jsp"> <i class="fa-solid fa-right-to-bracket"></i> Entrar </a> </li>
+                <li class="hideOnMobile"> <a href="#form"> <i class="fa-solid fa-user-plus"></i> Cadastrar </a> </li>
+                <li class="menu-button" onclick=showSidebar()> <a> <img src="imagens/cadastro/sidebar2.png"> </a> </li>
+            </ul>
+        </nav>
+    </header>
+</section>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                      <div class="form-outline flex-fill mb-0">
-                                        <label style="font-size: 1.8rem;" class="form-label" for="form3Example3c">Ocupação</label>
-                                        <select style="font-size: 1.8rem; cursor: pointer;" id="form3Example5c" class="form-control" name="ocupacao" onchange="mostrarOcultarMatricula()">
-                                              <option value="aluno" label="Aluno" value="aluno"> </option>
-                                              <option value="professor" label="Professor" value="professor"> </option>
-                                        </select>
-                                      </div>
-                                    </div>
+<section id="second-half">
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                      <div class="form-outline flex-fill mb-0">
-                                        <label style="font-size: 1.8rem;" class="form-label" for="form3Exampl7c" id="labelFuncao">Função</label>
-                                        <select style="font-size: 1.8rem; cursor: pointer;" id="form3Exampl7c" class="form-control" name="select">
-                                              <option value="tutor" label="Tutor" value="tutor"> </option>
-                                              <option value="tutorado" label="Tutorado" value="tutorado"> </option>
-                                        </select>
-                                      </div>
-                                    </div>
-                  
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                      <div class="form-outline flex-fill mb-0" >
-                                        <input style="font-size: 1.8rem;"  type="text" name="nome" id="form3Example1c" class="form-control" style="border-color: #CB9624;" placeholder="Nome"/>
-                                      </div>
-                                    </div>
-                  
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                      <div class="form-outline flex-fill mb-0">
-                                        <input style="font-size: 1.8rem;"  type="email" name="email" id="form3Example3c" class="form-control" placeholder="Email" />
-                                      </div>
-                                    </div>
+    <div class="container">
 
-                      
+        <div class="form" id="form">
+            <form action="cadastrar" id="frmUsuario" class="frmUsuario" name="frmUsuario">
 
-                                      <div class="d-flex flex-row align-items-center mb-4" id="matriculaDIV">
-                                        <div class="form-outline flex-fill mb-0">
-                                          <input style="font-size: 1.8rem;" type="text" name="matricula" id="form3Example6c" class="form-control" placeholder="Matrícula"/>
-                                        </div>
-                                      </div>
-                  
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                      <div class="form-outline flex-fill mb-0">
-                                        <input style="font-size: 1.8rem;" type="password" name="senha" id="form3Example4c" class="form-control" placeholder="Senha"/>
-                                      </div>
-                                    </div>
-                  
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                      <div class="form-outline flex-fill mb-0">
-                                        <input style="font-size: 1.8rem;" type="password" name="senhaRepetida" id="form3Example4cd" class="form-control" placeholder="Repetir senha"/>
-                                      </div>
-                                    </div>
-                  
-                                    <div class="form-check d-flex justify-content-center mb-5">
-                                      <input style="margin-top:5.5px;" class="form-check-input me-2" type="checkbox" name="termos" value="" id="form2Example3c" />
-                                      <label class="form-check-label" style="font-size: 1.3rem;">
-                                        Eu concordo com os <a href="#!">termos de uso</a>
-                                      </label>
-                                    </div>
-                  
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4" style="border-color: #CB9624;">
-                                      <button style="font-size: 1.8rem; background-color: #CB9624;" type="button" class="btn btn-primary btn-lg" onclick="validar()">CADASTRAR</button>
-                                    </div>
-                  
-                                  </form>
-                  
-                                </div>
-                                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                  
-                                  <img id="img-mulher" src="imagens/cadastro/mulher2.png" class="img-fluid" alt="Sample image">
-                  
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                <div class="form-header">
+                    <div class="form-title">
+                        <h1> Cadastre-se! </h1>
                     </div>
-                  </section>
-            
-        </section>
+                </div>
 
-        <footer class="footer">
+                <div class="input-group">
 
-        </footer>
-    
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="scripts/cadastroVerificador.js"></script>
-  <script src="scripts/cadastroValidador.js"></script>
+                    <div class="input-box">
+                        <label class="form-label" for="form3Example3c">Ocupação</label>
+                        <select id="form3Example5c" class="form-control" name="ocupacao" onchange="mostrarOcultarMatricula()">
+                            <option value="aluno" label="Aluno"> </option>
+                            <option value="professor" label="Professor"> </option>
+                        </select>
+                    </div>
 
+                    <div class="input-box">
+                        <label class="form-label" for="form3Example7c" id="labelFuncao">Função</label>
+                        <select id="form3Example7c" class="form-control" name="select">
+                            <option value="tutor" label="Tutor"> </option>
+                            <option value="tutorado" label="Tutorado"> </option>
+                        </select>
+                    </div>
+
+                    <div class="input-box">
+                        <label class="form-label" for="form3Example1c">Nome</label>
+                        <input type="text" name="nome" id="form3Example1c" class="form-control" style="border-color: #CB9624;" placeholder="nome"/>
+                    </div>
+
+                    <div class="input-box">
+                        <label class="form-label" for="form3Example3c">E-mail</label>
+                        <input type="email" name="email" id="form3Example3c" class="form-control" placeholder="email" />
+                    </div>
+
+                    <div class="input-box">
+                        <label id="labelMatricula" class="form-label" for="form3Example3c"> Matrícula </label>
+                        <input type="text" name="matricula" id="form3Example6c" class="form-control" placeholder="matrícula" />
+                    </div>
+
+                    <div class="input-box">
+                        <label class="form-label" for="form3Example4c">Senha</label>
+                        <input type="password" name="senha" id="form3Example4c" class="form-control" placeholder="senha"/>
+                    </div>
+
+                    <div class="input-box">
+                        <label class="form-label" for="form3Example4cd">Repita sua senha</label>
+                        <input type="password" name="senhaRepetida" id="form3Example4cd" class="form-control" placeholder="repetir senha"/>
+                    </div>
+
+                    <div  id="input-termos">
+                        <input class="form-check-input me-2" type="checkbox" name="termos" value="" id="form2Example3c" />
+                        <label class="form-check-label" for="form2Example3c"> Eu concordo com os <a href="termosDeUso.html" target="_blank">termos de uso</a> </label>
+                    </div>
+                </div>
+
+                <div id="botao">
+                    <button type="button" class="cadastro-button" onclick="validar()">CADASTRAR</button>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+</section>
+
+<footer id="div-area">
+    <div id="div-area-footer1">
+        <div id="div-area-image1">
+            <img id="image-main-footer" src="imagens/cadastro/Frame 1.png" alt="">
+        </div>
+        <div id="div-area-image2">
+            <a href=""><img src="imagens/cadastro/icons8-facebook-50 1.png" alt=""></a>
+            <a href=""><img src="imagens/cadastro/icons8-instagram-64 1.png" alt=""></a>
+            <a href=""><img src="imagens/cadastro/icons8-linkedin-50 1.png" alt=""></a>
+        </div>
+    </div>
+    <div id="div-area-footer2">
+        <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
+        <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
+    </div>
+    </div>
+</footer>
+
+
+<script src="scripts/cadastro/cadastroSideBar.js"></script>
+<script src="scripts/cadastro/cadastroValidador.js"> </script>
+<script src="scripts/cadastro/cadastroVerificador.js"> </script>
+<script src="https://kit.fontawesome.com/bfe249254a.js" crossorigin="anonymous"></script>
 </body>
 </html>
