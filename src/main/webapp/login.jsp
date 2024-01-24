@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles/login/login.css">
 </head>
 <body>
+<script src="scripts/login/loginValidador.js"></script>
 <div class="container">
     <nav>
         <div id="navbar">
@@ -27,7 +28,7 @@
     <section>
         <div class="section">
             <div id="section-image">
-                <img id="img-section" src="imagens/login/estudantes-universitarios-lotando-ao-ar-livre 1(1).png" alt="estudantes-universitarios-lotando-ao-ar-livre.png">
+                <img id="img-section" class="tracking-in-expand" src="imagens/login/section.png" alt="estudantes-universitarios-lotando-ao-ar-livre.png">
             </div>
             <div class="section-login">
                 <h2 id="text-section">Fa&ccedil;a seu login</h2>
@@ -65,9 +66,10 @@
         <div id="div-area-footer2">
             <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
             <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
+            <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Contato</p></a>
         </div>
     </div>
 </div>
-<script src="scripts/loginValidador.js"></script>
+<script src="scripts/login/loginValidador.js"></script>
 </body>
 </html>

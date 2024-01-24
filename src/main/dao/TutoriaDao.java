@@ -1,5 +1,4 @@
 package main.dao;
-import jdk.jshell.spi.ExecutionControl;
 import main.model.Tutoria;
 
 import java.sql.Connection;
@@ -132,6 +131,217 @@ public class TutoriaDao {
         catch(Exception e)
         {
             System.out.println(e);
+        }
+    }
+    public static ArrayList<Tutoria> retornarTodasTutorias(){
+        ConectionDB conectionDB = new ConectionDB();
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        TutorDao tutorDao = new TutorDao();
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        ArrayList<Tutoria> tutorias = new ArrayList<>();
+
+        String read = "SELECT * FROM tutoria";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()){
+                Tutoria tutoria = new Tutoria();
+                tutoria.setCodigo(rs.getInt(1));
+                tutoria.setSenha(rs.getString(2));
+                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt(3)));
+                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
+                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt(5)));
+                tutorias.add(tutoria);
+            }
+            return tutorias;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public static ArrayList<Tutoria> retornarTodasTutoriasMatriculaTutor(String matricula){
+        ConectionDB conectionDB = new ConectionDB();
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        TutorDao tutorDao = new TutorDao();
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        ArrayList<Tutoria> tutorias = new ArrayList<>();
+
+        String read = "SELECT * FROM tutoria t INNER JOIN usuario u on t.id_tutor = u.id WHERE matricula = ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setString(1, matricula);
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()){
+                Tutoria tutoria = new Tutoria();
+                tutoria.setCodigo(rs.getInt(1));
+                tutoria.setSenha(rs.getString(2));
+                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt(3)));
+                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
+                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt(5)));
+                tutorias.add(tutoria);
+            }
+            return tutorias;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public static ArrayList<Tutoria> retornarTodasTutoriasMatriculaTutorado(String matricula){
+        ConectionDB conectionDB = new ConectionDB();
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        TutorDao tutorDao = new TutorDao();
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        ArrayList<Tutoria> tutorias = new ArrayList<>();
+
+        String read = "SELECT * FROM tutoria t INNER JOIN usuario u on t.id_tutorado = u.id WHERE matricula = ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setString(1, matricula);
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()){
+                Tutoria tutoria = new Tutoria();
+                tutoria.setCodigo(rs.getInt(1));
+                tutoria.setSenha(rs.getString(2));
+                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt(3)));
+                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
+                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt(5)));
+                tutorias.add(tutoria);
+            }
+            return tutorias;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public static ArrayList<Tutoria> retornarTodasTutoriasNomeTutor(String nome){
+        ConectionDB conectionDB = new ConectionDB();
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        TutorDao tutorDao = new TutorDao();
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        ArrayList<Tutoria> tutorias = new ArrayList<>();
+
+        String read = "SELECT * FROM tutoria t INNER JOIN usuario u on t.id_tutor = u.id WHERE nome LIKE ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setString(1, nome + "%");
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()){
+                Tutoria tutoria = new Tutoria();
+                tutoria.setCodigo(rs.getInt("codigo"));
+                tutoria.setSenha(rs.getString("senha"));
+                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt("id_tutor")));
+                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt("id_tutorado")));
+                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt("codigo_disciplina")));
+                tutorias.add(tutoria);
+            }
+            return tutorias;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public static ArrayList<Tutoria> retornarTodasTutoriasNomeTutorado(String nome){
+        ConectionDB conectionDB = new ConectionDB();
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        TutorDao tutorDao = new TutorDao();
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        ArrayList<Tutoria> tutorias = new ArrayList<>();
+
+        String read = "SELECT * FROM tutoria t INNER JOIN usuario u on t.id_tutorado = u.id WHERE nome LIKE ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setString(1, nome + "%");
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()){
+                Tutoria tutoria = new Tutoria();
+                tutoria.setCodigo(rs.getInt("codigo"));
+                tutoria.setSenha(rs.getString("senha"));
+                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt("id_tutor")));
+                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt("id_tutorado")));
+                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt("codigo_disciplina")));
+                tutorias.add(tutoria);
+            }
+            return tutorias;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public static ArrayList<Tutoria> retornarTodasTutoriasNomeDisciplina(String nome){
+        ConectionDB conectionDB = new ConectionDB();
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        TutorDao tutorDao = new TutorDao();
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        ArrayList<Tutoria> tutorias = new ArrayList<>();
+
+        String read = "SELECT * FROM tutoria t INNER JOIN disciplina d on t.codigo_disciplina = d.codigo WHERE nome LIKE ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setString(1, nome + "%");
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()){
+                Tutoria tutoria = new Tutoria();
+                tutoria.setCodigo(rs.getInt("codigo"));
+                tutoria.setSenha(rs.getString("senha"));
+                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt("id_tutor")));
+                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt("id_tutorado")));
+                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt("codigo_disciplina")));
+                tutorias.add(tutoria);
+            }
+            return tutorias;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public static ArrayList<Tutoria> retornarTodasTutoriasGenerico(String nome){
+        ConectionDB conectionDB = new ConectionDB();
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        TutorDao tutorDao = new TutorDao();
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        ArrayList<Tutoria> tutorias = new ArrayList<>();
+
+        String read = "SELECT * FROM tutoria t INNER JOIN disciplina d on t.codigo_disciplina = d.codigo INNER JOIN usuario u1 on t.id_tutorado = u1.id INNER JOIN usuario u2 on t.id_tutor = u2.id WHERE d.nome LIKE ? OR u1.nome LIKE ? OR u2.nome LIKE ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setString(1, nome + "%");
+            readUser.setString(2, nome + "%");
+            readUser.setString(3, nome + "%");
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()){
+                Tutoria tutoria = new Tutoria();
+                tutoria.setCodigo(rs.getInt("codigo"));
+                tutoria.setSenha(rs.getString("senha"));
+                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt("id_tutor")));
+                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt("id_tutorado")));
+                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt("codigo_disciplina")));
+                tutorias.add(tutoria);
+            }
+            return tutorias;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
         }
     }
 }

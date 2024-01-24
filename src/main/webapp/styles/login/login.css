@@ -2,6 +2,8 @@
 
 .tracking-in-expand-forward-top{animation:tracking-in-expand-forward-top 0.5s linear both} @keyframes tracking-in-expand-forward-top{0%{letter-spacing:-.2em;transform:translateZ(-700px) translateY(-100px);opacity:0}40%{opacity:.6}100%{transform:translateZ(0) translateY(0);opacity:1}}
 
+.tracking-in-expand{animation:tracking-in-expand 0.5s linear both} @keyframes tracking-in-expand{0%{letter-spacing:-.2em;opacity:0}40%{opacity:.6}100%{opacity:1}}
+
     a{
         text-decoration: none;
         color: inherit;
@@ -74,7 +76,7 @@
         margin-top: 0%;
         line-height: 3px;
         color: rgb(255, 255, 255);
-        font-family: 'Indie Flower', cursive;
+        font-family: cursive;
         font-size: 23px;
         text-shadow: 2px 2px 3px black;
     }
@@ -141,14 +143,14 @@
     }
     #section-image{
         padding-left: 3%;
-        margin-top: 4.5%;
+        margin-top: 3.5%;
         width: 50%;
         height: 100%;
     }
     #img-section{
         height: 40%;
         width: 85%;
-        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
+        box-shadow: 0px 0px 10px 2px #CB9624;
     }
     .section-login{
         width: 50%;
@@ -158,11 +160,11 @@
         align-items: center;
     }
     #text-section{
-        color: rgb(140, 28, 50);
+        color: #CB9624;
         font-size: 4.5rem;
         word-spacing: 40%;
         margin-bottom: 15%;
-        text-shadow: 2px 2px 3px rgb(140, 28, 50);
+        text-shadow: 2px 2px 3px #CB9624;
     }
     #form-section{
         width: 100%;
@@ -172,7 +174,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -180,7 +182,7 @@
         font-size: 1.5rem;
     }
     #input-text2{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -188,7 +190,7 @@
         font-size: 1.5rem;
     }
     #input-text1:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -196,7 +198,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -206,7 +208,7 @@
     #input-button1{
         width: 21.5%;
         height: 10.5%;
-        background-color: rgb(140, 28, 50);
+        background-color: #CB9624;
         color: white;
         font-family: Inter;
         font-size: 1.6rem;
@@ -218,13 +220,13 @@
         width: 22%;
         height: 11%;
         background-color: white;
-        color: rgb(140, 28, 50);
+        color: #CB9624;
         font-family: Inter;
         font-size: 1.6rem;
         text-transform: uppercase;
         border-radius: 14px;
         transition: 1s;
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         cursor: pointer;
     }
     #entrada1{
@@ -268,7 +270,7 @@
         margin-top: 0%;
         line-height: 3px;
         color: rgb(255, 255, 255);
-        font-family: 'Indie Flower', cursive;
+        font-family: cursive;
         font-size: 23px;
         text-shadow: 2px 2px 3px black;
     }
@@ -277,7 +279,7 @@
         margin-left: 4%;
         line-height: 3px;
         color: rgb(255, 255, 255);
-        font-family: Inter;
+        font-family: cursive;
         font-size: 30px;
         text-shadow: 2px 2px 3px rgb(59, 51, 51);
     }
@@ -335,14 +337,14 @@
     }
     #section-image{
         padding-left: 3%;
-        margin-top: 4.5%;
+        margin-top: 4%;
         width: 50%;
         height: 100%;
     }
     #img-section{
         height: 100%;
         width: 95%;
-        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
+        box-shadow: 0px 0px 10px 2px #CB9624;
     }
     .section-login{
         width: 50%;
@@ -352,11 +354,11 @@
         align-items: center;
     }
     #text-section{
-        color: rgb(140, 28, 50);
+        color: #CB9624;
         font-size: 2.8rem;
         word-spacing: 15%;
         margin-bottom: 15%;
-        text-shadow: 2px 2px 3px rgb(122, 108, 108);
+        text-shadow: 2px 2px 3px #CB9624;
     }
     #form-section{
         width: 100%;
@@ -366,7 +368,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -374,7 +376,7 @@
         font-size: 1.5rem;
     }
     #input-text2{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -382,7 +384,7 @@
         font-size: 1.5rem;
     }
     #input-text1:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -390,7 +392,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -400,7 +402,7 @@
     #input-button1{
         width: 26.5%;
         height: 10.5%;
-        background-color: rgb(140, 28, 50);
+        background-color: #CB9624;
         color: white;
         font-family: Inter;
         font-size: 1.2rem;
@@ -447,7 +449,7 @@
         margin-top: 0%;
         line-height: 3px;
         color: rgb(255, 255, 255);
-        font-family: 'Indie Flower', cursive;
+        font-family: cursive;
         font-size: 23px;
         text-shadow: 2px 2px 3px black;
     }
@@ -522,7 +524,7 @@
         height: 100%;
         width: 95%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
+        box-shadow: 0px 0px 10px 2px #CB9624;
     }
     .section-login{
         width: 50%;
@@ -532,11 +534,11 @@
         align-items: center;
     }
     #text-section{
-        color: rgb(140, 28, 50);
+        color: #CB9624;
         font-size: 2.8rem;
         word-spacing: 15%;
         margin-bottom: 15%;
-        text-shadow: 2px 2px 3px rgb(140, 28, 50);
+        text-shadow: 2px 2px 3px #CB9624;
     }
     #form-section{
         width: 100%;
@@ -546,7 +548,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -554,7 +556,7 @@
         font-size: 1rem;
     }
     #input-text2{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 55%;
@@ -562,7 +564,7 @@
         font-size: 1.5rem;
     }
     #input-text1:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -570,7 +572,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 10%;
         width: 58%;
@@ -580,7 +582,7 @@
     #input-button1{
         width: 26.5%;
         height: 10.5%;
-        background-color: rgb(140, 28, 50);
+        background-color: #CB9624;
         color: white;
         font-family: Inter;
         font-size: 1.2rem;
@@ -629,7 +631,7 @@
         margin-top: 0%;
         line-height: 3px;
         color: rgb(255, 255, 255);
-        font-family: 'Indie Flower', cursive;
+        font-family: cursive;
         font-size: 23px;
         text-shadow: 2px 2px 3px black;
     }
@@ -693,13 +695,13 @@
         height: 40%;
         width: 85%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
+        box-shadow: 0px 0px 10px 2px #CB9624;
     }
     #img-section:hover{
         height: 670px;
         width: 90%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
+        box-shadow: 0px 0px 10px 2px #CB9624;
         transition: 0.5s;
     }
     .section-login{
@@ -710,7 +712,7 @@
         align-items: center;
     }
     #text-section{
-        color: rgb(140, 28, 50);
+        color: #CB9624;
         font-size: 3rem;
         word-spacing: 20%;
         margin-bottom: 15%;
@@ -724,7 +726,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 50%;
         width: 55%;
@@ -732,7 +734,7 @@
         font-size: 1rem;
     }
     #input-text2{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 50%;
         width: 55%;
@@ -740,7 +742,7 @@
         font-size: 1rem;
     }
     #input-text1:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 50%;
         width: 58%;
@@ -748,7 +750,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 50%;
         width: 58%;
@@ -758,7 +760,7 @@
     #input-button1{
         width: 35%;
         height: 20%;
-        background-color: rgb(140, 28, 50);
+        background-color: #CB9624;
         color: white;
         font-family: Inter;
         font-size: 1.6rem;
@@ -770,13 +772,13 @@
         width: 35%;
         height: 20%;
         background-color: white;
-        color: rgb(140, 28, 50);
+        color: #CB9624;
         font-family: Inter;
         font-size: 1.6rem;
         text-transform: uppercase;
         border-radius: 14px;
         transition: 1s;
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         cursor: pointer;
     }
     #entrada1{
@@ -818,7 +820,7 @@
         margin-top: 0%;
         line-height: 3px;
         color: rgb(255, 255, 255);
-        font-family: 'Indie Flower', cursive;
+        font-family: cursive;
         font-size: 23px;
         text-shadow: 2px 2px 3px black;
     }
@@ -882,13 +884,13 @@
         height: 40%;
         width: 85%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
+        box-shadow: 0px 0px 10px 2px #CB9624;
     }
     #img-section:hover{
         height: 670px;
         width: 90%;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px 2px rgb(140, 28, 50);
+        box-shadow: 0px 0px 10px 2px #CB9624;
         transition: 0.5s;
     }
     .section-login{
@@ -899,7 +901,7 @@
         align-items: center;
     }
     #text-section{
-        color: rgb(140, 28, 50);
+        color: #CB9624;
         font-size: 3rem;
         word-spacing: 20%;
         margin-bottom: 15%;
@@ -913,7 +915,7 @@
         align-items: center;
     }
     #input-text1{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 50%;
         width: 55%;
@@ -921,7 +923,7 @@
         font-size: 1rem;
     }
     #input-text2{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 50%;
         width: 55%;
@@ -929,7 +931,7 @@
         font-size: 1rem;
     }
     #input-text1:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 50%;
         width: 58%;
@@ -937,7 +939,7 @@
         box-shadow: 0px 0px 10px 2px black;
     }
     #input-text2:focus{
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         border-radius: 20px;
         height: 50%;
         width: 58%;
@@ -947,7 +949,7 @@
     #input-button1{
         width: 37%;
         height: 22%;
-        background-color: rgb(140, 28, 50);
+        background-color: #CB9624;
         color: white;
         font-family: Inter;
         font-size: 1.6rem;
@@ -959,13 +961,13 @@
         width: 35%;
         height: 20%;
         background-color: white;
-        color: rgb(140, 28, 50);
+        color: #CB9624;
         font-family: Inter;
         font-size: 1.6rem;
         text-transform: uppercase;
         border-radius: 14px;
         transition: 1s;
-        border: 4px rgb(140, 28, 50) solid;
+        border: 4px #CB9624 solid;
         cursor: pointer;
     }
     #entrada1{

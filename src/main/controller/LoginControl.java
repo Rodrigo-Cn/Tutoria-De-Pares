@@ -1,9 +1,9 @@
 package main.controller;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import main.dao.UsuarioDao;
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ public class LoginControl extends HttpServlet {
             else if (tipoDeUsuario == 3) {
                 response.sendRedirect("tutoradohome?id="+usuarioDao.lerIdUsuario(request.getParameter("email"), request.getParameter("senha")));
             }else {
-                //response.sendRedirect("napnehome");
+                response.sendRedirect("napnehome?id="+usuarioDao.lerIdUsuario(request.getParameter("email"), request.getParameter("senha")));
             }
         }
     }
