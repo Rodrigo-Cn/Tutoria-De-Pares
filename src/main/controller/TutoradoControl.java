@@ -1,23 +1,26 @@
 package main.controller;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import main.dao.TutoradoDao;
 import main.dao.TutoriaDao;
 import main.model.Tutorado;
 import main.model.Tutoria;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/tutoradohome", "/edicaoTutorado"})
+@WebServlet(urlPatterns = {"/tutoradohome", "/edicaoTutorado", "/loginTutoriaTutorado","/realizarEdicaoDoTutorado", "/voltarParaMainTutorado"})
 public class TutoradoControl extends HttpServlet {
     Tutorado tutorado = new Tutorado();
     ArrayList<Tutoria> tutorias = new ArrayList<>();
     TutoradoDao tutoradoDao = new TutoradoDao();
+    private static TutoriaDao tutoriaDao = new TutoriaDao();
+    private static Tutoria tutoria = new Tutoria();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getServletPath();
         int id = Integer.parseInt(request.getParameter("id"));
@@ -27,11 +30,24 @@ public class TutoradoControl extends HttpServlet {
         {
             iniciarHome(request,response,id);
         }
+        else if(action.equals("/loginTutoriaTutorado"))
+        {
+            verificarTutoriaTutorado(request, response);
+        }
         else if( action.equals("/edicaoTutorado"))
         {
             irParaEdicao(request,response,id);
         }
-        else {
+        else if (action.equals("/realizarEdicaoDoTutorado"))
+        {
+            atualizarDadosTutorado(request,response);
+        }
+        else if(action.equals("/voltarParaMainTutorado"))
+        {
+            response.sendRedirect("tutoradohome?id="+id);
+        }
+        else
+        {
             response.sendRedirect("login.jsp");
         }
 
@@ -61,5 +77,37 @@ public class TutoradoControl extends HttpServlet {
         request.setAttribute("matricula",tutorado.getMatricula());
         RequestDispatcher rd = request.getRequestDispatcher("edicaoTutorado.jsp");
         rd.forward(request,response);
+    }
+
+    protected void verificarTutoriaTutorado(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        PrintWriter out = resp.getWriter();
+        tutoria.setCodigo(Integer.parseInt(req.getParameter("codigo")));
+        tutoria.setSenha(req.getParameter("senha"));
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        if(tutoriaDao.lerTutoria(tutoria))
+        {
+            tutoriaDao.atualizarTutoriaTutorado(tutoria, id);
+            resp.sendRedirect("voltarParaMainTutorado?id="+tutorado.getId());
+        }
+        else
+        {
+            resp.getWriter().write("<script>alert('Tutoria não encontrada!'); window.location='tutoradohome?id=" + id + "';</script>");
+        }
+    }
+
+    protected void atualizarDadosTutorado(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        tutorado.setId(Integer.parseInt(request.getParameter("id")));
+        tutorado.setSenha(request.getParameter("senha"));
+        tutorado.setNome(request.getParameter("nome"));
+        tutorado.setEmail(request.getParameter("email"));
+        tutorado.setCurso(request.getParameter("curso"));
+        tutorado.setSemestre(Integer.parseInt(request.getParameter("semestre")));
+        tutorado.setTipoDeDeficiencia(request.getParameter("deficiencia"));
+        tutorado.setMatricula(request.getParameter("matricula"));
+        tutoradoDao.editarTutorado(tutorado);
+        response.sendRedirect("voltarParaMainTutorado?id="+tutorado.getId());
     }
 }

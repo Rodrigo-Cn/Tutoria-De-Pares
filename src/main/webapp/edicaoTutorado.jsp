@@ -134,7 +134,7 @@
   </div>
 </div>
 
-<script src="scripts/tutoradoEdicao/validadorTutoradoEdicao.js"></script>
+<script src="scripts/edicao/validarTutoradoEdicao.js"></script>
 <script src="menu-entrar-tutoria.js"></script>
 <script src="barra-lateral.js"></script>
 <script src="cards.js"></script>

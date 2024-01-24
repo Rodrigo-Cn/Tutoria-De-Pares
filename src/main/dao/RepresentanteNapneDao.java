@@ -1,6 +1,7 @@
 package main.dao;
 
 import main.model.RepresentanteNapne;
+import main.model.Tutor;
 import main.model.Tutorado;
 
 import java.sql.Connection;
@@ -46,6 +47,54 @@ public class RepresentanteNapneDao {
             newUser.close();
             con.close();
         }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void selecionarRepresentanteNapne(RepresentanteNapne representanteNapne)
+    {
+        String read = "SELECT * FROM usuario WHERE id=?";
+
+        try
+        {
+            Connection con = conectionDB.conectar();
+            PreparedStatement ps = con.prepareStatement(read);
+            ps.setInt(1, representanteNapne.getId());
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next())
+            {
+                representanteNapne.setNome(rs.getString(1));
+                representanteNapne.setIdade(rs.getInt(2));
+                representanteNapne.setEmail(rs.getString(3));
+                representanteNapne.setSenha(rs.getString(4));
+                representanteNapne.setId(rs.getInt(5));
+            }
+            con.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public void editarRepresentanteNapne(RepresentanteNapne representanteNapne)
+    {
+        String update = "UPDATE usuario SET nome=?, email=?, senha=? WHERE id=?";
+
+        try
+        {
+            Connection con = conectionDB.conectar();
+            PreparedStatement ps = con.prepareStatement(update);
+            ps.setString(1, representanteNapne.getNome());
+            ps.setString(2, representanteNapne.getEmail());
+            ps.setString(3, representanteNapne.getSenha());
+            ps.setInt(4, representanteNapne.getId());
+            ps.executeUpdate();
+
+        }
+        catch (Exception e)
+        {
             System.out.println(e);
         }
     }
