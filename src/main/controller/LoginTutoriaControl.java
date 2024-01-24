@@ -56,9 +56,7 @@ public class LoginTutoriaControl extends HttpServlet {
         }
         else
         {
-            //resp.sendRedirect("tutoradohome?id="+id);
             resp.getWriter().write("<script>alert('Tutoria não encontrada!'); window.location='tutoradohome?id=" + id + "';</script>");
-
         }
     }
 
@@ -76,9 +74,7 @@ public class LoginTutoriaControl extends HttpServlet {
         }
         else
         {
-            //resp.sendRedirect("tutoradohome?id="+id);
             resp.getWriter().write("<script>alert('Tutoria não encontrada!'); window.location='tutorhome?id=" + id + "';</script>");
-
         }
     }
 

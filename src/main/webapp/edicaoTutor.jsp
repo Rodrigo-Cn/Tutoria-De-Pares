@@ -47,8 +47,8 @@
 
   <div id="navbar">
     <div id="navbar-logo">
-      <div> <a href="voltarParaMainTutor?id=<%= request.getParameter("id")%>""> <img src="imagens/cadastro/Frame 1.png" id="navbar-image" alt="frame.png"> </a></div>
-      <div id="navbar-name"> <a href="voltarParaMain?id=<%= request.getParameter("id")%>""> <p>Tutoria</p><p>De</p><p>Pares</p> </a></div>
+      <div> <a href="voltarParaMainTutor?id=<%= request.getParameter("id")%>"> <img src="imagens/cadastro/Frame 1.png" id="navbar-image" alt="frame.png"> </a></div>
+      <div id="navbar-name"> <a href="voltarParaMainTutor?id=<%= request.getParameter("id")%>"> <p>Tutoria</p><p>De</p><p>Pares</p> </a></div>
     </div>
   </div>
 

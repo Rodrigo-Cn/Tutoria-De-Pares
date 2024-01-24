@@ -29,6 +29,7 @@ public class EditarTutoradoControl extends HttpServlet
         else
         {
             response.sendRedirect("tutoradohome?id="+id);
+
         }
 
     }
@@ -44,7 +45,7 @@ public class EditarTutoradoControl extends HttpServlet
         tutorado.setTipoDeDeficiencia(request.getParameter("deficiencia"));
         tutorado.setMatricula(request.getParameter("matricula"));
         tutoradoDao.editarTutorado(tutorado);
-        response.sendRedirect("tutoradohome?id="+tutorado.getId());
+        response.sendRedirect("voltarParaMainTutor?id="+tutorado.getId());
     }
 
 }
