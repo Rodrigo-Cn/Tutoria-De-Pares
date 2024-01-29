@@ -33,7 +33,7 @@ public class LoginControl extends HttpServlet {
         else
         {
             if(tipoDeUsuario ==1){
-                //response.sendRedirect("professorhome");
+                response.sendRedirect("professorhome?id="+usuarioDao.lerIdUsuario(request.getParameter("email"), request.getParameter("senha")));
             } else if (tipoDeUsuario == 2) {
                 response.sendRedirect("tutorhome?id="+usuarioDao.lerIdUsuario(request.getParameter("email"), request.getParameter("senha")));
             }

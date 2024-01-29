@@ -64,6 +64,37 @@ public class TutoriaDao {
         }
     }
 
+    public static ArrayList<Tutoria> retornarTutoriaParaProfessor(int id){
+        ConectionDB conectionDB = new ConectionDB();
+        TutorDao tutorDao = new TutorDao();
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        ArrayList<Tutoria> tutorias = new ArrayList<>();
+
+        String read = "SELECT t.codigo,t.senha,t.id_tutor,t.id_tutorado,t.codigo_disciplina FROM tutoria t INNER JOIN disciplina d ON t.codigo_disciplina=d.codigo INNER JOIN usuario u ON d.id_professor = ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setInt(1, id);
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()){
+                Tutoria tutoria = new Tutoria();
+                tutoria.setCodigo(rs.getInt(1));
+                tutoria.setSenha(rs.getString(2));
+                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt(3)));
+                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
+                tutoria.setDisciplina(DisciplinaDao.retornarDisciplina(rs.getInt(5)));
+                tutorias.add(tutoria);
+            }
+            return tutorias;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+
     public static boolean lerTutoria (Tutoria tutoria)
     {
         ConectionDB con = new ConectionDB();
@@ -113,6 +144,7 @@ public class TutoriaDao {
             System.out.println(e);
         }
     }
+
 
     public static void atualizarTutoriaTutor(Tutoria tutoria, int id)
     {
