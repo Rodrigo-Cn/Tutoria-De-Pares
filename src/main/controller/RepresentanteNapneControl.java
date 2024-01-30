@@ -1,11 +1,11 @@
 package main.controller;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import main.dao.RepresentanteNapneDao;
 import main.dao.TutoriaDao;
 import main.model.RepresentanteNapne;
@@ -14,7 +14,7 @@ import main.model.Tutoria;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria"})
+@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne"})
 public class RepresentanteNapneControl extends HttpServlet {
     RepresentanteNapne representanteNapne = new RepresentanteNapne();
     RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
@@ -37,6 +37,18 @@ public class RepresentanteNapneControl extends HttpServlet {
         }
         else if (action.equals("/buscartutoria")){
             buscarTutoria(request,response);
+        }
+        else if( action.equals("/edicaoNapne"))
+        {
+            irParaEdicao(request,response,id);
+        }
+        else if (action.equals("/realizarEdicaoDoNapne"))
+        {
+            atualizarDadosNapne(request,response);
+        }
+        else if(action.equals("/voltarParaMainNapne"))
+        {
+            response.sendRedirect("napnehome?id="+id);
         }
         else {
             response.sendRedirect("login.jsp");
@@ -99,5 +111,27 @@ public class RepresentanteNapneControl extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("buscarTutoria.jsp");
         rd.forward(request,response);
 
+    }
+
+    protected void irParaEdicao(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        representanteNapne.setId(id);
+        representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
+        request.setAttribute("id", representanteNapne.getId());
+        request.setAttribute("senha",representanteNapne.getSenha());
+        request.setAttribute("nome",representanteNapne.getNome());
+        request.setAttribute("email", representanteNapne.getEmail());
+        RequestDispatcher rd = request.getRequestDispatcher("edicaoNapne.jsp");
+        rd.forward(request,response);
+    }
+
+    protected void atualizarDadosNapne(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        representanteNapne.setId(Integer.parseInt(request.getParameter("id")));
+        representanteNapne.setSenha(request.getParameter("senha"));
+        representanteNapne.setNome(request.getParameter("nome"));
+        representanteNapne.setEmail(request.getParameter("email"));
+        representanteNapneDao.editarRepresentanteNapne(representanteNapne);
+        response.sendRedirect("voltarParaMainNapne?id="+representanteNapne.getId());
     }
 }

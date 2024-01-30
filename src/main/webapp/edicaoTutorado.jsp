@@ -47,8 +47,8 @@
 
   <div id="navbar">
     <div id="navbar-logo">
-      <div> <a href="voltarParaMainTutorado?id=<%= request.getParameter("id")%>""> <img src="imagens/cadastro/Frame 1.png" id="navbar-image" alt="frame.png"> </a></div>
-      <div id="navbar-name"> <a href="voltarParaMain?id=<%= request.getParameter("id")%>""> <p>Tutoria</p><p>De</p><p>Pares</p> </a></div>
+      <div> <a href="voltarParaMainTutorado?id=<%= request.getParameter("id")%>"> <img src="imagens/cadastro/Frame 1.png" id="navbar-image" alt="frame.png"> </a></div>
+      <div id="navbar-name"> <a href="voltarParaMainTutorado?id=<%= request.getParameter("id")%>"> <p>Tutoria</p><p>De</p><p>Pares</p> </a></div>
     </div>
   </div>
 
@@ -134,7 +134,7 @@
   </div>
 </div>
 
-<script src="scripts/tutoradoEdicao/validadorTutoradoEdicao.js"></script>
+<script src="scripts/edicao/validarTutoradoEdicao.js"></script>
 <script src="menu-entrar-tutoria.js"></script>
 <script src="barra-lateral.js"></script>
 <script src="cards.js"></script>

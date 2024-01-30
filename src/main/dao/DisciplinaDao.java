@@ -2,6 +2,7 @@ package main.dao;
 
 import main.model.Disciplina;
 import main.model.Tutor;
+import main.model.Tutoria;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,5 +44,54 @@ public class DisciplinaDao {
         }
 
         return null;
+    }
+
+    public static void atualizarDisciplinaProfessor(Disciplina disciplina, int id)
+    {
+        ConectionDB con = new ConectionDB();
+        String update = "UPDATE disciplina SET id_professor = ? WHERE codigo = ?";
+        PreparedStatement ps = null;
+
+        try
+        {
+            ps = con.conectar().prepareStatement(update);
+            ps.setInt(1, id);
+            ps.setInt(2, disciplina.getCodigo());
+            ps.execute();
+            ps.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public static boolean lerDisciplina (Disciplina disciplina)
+    {
+        ConectionDB con = new ConectionDB();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String read = "SELECT * FROM disciplina WHERE codigo = ?";
+
+        try
+        {
+            ps = con.conectar().prepareStatement(read);
+            ps.setInt(1, disciplina.getCodigo());
+            rs = ps.executeQuery();
+
+            if(rs.next())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return false;
     }
 }
