@@ -376,4 +376,33 @@ public class TutoriaDao {
             return null;
         }
     }
+
+    public static void retornaTutoria (Tutoria tutoria)
+    {
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        TutorDao tutorDao = new TutorDao();
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        ConectionDB conectionDB = new ConectionDB();
+        String sql = "SELECT * FROM tutoria WHERE codigo = ?";
+
+        try
+        {
+            Connection con = conectionDB.conectar();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, tutoria.getCodigo());
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next())
+            {
+                tutoria.setSenha(rs.getString(2));
+                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt(3)));
+                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
+                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt(5)));
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/tutorhome", "/edicaoTutor", "/loginTutoriaTutor", "/realizarEdicaoDoTutor", "/voltarParaMainTutor"})
+@WebServlet(urlPatterns = {"/tutorhome", "/edicaoTutor", "/loginTutoriaTutor", "/realizarEdicaoDoTutor", "/voltarParaMainTutor", "/entrarTutoriaTutor"})
 public class TutorControl extends HttpServlet {
     Tutor tutor = new Tutor();
     ArrayList<Tutoria> tutorias = new ArrayList<>();
@@ -45,6 +45,10 @@ public class TutorControl extends HttpServlet {
         else if(action.equals(("/voltarParaMainTutor")))
         {
             response.sendRedirect("tutorhome?id="+id);
+        }
+        else if(action.equals(("/entrarTutoriaTutor")))
+        {
+            irParaTutoriaTutor(request,response,id);
         }
         else
         {
@@ -107,6 +111,22 @@ public class TutorControl extends HttpServlet {
         tutor.setMatricula(request.getParameter("matricula"));
         tutorDao.editarTutor(tutor);
         response.sendRedirect("voltarParaMainTutor?id="+tutor.getId());
+    }
+
+    protected void irParaTutoriaTutor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        tutoria.setCodigo(Integer.parseInt(request.getParameter("codigo")));
+        tutoriaDao.retornaTutoria(tutoria);
+
+        request.setAttribute("codigo", tutoria.getCodigo());
+        request.setAttribute("senha", tutoria.getSenha());
+        request.setAttribute("nomeTutor", tutoria.getTutor().getNome());
+        request.setAttribute("nomeTutorado", tutoria.getTutorado().getNome());
+        request.setAttribute("disciplina", tutoria.getDisciplina().getNome());
+        request.setAttribute("nomeProfessor", tutoria.getDisciplina().getProfessor().getNome());
+
+        RequestDispatcher rd = request.getRequestDispatcher("tutoriaTutor.jsp");
+        rd.forward(request,response);
     }
 }
 
