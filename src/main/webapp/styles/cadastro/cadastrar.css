@@ -368,6 +368,11 @@ nav li:first-child{
         font-family: 'Montserrat';
     }
 
+    .form{
+                height: 70%;
+                width: 100vw;
+            }
+
 
 }
 
