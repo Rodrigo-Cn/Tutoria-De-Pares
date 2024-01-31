@@ -17,7 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor"})
+@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor", "/entrarTutoriaProfessor"})
 public class ProfessorControl extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -54,6 +54,10 @@ public class ProfessorControl extends HttpServlet
         else if(action.equals("/realizarEdicaoDoProfessor"))
         {
             atualizarDadosProfessor(request,response, id);
+        }
+        else if(action.equals(("/entrarTutoriaProfessor")))
+        {
+            irParaTutoriaProfessor(request,response,id);
         }
     }
 
@@ -102,6 +106,22 @@ public class ProfessorControl extends HttpServlet
         professor.setEmail(request.getParameter("email"));
         professorDao.editarProfessor(professor);
         response.sendRedirect("voltarParaMainProfessor?id="+id);
+    }
+
+    protected void irParaTutoriaProfessor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        tutoria.setCodigo(Integer.parseInt(request.getParameter("codigo")));
+        tutoriaDao.retornaTutoria(tutoria);
+
+        request.setAttribute("codigo", tutoria.getCodigo());
+        request.setAttribute("senha", tutoria.getSenha());
+        request.setAttribute("nomeTutor", tutoria.getTutor().getNome());
+        request.setAttribute("nomeTutorado", tutoria.getTutorado().getNome());
+        request.setAttribute("disciplina", tutoria.getDisciplina().getNome());
+        request.setAttribute("nomeProfessor", tutoria.getDisciplina().getProfessor().getNome());
+
+        RequestDispatcher rd = request.getRequestDispatcher("tutoriaProfessor.jsp");
+        rd.forward(request,response);
     }
 
 
