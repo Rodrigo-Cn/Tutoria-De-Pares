@@ -12,6 +12,7 @@ public class DisciplinaDao {
     public static Disciplina retornarDisciplina(int id){
 
         ConectionDB conectionDB = new ConectionDB();
+        ProfessorDao professorDao = new ProfessorDao();
 
         String read = "SELECT * FROM disciplina WHERE codigo = ?";
         try {
@@ -25,6 +26,7 @@ public class DisciplinaDao {
 
                 disciplina.setNome(rs.getString("nome"));
                 disciplina.setCodigo(rs.getInt("codigo"));
+                disciplina.setProfessor(professorDao.retornarProfessor(rs.getInt("id_professor")));
 
                 rs.close();
                 readUser.close();

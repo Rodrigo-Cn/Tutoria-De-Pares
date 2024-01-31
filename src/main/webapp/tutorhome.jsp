@@ -83,6 +83,7 @@
         %>
 
         <h1 id="section-titulo">Tutorias Cadastradas:</h1>
+
         <div id="container-slide">
             <% if (tutorias.size() >= 2) { %>
                 <div id="arrow-left"><img src="imagens/tutorhome/icons8-arrow-100(1).png" alt="icons8-arrow-100(1).png" id="img-arrow-left"></div>
@@ -99,7 +100,7 @@
                                     <hr style="margin-top: 6.7%;">
                               </div>
                            <% } else if (tutorias.size() == 1){ %>
-                               <a href="tutoria?id=<%= tutorias.get(0).getCodigo() %>">
+                               <a href="entrarTutoriaTutor?codigo=<%= tutorias.get(0).getCodigo() %>&id=<%= request.getParameter("id") %>">
                                    <div class="slider on rotate-scale-down-horizontal">
                                        <img src="imagens/tutorhome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
                                        <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina() != null ? tutorias.get(0).getDisciplina().getNome() : "Disciplina não disponível" %></h1>
@@ -110,7 +111,7 @@
                                    </div>
                                </a>
                            <% } else { %>
-                               <a href="tutoria?id=<%= tutorias.get(0).getCodigo() %>">
+                               <a href="entrarTutoriaTutor?codigo=<%= tutorias.get(0).getCodigo() %>&id=<%= request.getParameter("id") %>">
                                    <div class="slider on rotate-scale-down-horizontal">
                                        <img src="imagens/tutorhome/solar_pin-bold.png" alt="uiw_paper-clip.png"  class="rotate-scale-down-diagonal-left" id="clip-card">
                                        <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina().getNome() %></h1>
@@ -121,7 +122,7 @@
                                    </div>
                                </a>
                                <% for (int i = 1; i < tutorias.size(); i++) { %>
-                                   <a href="tutoria?id=<%= tutorias.get(i).getCodigo() %>">
+                                   <a href="entrarTutoriaTutor?codigo=<%= tutorias.get(0).getCodigo() %>&id=<%= request.getParameter("id") %>">
                                        <div class="slider rotate-scale-down-horizontal">
                                            <img src="imagens/tutorhome/solar_pin-bold.png" alt="uiw_paper-clip.png" class="rotate-scale-down-diagonal-left" id="clip-card">
                                            <h1 id="titulo-card"><%= tutorias.get(i).getDisciplina().getNome() %></h1>
