@@ -1,12 +1,9 @@
 package main.model;
 
-import java.util.ArrayList;
-
 public class Disciplina {
     private String nome;
     private int codigo;
     private Professor professor;
-    ArrayList<String> componenteCurricular = new ArrayList<>();
     public Disciplina(){
 
     }
@@ -19,13 +16,6 @@ public class Disciplina {
         this.codigo = codigo;
         this.professor = professor;
     }
-    public Disciplina(String nome, int codigo, Professor professor, ArrayList<String> componenteCurricular){
-        this.nome = nome;
-        this.codigo = codigo;
-        this.professor = professor;
-        this.componenteCurricular = componenteCurricular;
-    }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -48,13 +38,5 @@ public class Disciplina {
 
     public Professor getProfessor() {
         return professor;
-    }
-
-    public void setComponenteCurricular(ArrayList<String> componenteCurricular) {
-        this.componenteCurricular = componenteCurricular;
-    }
-
-    public ArrayList<String> getComponenteCurricular() {
-        return componenteCurricular;
     }
 }

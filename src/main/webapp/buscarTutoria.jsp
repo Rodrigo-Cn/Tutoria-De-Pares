@@ -60,6 +60,7 @@
                     <p style="font-size:2.5rem;">Nenhuma Tutoria Encontrada</p>
                     <p style="font-size:1.5rem; margin-bottom:18rem;color:gray;">Tente um nome diferente</p>
                 <% } %>
+
             </div>
             <div id="paginacao">
                 <img id="seta-esquerda" src="imagens/buscarTutoria/seta-esquerda.png" alt="">

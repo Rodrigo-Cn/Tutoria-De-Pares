@@ -1,12 +1,11 @@
 package main.dao;
 
 import main.model.Disciplina;
-import main.model.Tutor;
-import main.model.Tutoria;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class DisciplinaDao {
     public static Disciplina retornarDisciplina(int id){
@@ -95,5 +94,120 @@ public class DisciplinaDao {
             System.out.println(e);
         }
         return false;
+    }
+    public void cadastrarDisciplina(Disciplina disciplina){
+        ConectionDB conectionDB = new ConectionDB();
+
+        String create = "INSERT INTO disciplina (nome,id_professor) VALUES (?, ?)";
+        try{
+            Connection con = conectionDB.conectar();
+            PreparedStatement newUser = con.prepareStatement(create);
+            newUser.setString(1, disciplina.getNome());
+            newUser.setInt(2,disciplina.getProfessor().getId());
+            newUser.execute();
+            newUser.close();
+            con.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public void cadastrarDisciplinaSemProfessor(Disciplina disciplina){
+        ConectionDB conectionDB = new ConectionDB();
+
+        String create = "INSERT INTO disciplina (nome) VALUES (?)";
+        try{
+            Connection con = conectionDB.conectar();
+            PreparedStatement newUser = con.prepareStatement(create);
+            newUser.setString(1, disciplina.getNome());
+            newUser.execute();
+            newUser.close();
+            con.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public static ArrayList<Disciplina> retornarDisciplinas(String nome){
+        ArrayList<Disciplina> disciplinas = new ArrayList<>();
+        ConectionDB conectionDB = new ConectionDB();
+        ProfessorDao professorDao = new ProfessorDao();
+
+        String read = "SELECT * FROM disciplina WHERE nome LIKE ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setString(1, nome+"%");
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()) {
+                Disciplina disciplina = new Disciplina();
+
+                disciplina.setNome(rs.getString("nome"));
+                disciplina.setCodigo(rs.getInt("codigo"));
+                disciplina.setProfessor(professorDao.retornarProfessor(rs.getInt("id_professor")));
+
+                disciplinas.add(disciplina);
+            }
+
+            rs.close();
+            readUser.close();
+            con.close();
+            return disciplinas;
+
+        } catch (Exception e) {
+
+            System.out.println(e);
+            return null;
+
+        }
+    }
+    public static ArrayList<Disciplina> retornarTodasDisciplinas(){
+        ArrayList<Disciplina> disciplinas = new ArrayList<>();
+        ConectionDB conectionDB = new ConectionDB();
+        ProfessorDao professorDao = new ProfessorDao();
+
+        String read = "SELECT * FROM disciplina";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            ResultSet rs = readUser.executeQuery();
+
+            while (rs.next()) {
+                Disciplina disciplina = new Disciplina();
+
+                disciplina.setNome(rs.getString("nome"));
+                disciplina.setCodigo(rs.getInt("codigo"));
+                disciplina.setProfessor(professorDao.retornarProfessor(rs.getInt("id_professor")));
+                disciplinas.add(disciplina);
+
+            }
+
+            rs.close();
+            readUser.close();
+            con.close();
+            return disciplinas;
+
+        } catch (Exception e) {
+
+            System.out.println(e);
+            return null;
+
+        }
+    }
+    public void excluirDisciplina(int codigo){
+        ConectionDB conectionDB = new ConectionDB();
+
+        String create = "DELETE FROM disciplina WHERE codigo = ?";
+        try{
+            Connection con = conectionDB.conectar();
+            PreparedStatement newUser = con.prepareStatement(create);
+            newUser.setInt(1, codigo);
+            newUser.execute();
+            newUser.close();
+            con.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 }

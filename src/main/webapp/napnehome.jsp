@@ -24,7 +24,7 @@
                 <div id="nav-lateral-option1"><a href="edicaoNapne?id=<%= request.getParameter("id")%>">Editar Perfil</a></div>
                 <div id="nav-lateral-option2"><a href="">Nova Tutoria</a></div>
                 <div id="nav-lateral-option2"><a href="telacadastronapne?id=<%= ((RepresentanteNapne) request.getAttribute("representante")).getId() %>">Cadastrar Profissional</a></div>
-                <div id="nav-lateral-option2"><a href="">Menu de Disciplinas</a></div>
+                <div id="nav-lateral-option2"><a href="menudisciplinas?id=<%= ((RepresentanteNapne) request.getAttribute("representante")).getId() %>">Menu de Disciplinas</a></div>
                 <div id="nav-lateral-option3"><a href="main">Sair</a></div>
             </div>
         </div>

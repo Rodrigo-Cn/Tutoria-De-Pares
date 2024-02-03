@@ -69,5 +69,33 @@ public class UsuarioDao {
 
         return 0;
     }
+    public int lerTipoUsuarioDisciplina(int id) {
+        String read = "SELECT tipo_de_usuario FROM usuario WHERE id = ?";
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setInt(1, id);
+
+            ResultSet rs = readUser.executeQuery();
+
+            if (rs.next()) {
+                int tipoUsuario = rs.getInt("tipo_de_usuario");
+                rs.close();
+                readUser.close();
+                con.close();
+
+                return tipoUsuario;
+            } else {
+                rs.close();
+                readUser.close();
+                con.close();
+                return 0;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return 0;
+    }
 
 }
