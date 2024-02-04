@@ -4,6 +4,7 @@ import main.model.Tutoria;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.ArrayList;
 
 public class TutoriaDao {
@@ -405,5 +406,35 @@ public class TutoriaDao {
             System.out.println(e);
         }
     }
+
+    public static void criarTutoria(Tutoria tutoria)
+    {
+        ConectionDB conectionDB = new ConectionDB();
+        String sql = "INSERT INTO tutoria (senha,id_tutor,id_tutorado,codigo_disciplina) VALUES (?, ?, ?, ?)";
+
+        try
+        {
+            PreparedStatement ps = conectionDB.conectar().prepareStatement(sql);
+            ps.setString(1, tutoria.getSenha());
+            if (tutoria.getTutor() != null) {
+                ps.setInt(2, tutoria.getTutor().getId());
+            } else {
+                ps.setNull(2, Types.INTEGER);
+            }
+            if (tutoria.getTutorado() != null) {
+                ps.setInt(3, tutoria.getTutorado().getId());
+            } else {
+                ps.setNull(3, Types.INTEGER);
+            }
+            ps.setInt(4, tutoria.getDisciplina().getCodigo());
+            ps.execute();
+            ps.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
 
 }

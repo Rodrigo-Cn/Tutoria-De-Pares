@@ -1,30 +1,42 @@
 package main.controller;
 
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import main.dao.DisciplinaDao;
 import main.dao.RepresentanteNapneDao;
 import main.dao.TutoriaDao;
 import main.dao.UsuarioDao;
+import main.dao.TutorDao;
+import main.dao.TutoradoDao;
 import main.model.Disciplina;
 import main.model.Professor;
 import main.model.RepresentanteNapne;
 import main.model.Tutoria;
+import main.model.Tutor;
+import main.model.Tutorado;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina"})
+@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria"})
 public class RepresentanteNapneControl extends HttpServlet {
     RepresentanteNapne representanteNapne = new RepresentanteNapne();
     RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
     TutoriaDao tutoriaDao = new TutoriaDao();
+    Tutoria tutoria = new Tutoria();
+    TutoradoDao tutoradoDao = new TutoradoDao();
+    Tutorado tutorado = new Tutorado();
+    Tutor tutor = new Tutor();
+    TutorDao tutorDao = new TutorDao();
+    Disciplina disciplina = new Disciplina();
+    DisciplinaDao disciplinaDao = new DisciplinaDao();
+    UsuarioDao usuarioDao = new UsuarioDao();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String action = request.getServletPath();
@@ -83,7 +95,16 @@ public class RepresentanteNapneControl extends HttpServlet {
         {
             response.sendRedirect("napnehome?id="+representanteNapne.getId());
         }
-        else {
+        else if(action.equals("/irCriarTutoria"))
+        {
+            irCriarTutoria(request,response,id);
+        }
+        else if(action.equals("/criarTutoria"))
+        {
+            criarTutoria(request,response, id);
+        }
+        else
+        {
             response.sendRedirect("login.jsp");
         }
 
@@ -229,5 +250,113 @@ public class RepresentanteNapneControl extends HttpServlet {
         request.setAttribute("representante", representanteNapne);
         RequestDispatcher rd = request.getRequestDispatcher("menuDisciplina.jsp");
         rd.forward(request,response);
+    }
+
+    protected void irCriarTutoria(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        representanteNapne.setId(id);
+        representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
+        request.setAttribute("representante", representanteNapne);
+        RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+        rd.forward(request,response);
+    }
+    protected void criarTutoria(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        representanteNapne.setId(id);
+        representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
+        request.setAttribute("representante", representanteNapne);
+
+        int idTutor = definirIdDeTutor(request,response);
+        int idTutorado = definirIdDeTutorado(request,response);
+        Tutoria tutoria2 = new Tutoria();
+        if(verificaSeDisciplinaExiste(request,response, disciplina))
+        {
+            disciplina = disciplinaDao.retornarDisciplina(disciplina.getCodigo());
+            tutoria2.setDisciplina(disciplina);
+            tutoria2.setSenha(request.getParameter("senha"));
+
+            if(idTutorado!=0)
+            {
+                if(usuarioDao.lerTipoUsuarioDisciplina(idTutorado) != 3)
+                {
+                    request.setAttribute("mensagem", "Coloque apenas ID de tutorado no campo do tutorado!");
+                    RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+                    rd.forward(request, response);
+                    return;
+                }
+                else
+                {
+                    tutorado.setId(idTutorado);
+                    tutoradoDao.selecionarTutorado(tutorado) ;
+                    tutoria2.setTutorado(tutorado);
+                }
+            }
+
+            if(idTutor!=0)
+            {
+                if(usuarioDao.lerTipoUsuarioDisciplina(idTutor) != 2)
+                {
+                    request.setAttribute("mensagem", "Coloque apenas ID de tutor no compo do tutor!");
+                    RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+                    rd.forward(request, response);
+                    return;
+                }
+                else
+                {
+                    tutor.setId(idTutor);
+                    tutorDao.selecionarTutor(tutor) ;
+                    tutoria2.setTutor(tutor);
+                }
+            }
+
+            tutoriaDao.criarTutoria(tutoria2);
+            request.setAttribute("mensagem", "TUTORIA CRIADA COM SUCESSO!");
+            RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+            rd.forward(request, response);
+        }
+        else
+        {
+            request.setAttribute("mensagem", "TUTORIA NÃO FOI CRIADA! DISCIPLINA NÃO ENCONTRADA");
+            RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+            rd.forward(request, response);
+        }
+
+    }
+
+    protected int definirIdDeTutor(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        if(request.getParameter("idTutor") == null || request.getParameter("idTutor").isEmpty())
+        {
+            return 0;
+        }
+        else
+        {
+            return Integer.parseInt(request.getParameter("idTutor"));
+        }
+    }
+
+    protected int definirIdDeTutorado(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        if(request.getParameter("idTutorado") == null || request.getParameter("idTutorado").isEmpty())
+        {
+            return 0;
+        }
+        else
+        {
+            return Integer.parseInt(request.getParameter("idTutorado"));
+        }
+    }
+
+    protected boolean verificaSeDisciplinaExiste(HttpServletRequest request, HttpServletResponse response, Disciplina disciplina) throws IOException
+    {
+        disciplina.setCodigo(Integer.parseInt(request.getParameter("idDisciplina")));
+        if(disciplinaDao.lerDisciplina(disciplina))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
