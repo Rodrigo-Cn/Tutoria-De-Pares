@@ -20,7 +20,9 @@ option{
     font-size: 1.5rem;
 }
 
-
+a{
+    text-style:none;
+}
  /*CORPO DA PRIMEIRA METADE*/
  #first-half{
     background-image: url("cadastro7.png");
@@ -367,6 +369,11 @@ nav li:first-child{
         background-position: center;
         font-family: 'Montserrat';
     }
+
+    .form{
+                height: 70%;
+                width: 100vw;
+            }
 
 
 }
