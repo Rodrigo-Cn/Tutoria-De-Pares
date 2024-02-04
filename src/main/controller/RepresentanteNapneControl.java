@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import main.dao.RepresentanteNapneDao;
 import main.dao.TutoriaDao;
+import main.dao.TutoradoDao;
+import main.dao.TutorDao;
 import main.model.RepresentanteNapne;
+import main.model.Tutorado;
 import main.model.Tutoria;
 
 import java.io.IOException;
@@ -19,6 +22,8 @@ public class RepresentanteNapneControl extends HttpServlet {
     RepresentanteNapne representanteNapne = new RepresentanteNapne();
     RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
     TutoriaDao tutoriaDao = new TutoriaDao();
+    Tutoria tutoria = new Tutoria();
+    TutoradoDao tutorado = new TutoradoDao();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -50,7 +55,8 @@ public class RepresentanteNapneControl extends HttpServlet {
         {
             response.sendRedirect("napnehome?id="+id);
         }
-        else {
+        else
+        {
             response.sendRedirect("login.jsp");
         }
 
@@ -134,4 +140,5 @@ public class RepresentanteNapneControl extends HttpServlet {
         representanteNapneDao.editarRepresentanteNapne(representanteNapne);
         response.sendRedirect("voltarParaMainNapne?id="+representanteNapne.getId());
     }
+
 }
