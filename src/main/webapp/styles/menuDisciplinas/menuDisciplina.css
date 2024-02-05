@@ -6,6 +6,8 @@
 
 .rotate-center{animation:rotate-center 0.9s} @keyframes rotate-center{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
 
+
+
 ::placeholder{
     font-size: 1.4rem;
 }
