@@ -48,13 +48,13 @@
                 <% if (disciplinas != null && disciplinas.size() > 0) { %>
                     <% for (int i = 0; i < disciplinas.size(); i++) { %>
                         <div class="card">
-                            <a href=""><h1 id="card-titulo"><%= disciplinas.get(i).getNome() %></h1></a>
+                            <h1 id="card-titulo"><%= disciplinas.get(i).getNome() %></h1>
                             <% if (disciplinas.get(i).getProfessor().getNome() != null) { %>
                                 <h4 class="card-section">Professor: <%= disciplinas.get(i).getProfessor().getNome() %></h4>
                             <% } else{%>
                                 <h4 class="card-section">Professor não cadastrado</h4>
                             <% } %>
-                            <h4 class="card-section"><a href="" style="color: blue;">Editar</a><a href="javascript: confirmar(<%= disciplinas.get(i).getCodigo() %>)" style="color: red; margin-left: 4%;">Excluir</a></h4>
+                            <h4 class="card-section"><a href="editarDisciplina?codigo=<%= disciplinas.get(i).getCodigo() %>" style="color: blue;">Editar</a><a href="javascript: confirmar(<%= disciplinas.get(i).getCodigo() %>)" style="color: red; margin-left: 4%;">Excluir</a></h4>
                         </div>
                     <% } %>
                 <% } else{%>
@@ -87,8 +87,8 @@
             </div>
             <div id="div-area-footer2">
                 <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
-                <a href=""><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
-                <a href=""><p style="height: 10%; text-decoration: underline;">Contato</p></a>
+                <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
+                <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Contato</p></a>
             </div>
         </div>
     </div>

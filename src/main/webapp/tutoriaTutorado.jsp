@@ -26,7 +26,7 @@
 
   <div id="container-main">
     <div id="container-conteudo">
-      <h1 id="section-titulo">Informações</h1>
+      <h1 id="section-titulo">Tutoria</h1>
       <hr>
       <form action="" id="editarTutorado">
 
@@ -71,11 +71,11 @@
 
         <div class="half" id="footer3">
                    <div class="footer-grupo" id="footer1">
-                      <button id="button-submit" type="submit">Ver sessões</button>
+                      <button id="button-submit" type="submit">Ver Atendimentos</button>
                     </div>
 
                     <div class="footer-grupo" id="footer2">
-                      <button id="button-submit" type="submit">Ver dificuldades</button>
+                      <button id="button-submit" type="submit">Ver Metas</button>
                      </div>
                </div>
       </form>
@@ -97,6 +97,7 @@
     <div id="div-area-footer2">
       <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
       <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
+      <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Contato</p></a>
     </div>
   </div>
 </div>

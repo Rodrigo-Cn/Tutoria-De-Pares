@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class DisciplinaDao {
-    public static Disciplina retornarDisciplina(int id){
+    public static Disciplina retornarDisciplina(int codigo){
 
         ConectionDB conectionDB = new ConectionDB();
         ProfessorDao professorDao = new ProfessorDao();
@@ -17,7 +17,7 @@ public class DisciplinaDao {
         try {
             Connection con = conectionDB.conectar();
             PreparedStatement readUser = con.prepareStatement(read);
-            readUser.setInt(1, id);
+            readUser.setInt(1, codigo);
             ResultSet rs = readUser.executeQuery();
 
             if (rs.next()) {
@@ -204,6 +204,39 @@ public class DisciplinaDao {
             PreparedStatement newUser = con.prepareStatement(create);
             newUser.setInt(1, codigo);
             newUser.execute();
+            newUser.close();
+            con.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public void editarDisciplina(Disciplina disciplina){
+        ConectionDB conectionDB = new ConectionDB();
+
+        String create = "UPDATE disciplina SET nome=?, id_professor=? WHERE codigo = ?";
+        try{
+            Connection con = conectionDB.conectar();
+            PreparedStatement newUser = con.prepareStatement(create);
+            newUser.setString(1, disciplina.getNome());
+            newUser.setInt(2, disciplina.getProfessor().getId());
+            newUser.setInt(3, disciplina.getCodigo());
+            newUser.executeUpdate();
+            newUser.close();
+            con.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public void editarDisciplinaSemProfessor(Disciplina disciplina){
+        ConectionDB conectionDB = new ConectionDB();
+
+        String create = "UPDATE disciplina SET nome=?, id_professor=null WHERE codigo = ?";
+        try{
+            Connection con = conectionDB.conectar();
+            PreparedStatement newUser = con.prepareStatement(create);
+            newUser.setString(1, disciplina.getNome());
+            newUser.setInt(2, disciplina.getCodigo());
+            newUser.executeUpdate();
             newUser.close();
             con.close();
         }catch (Exception e){

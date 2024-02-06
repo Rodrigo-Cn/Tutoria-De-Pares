@@ -99,7 +99,6 @@
                   <%
                         if (tutorias.size() == 0) { %>
                               <div class="slider on rotate-scale-down-horizontal">
-                                    <img src="imagens/tutoradohome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
                                     <h1 id="titulo-card">Nenhuma Tutoria Cadastrada</h1>
                                     <hr>
                                     <h1 id="titulo-card-ator">Precisa de ajuda ? Procure o Napne.</h1>
@@ -109,7 +108,6 @@
                            <% } else if (tutorias.size() == 1){ %>
                                <a href="entrarTutoriaTutorado?codigo=<%= tutorias.get(0).getCodigo() %>&id=<%= request.getParameter("id") %>">
                                    <div class="slider on rotate-scale-down-horizontal">
-                                       <img src="imagens/tutoradohome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
                                        <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina() != null ? tutorias.get(0).getDisciplina().getNome() : "Disciplina não disponível" %></h1>
                                        <hr>
                                        <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(0).getTutor() != null ? tutorias.get(0).getTutor().getNome() : "Tutor não disponível" %></h1>
@@ -120,7 +118,6 @@
                            <% } else { %>
                                <a href="entrarTutoriaTutorado?codigo=<%= tutorias.get(0).getCodigo() %>&id=<%= request.getParameter("id") %>">
                                    <div class="slider on rotate-scale-down-horizontal">
-                                       <img src="imagens/tutoradohome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
                                        <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina().getNome() %></h1>
                                        <hr>
                                        <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(0).getTutor().getNome() %></h1>
@@ -131,7 +128,6 @@
                                <% for (int i = 1; i < tutorias.size(); i++) { %>
                                    <a href="entrarTutoriaTutorado?codigo=<%= tutorias.get(0).getCodigo() %>&id=<%= request.getParameter("id") %>">
                                        <div class="slider rotate-scale-down-horizontal">
-                                           <img src="imagens/tutoradohome/solar_pin-bold.png" alt="uiw_paper-clip.png" id="clip-card">
                                            <h1 id="titulo-card"><%= tutorias.get(i).getDisciplina().getNome() %></h1>
                                            <hr>
                                            <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(i).getTutor().getNome() %></h1>
@@ -161,6 +157,7 @@
             <div id="div-area-footer2">
                 <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
                 <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
+                <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Contato</p></a>
             </div>
         </div>
     </div>

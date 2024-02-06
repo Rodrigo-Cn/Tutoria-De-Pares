@@ -65,8 +65,8 @@
         </div>
         <div id="div-area-footer2">
             <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
-            <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
-            <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Contato</p></a>
+            <a href="sobre.html" target="_blank" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
+            <a href="sobre.html" target="_blank" target="_blank"><p style="height: 10%; text-decoration: underline;">Contato</p></a>
         </div>
     </div>
 </div>

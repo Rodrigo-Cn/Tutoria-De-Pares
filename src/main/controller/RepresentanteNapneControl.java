@@ -1,12 +1,12 @@
 package main.controller;
 
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import main.dao.DisciplinaDao;
 import main.dao.RepresentanteNapneDao;
 import main.dao.TutoriaDao;
@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria"})
+@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina"})
 public class RepresentanteNapneControl extends HttpServlet {
     RepresentanteNapne representanteNapne = new RepresentanteNapne();
     RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
@@ -102,6 +102,38 @@ public class RepresentanteNapneControl extends HttpServlet {
         else if(action.equals("/criarTutoria"))
         {
             criarTutoria(request,response, id);
+        }
+        else if(action.equals("/editarDisciplina"))
+        {
+            editarDisciplina(request,response);
+        }
+        else
+        {
+            response.sendRedirect("login.jsp");
+        }
+
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        String action = request.getServletPath();
+
+        String idParameter = request.getParameter("id");
+        int id;
+
+        if (idParameter != null && !idParameter.isEmpty()) {
+            try {
+                id = Integer.parseInt(idParameter);
+            } catch (NumberFormatException e) {
+                id = representanteNapne.getId();
+            }
+        } else {
+            id =  representanteNapne.getId();
+        }
+
+        if (action.equals("/editandoDisciplina"))
+        {
+            editandoDisciplina(request,response);
         }
         else
         {
@@ -358,5 +390,45 @@ public class RepresentanteNapneControl extends HttpServlet {
         {
             return false;
         }
+    }
+    protected void editarDisciplina(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        Disciplina disciplina = new Disciplina();
+        disciplina = disciplinaDao.retornarDisciplina(Integer.parseInt(request.getParameter("codigo")));
+
+        request.setAttribute("representante", representanteNapne);
+        request.setAttribute("disciplina", disciplina);
+        RequestDispatcher rd = request.getRequestDispatcher("editarDisciplina.jsp");
+        rd.forward(request,response);
+    }
+    protected void editandoDisciplina(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        DisciplinaDao disciplinaDao = new DisciplinaDao();
+        Disciplina disciplina = new Disciplina();
+        Professor professor = new Professor();
+
+        disciplina.setCodigo(Integer.parseInt(request.getParameter("codigo-disciplina")));
+        disciplina.setNome(request.getParameter("nome-disciplina"));
+        String codigoProfessorString = request.getParameter("id-professor");
+
+        if (codigoProfessorString != null && !codigoProfessorString.isEmpty()) {
+            professor.setId(Integer.parseInt(codigoProfessorString));
+            disciplina.setProfessor(professor);
+            if (usuarioDao.lerTipoUsuarioDisciplina(disciplina.getProfessor().getId())==1){
+                disciplinaDao.editarDisciplina(disciplina);
+                String mensagem = "Disciplina editada com Sucesso.";
+                request.setAttribute("mensagemErro", mensagem);
+            } else {
+                String mensagem = "Código de Professor está Incorreto.";
+                request.setAttribute("mensagemErro", mensagem);
+            }
+        }else {
+            disciplinaDao.editarDisciplinaSemProfessor(disciplina);
+            String mensagem = "Disciplina editada com Sucesso.";
+            request.setAttribute("mensagemErro", mensagem);
+        }
+
+        request.setAttribute("representante", representanteNapne);
+        RequestDispatcher rd = request.getRequestDispatcher("menuDisciplina.jsp");
+        rd.forward(request,response);
     }
 }

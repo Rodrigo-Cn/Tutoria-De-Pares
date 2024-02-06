@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="styles/criarTutoria/criarTutoria.css">
     <script src="https://kit.fontawesome.com/bfe249254a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-ZszwtZ2O1b5GZYG8waGIB+S0xGjH5+8h7v4lG2acK5X5KbwD/3Sd7U3HxbSjg4Qhno2cA5wXtxa/FR1u7hzfgg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Tutoria</title>
+    <title>Criar Tutoria</title>
 </head>
 <body>
     <div id="navbar">
@@ -118,6 +118,7 @@
         <div id="div-area-footer2">
           <strong><p style="font-size: 1.3rem; height: 80%;">Informa&ccedil;&otilde;es:</p></strong>
           <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
+          <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Contato</p></a>
         </div>
       </div>
     </div>

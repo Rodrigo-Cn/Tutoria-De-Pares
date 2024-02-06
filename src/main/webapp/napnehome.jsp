@@ -34,8 +34,7 @@
                 <div><img src="imagens/napnehome/Frame 1.png" id="navbar-image" class="tracking-in-expand-forward-top" alt="frame.png"></div>
                 <div id="navbar-name" class="tracking-in-expand-forward-top"><p>Tutoria</p><p>De</p><p>Pares</p></div>
             </div>
-                <div id="navbar-inicio"> 
-                    <img  id="navbar-image2" class="tracking-in-expand-forward-top" src="imagens/napnehome/icons8-soma-96.png" alt="icons8-casa-384.png">
+                <div id="navbar-inicio">
                     <img class="iniciar-barra tracking-in-expand-forward-top" id="navbar-image3" src="imagens/napnehome/icons8-usuário-96.png" alt="">
                     <h2 class="iniciar-barra2 tracking-in-expand-forward-top" id="navbar-name2"><%= ((RepresentanteNapne) request.getAttribute("representante")).getNome().split(" ")[0] %></h2>
                 </div>
@@ -79,8 +78,8 @@
             </div>
             <div id="div-area-footer2">
                 <strong><p style="font-size: 1.3rem; height: 80%;">Informações:</p></strong>
-                <a href=""><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
-                <a href=""><p style="height: 10%; text-decoration: underline;">Contato</p></a>
+                <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Sobre</p></a>
+                <a href="sobre.html" target="_blank"><p style="height: 10%; text-decoration: underline;">Contato</p></a>
             </div>
         </div>
     </div>   

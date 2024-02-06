@@ -1,8 +1,6 @@
 package main.dao;
 
 import main.model.RepresentanteNapne;
-import main.model.Tutor;
-import main.model.Tutorado;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
