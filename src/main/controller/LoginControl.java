@@ -1,12 +1,12 @@
 package main.controller;
 
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import main.dao.UsuarioDao;
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ public class LoginControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static UsuarioDao usuarioDao = new UsuarioDao();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
         String action = request.getServletPath();
         if (action.equals("/login"))
@@ -26,12 +26,15 @@ public class LoginControl extends HttpServlet {
         }
     }
 
-    protected void realizarLogin(HttpServletRequest request, HttpServletResponse response) throws IOException
+    protected void realizarLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
         int tipoDeUsuario = usuarioDao.lerTipoUsuario(request.getParameter("email"), request.getParameter("senha"));
        if(tipoDeUsuario  == 0)
         {
-            response.getWriter().write("<script>alert('Credenciais invalidas. Verifique seu email e senha.'); window.location='login.jsp';</script>");
+            request.setAttribute("erroLogin", "Credenciais inválidas! Verifique seu e-mail ou senha.");
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
+            return;
         }
         else
         {

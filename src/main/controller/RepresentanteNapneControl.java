@@ -1,12 +1,12 @@
 package main.controller;
 
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import main.dao.DisciplinaDao;
 import main.dao.RepresentanteNapneDao;
 import main.dao.TutoriaDao;
@@ -297,54 +297,77 @@ public class RepresentanteNapneControl extends HttpServlet {
         representanteNapne.setId(id);
         representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
         request.setAttribute("representante", representanteNapne);
-
-        int idTutor = definirIdDeTutor(request,response);
-        int idTutorado = definirIdDeTutorado(request,response);
+        Integer idTutor = definirIdDeTutor(request,response);
+        Integer idTutorado = definirIdDeTutorado(request,response);
         Tutoria tutoria2 = new Tutoria();
         if(verificaSeDisciplinaExiste(request,response, disciplina))
         {
-            disciplina = disciplinaDao.retornarDisciplina(disciplina.getCodigo());
-            tutoria2.setDisciplina(disciplina);
-            tutoria2.setSenha(request.getParameter("senha"));
-
-            if(idTutorado!=0)
+            if(usuarioDao.verificaSeUsuarioExiste(idTutor) && usuarioDao.verificaSeUsuarioExiste(idTutorado))
             {
-                if(usuarioDao.lerTipoUsuarioDisciplina(idTutorado) != 3)
-                {
-                    request.setAttribute("mensagem", "Coloque apenas ID de tutorado no campo do tutorado!");
-                    RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
-                    rd.forward(request, response);
-                    return;
-                }
-                else
-                {
-                    tutorado.setId(idTutorado);
-                    tutoradoDao.selecionarTutorado(tutorado) ;
-                    tutoria2.setTutorado(tutorado);
-                }
-            }
+                disciplina = disciplinaDao.retornarDisciplina(disciplina.getCodigo());
+                tutoria2.setDisciplina(disciplina);
+                tutoria2.setSenha(request.getParameter("senha"));
 
-            if(idTutor!=0)
+                if(idTutorado!=null)
+                {
+                    if(usuarioDao.lerTipoUsuarioDisciplina(idTutorado) != 3)
+                    {
+                        request.setAttribute("mensagem", "Coloque apenas ID de tutorado no campo do tutorado!");
+                        RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+                        rd.forward(request, response);
+                        return;
+                    }
+                    else
+                    {
+                        tutorado.setId(idTutorado);
+                        tutoradoDao.selecionarTutorado(tutorado) ;
+                        tutoria2.setTutorado(tutorado);
+                    }
+                }
+
+                if(idTutor!=null)
+                {
+                    if(usuarioDao.lerTipoUsuarioDisciplina(idTutor) != 2)
+                    {
+                        request.setAttribute("mensagem", "Coloque apenas ID de tutor no compo do tutor!");
+                        RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+                        rd.forward(request, response);
+                        return;
+                    }
+                    else
+                    {
+                        tutor.setId(idTutor);
+                        tutorDao.selecionarTutor(tutor) ;
+                        tutoria2.setTutor(tutor);
+                    }
+                }
+
+                tutoriaDao.criarTutoria(tutoria2);
+                request.setAttribute("mensagem", "TUTORIA CRIADA COM SUCESSO!");
+                RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+                rd.forward(request, response);
+            }
+            else if(usuarioDao.verificaSeUsuarioExiste(idTutor) == false && usuarioDao.verificaSeUsuarioExiste(idTutorado) == true)
             {
-                if(usuarioDao.lerTipoUsuarioDisciplina(idTutor) != 2)
-                {
-                    request.setAttribute("mensagem", "Coloque apenas ID de tutor no compo do tutor!");
-                    RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
-                    rd.forward(request, response);
-                    return;
-                }
-                else
-                {
-                    tutor.setId(idTutor);
-                    tutorDao.selecionarTutor(tutor) ;
-                    tutoria2.setTutor(tutor);
-                }
+                request.setAttribute("mensagem", "Tutor inserido não existe!");
+                RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+                rd.forward(request, response);
+                return;
             }
-
-            tutoriaDao.criarTutoria(tutoria2);
-            request.setAttribute("mensagem", "TUTORIA CRIADA COM SUCESSO!");
-            RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
-            rd.forward(request, response);
+            else if(usuarioDao.verificaSeUsuarioExiste(idTutor) == true && usuarioDao.verificaSeUsuarioExiste(idTutorado) == false)
+            {
+                request.setAttribute("mensagem", "Tutorado inserido não existe!");
+                RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            else
+            {
+                request.setAttribute("mensagem", "Tanto o tutor quando o tutorado inseridos não existem!");
+                RequestDispatcher rd = request.getRequestDispatcher("criarTutoria.jsp");
+                rd.forward(request, response);
+                return;
+            }
         }
         else
         {
@@ -355,11 +378,11 @@ public class RepresentanteNapneControl extends HttpServlet {
 
     }
 
-    protected int definirIdDeTutor(HttpServletRequest request, HttpServletResponse response) throws IOException
+    protected Integer definirIdDeTutor(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         if(request.getParameter("idTutor") == null || request.getParameter("idTutor").isEmpty())
         {
-            return 0;
+            return null;
         }
         else
         {
@@ -367,11 +390,11 @@ public class RepresentanteNapneControl extends HttpServlet {
         }
     }
 
-    protected int definirIdDeTutorado(HttpServletRequest request, HttpServletResponse response) throws IOException
+    protected Integer definirIdDeTutorado(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         if(request.getParameter("idTutorado") == null || request.getParameter("idTutorado").isEmpty())
         {
-            return 0;
+            return null;
         }
         else
         {
@@ -391,6 +414,8 @@ public class RepresentanteNapneControl extends HttpServlet {
             return false;
         }
     }
+
+
     protected void editarDisciplina(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         DisciplinaDao disciplinaDao = new DisciplinaDao();
         Disciplina disciplina = new Disciplina();

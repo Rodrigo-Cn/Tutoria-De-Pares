@@ -98,4 +98,31 @@ public class UsuarioDao {
         return 0;
     }
 
+    public boolean verificaSeUsuarioExiste(Integer id)
+    {
+        if(id != null)
+        {
+            String sql = "SELECT * FROM usuario WHERE id = ?";
+            try {
+                Connection con = conectionDB.conectar();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
 }
