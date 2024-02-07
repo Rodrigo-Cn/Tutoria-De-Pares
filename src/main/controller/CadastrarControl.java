@@ -1,23 +1,16 @@
 package main.controller;
 
 import java.io.IOException;
-
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import main.dao.ProfessorDao;
 import main.dao.TutorDao;
 import main.dao.TutoradoDao;
 import main.model.Professor;
 import main.model.Tutor;
 import main.model.Tutorado;
-
-
-import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/main","/cadastrar"})
 public class CadastrarControl extends HttpServlet {
@@ -30,6 +23,13 @@ public class CadastrarControl extends HttpServlet {
     TutorDao tutorDao = new TutorDao();
     TutoradoDao tutoradoDao = new TutoradoDao();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String action = request.getServletPath();
+        if (action.equals("/main")){
+            response.sendRedirect("cadastrar.html");
+        }
+    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String action = request.getServletPath();
         if (action.equals("/cadastrar")){

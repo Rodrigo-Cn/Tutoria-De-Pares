@@ -110,7 +110,7 @@
                                    <div class="slider on rotate-scale-down-horizontal">
                                        <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina() != null ? tutorias.get(0).getDisciplina().getNome() : "Disciplina não disponível" %></h1>
                                        <hr>
-                                       <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(0).getTutor() != null ? tutorias.get(0).getTutor().getNome() : "Tutor não disponível" %></h1>
+                                       <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(0).getTutor() != null ? tutorias.get(0).getTutor().getNome() : "Tutor não cadastrado" %></h1>
                                        <hr>
                                        <hr style="margin-top: 6.7%;">
                                    </div>
@@ -120,7 +120,7 @@
                                    <div class="slider on rotate-scale-down-horizontal">
                                        <h1 id="titulo-card"><%= tutorias.get(0).getDisciplina().getNome() %></h1>
                                        <hr>
-                                       <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(0).getTutor().getNome() %></h1>
+                                       <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(0).getTutor() != null ? tutorias.get(0).getTutor().getNome() : "Tutor não cadastrado" %></h1>
                                        <hr>
                                        <hr style="margin-top: 6.7%;">
                                    </div>
@@ -130,7 +130,7 @@
                                        <div class="slider rotate-scale-down-horizontal">
                                            <h1 id="titulo-card"><%= tutorias.get(i).getDisciplina().getNome() %></h1>
                                            <hr>
-                                           <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(i).getTutor().getNome() %></h1>
+                                           <h1 id="titulo-card-ator">Tutor: <%= tutorias.get(i).getTutor() != null ? tutorias.get(i).getTutor().getNome() : "Tutor não cadastrado" %></h1>
                                            <hr>
                                            <hr style="margin-top: 6.7%;">
                                        </div>

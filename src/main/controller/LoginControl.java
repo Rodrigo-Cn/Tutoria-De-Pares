@@ -1,12 +1,12 @@
 package main.controller;
 
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import main.dao.UsuarioDao;
 import java.io.IOException;
 
@@ -31,7 +31,7 @@ public class LoginControl extends HttpServlet {
         int tipoDeUsuario = usuarioDao.lerTipoUsuario(request.getParameter("email"), request.getParameter("senha"));
        if(tipoDeUsuario  == 0)
         {
-            request.setAttribute("erroLogin", "Credenciais inválidas! Verifique seu e-mail ou senha.");
+            request.setAttribute("erroLogin", "Credenciais inválidas!");
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);
             return;

@@ -36,14 +36,13 @@
                     <input type="text" id="input-text1" placeholder="   Email" name="email">
                     <img src="imagens/login/olho(1).png" alt="" id="img-password">
                     <input type="password" id="input-text2" placeholder="   Senha" name="senha">
-                    <p id="entrada1"></p>
                      <%
                                     String erroLogin = (String) request.getAttribute("erroLogin");
                                     if (erroLogin != null) {
                                 %>
-                                    <div class="mensagemLogin" id="mensagemLogin">
-                                        <h3 style="color: red;"> <%= erroLogin %> </h3>
-                                    </div>
+                                    <p id="entrada1">
+                                        <%= erroLogin %>
+                                    </p>
                                 <%
                                     }
                                 %>
