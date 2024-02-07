@@ -37,19 +37,21 @@
                     <img src="imagens/login/olho(1).png" alt="" id="img-password">
                     <input type="password" id="input-text2" placeholder="   Senha" name="senha">
                     <p id="entrada1"></p>
+                     <%
+                                    String erroLogin = (String) request.getAttribute("erroLogin");
+                                    if (erroLogin != null) {
+                                %>
+                                    <div class="mensagemLogin" id="mensagemLogin">
+                                        <h3 style="color: red;"> <%= erroLogin %> </h3>
+                                    </div>
+                                <%
+                                    }
+                                %>
+
                     <input type="submit" value="Entrar" id="input-button1">
                 </form>
             </div>
-            <%
-                String erroLogin = (String) request.getAttribute("erroLogin");
-                if (erroLogin != null) {
-            %>
-                <div class="alert alert-danger">
-                    <%= erroLogin %>
-                </div>
-            <%
-                }
-            %>
+
         </div>
     </section>
     <div id="div-area">
