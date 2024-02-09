@@ -378,8 +378,9 @@ public class TutoriaDao {
         }
     }
 
-    public static void retornaTutoria (Tutoria tutoria)
+    public static Tutoria retornaTutoria(int codigo)
     {
+        Tutoria tutoria = new Tutoria();
         TutoradoDao tutoradoDao = new TutoradoDao();
         TutorDao tutorDao = new TutorDao();
         DisciplinaDao disciplinaDao = new DisciplinaDao();
@@ -390,21 +391,25 @@ public class TutoriaDao {
         {
             Connection con = conectionDB.conectar();
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, tutoria.getCodigo());
+            ps.setInt(1, codigo);
             ResultSet rs = ps.executeQuery();
 
             if(rs.next())
             {
+                tutoria.setCodigo(rs.getInt(1));
                 tutoria.setSenha(rs.getString(2));
                 tutoria.setTutor(tutorDao.retornarTutor(rs.getInt(3)));
                 tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
                 tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt(5)));
+                return tutoria;
             }
         }
         catch (Exception e)
         {
             System.out.println(e);
+            return null;
         }
+        return null;
     }
 
     public static void criarTutoria(Tutoria tutoria)

@@ -111,16 +111,10 @@ public class ProfessorControl extends HttpServlet
 
     protected void irParaTutoriaProfessor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
-        tutoria.setCodigo(Integer.parseInt(request.getParameter("codigo")));
-        tutoriaDao.retornaTutoria(tutoria);
-
-        request.setAttribute("codigo", tutoria.getCodigo());
-        request.setAttribute("senha", tutoria.getSenha());
-        request.setAttribute("nomeTutor", tutoria.getTutor().getNome());
-        request.setAttribute("nomeTutorado", tutoria.getTutorado().getNome());
-        request.setAttribute("disciplina", tutoria.getDisciplina().getNome());
-        request.setAttribute("nomeProfessor", tutoria.getDisciplina().getProfessor().getNome());
-
+        TutoriaDao tutoriaDao = new TutoriaDao();
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("tutoria", tutoria);
+        request.setAttribute("professor", professor);
         RequestDispatcher rd = request.getRequestDispatcher("tutoriaProfessor.jsp");
         rd.forward(request,response);
     }

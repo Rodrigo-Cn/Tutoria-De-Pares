@@ -21,10 +21,9 @@ import main.model.Tutor;
 import main.model.Tutorado;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina"})
+@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina", "/entraremtutoria"})
 public class RepresentanteNapneControl extends HttpServlet {
     RepresentanteNapne representanteNapne = new RepresentanteNapne();
     RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
@@ -79,10 +78,6 @@ public class RepresentanteNapneControl extends HttpServlet {
         {
             menuDisciplina(request,response);
         }
-        else if (action.equals("/criardisciplina"))
-        {
-            criarDisciplina(request,response);
-        }
         else if (action.equals("/buscardisciplina"))
         {
             buscarDisciplina(request,response);
@@ -106,6 +101,10 @@ public class RepresentanteNapneControl extends HttpServlet {
         else if(action.equals("/editarDisciplina"))
         {
             editarDisciplina(request,response);
+        }
+        else if(action.equals("/entraremtutoria"))
+        {
+            entrarTutoria(request,response);
         }
         else
         {
@@ -134,6 +133,10 @@ public class RepresentanteNapneControl extends HttpServlet {
         if (action.equals("/editandoDisciplina"))
         {
             editandoDisciplina(request,response);
+        }
+        else if (action.equals("/criardisciplina"))
+        {
+            criarDisciplina(request,response);
         }
         else
         {
@@ -454,6 +457,15 @@ public class RepresentanteNapneControl extends HttpServlet {
 
         request.setAttribute("representante", representanteNapne);
         RequestDispatcher rd = request.getRequestDispatcher("menuDisciplina.jsp");
+        rd.forward(request,response);
+    }
+    protected void entrarTutoria(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        TutoriaDao tutoriaDao = new TutoriaDao();
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("tutoria", tutoria);
+        request.setAttribute("representante", representanteNapne);
+
+        RequestDispatcher rd = request.getRequestDispatcher("tutoriaNapne.jsp");
         rd.forward(request,response);
     }
 }

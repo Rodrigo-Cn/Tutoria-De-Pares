@@ -16,7 +16,7 @@
     <script src="scripts/menuDisciplinas/buscar-disciplina.js"></script>
 
         <div id="nav-shadow" class="blur-in">
-            <form action="criardisciplina" id="sec-entrar-tutoria" name="criar-disciplina">
+            <form action="criardisciplina" method="post" id="sec-entrar-tutoria" name="criar-disciplina">
                 <div id="sec-entrar-image"><img id="sec-image" src="imagens/menuDisciplinas/1486564399-close_81512.png" alt="1486564399-close_81512.png"></div>
                 <div id="sec-entrar-input1"><input id="sec-input1" name="codigo-professor" type="number" placeholder="Código Professor"></div>
                 <div id="sec-entrar-input2"><input id="sec-input2" name="nome-disciplina" type="text" placeholder="Disciplina - Semestre"></div>

@@ -126,7 +126,7 @@
                                    </div>
                                </a>
                                <% for (int i = 1; i < tutorias.size(); i++) { %>
-                                   <a href="entrarTutoriaTutorado?codigo=<%= tutorias.get(0).getCodigo() %>&id=<%= request.getParameter("id") %>">
+                                   <a href="entrarTutoriaTutorado?codigo=<%= tutorias.get(i).getCodigo() %>&id=<%= request.getParameter("id") %>">
                                        <div class="slider rotate-scale-down-horizontal">
                                            <h1 id="titulo-card"><%= tutorias.get(i).getDisciplina().getNome() %></h1>
                                            <hr>
