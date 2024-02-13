@@ -27,7 +27,6 @@ public class TutoradoControl extends HttpServlet {
     Metas metas = new Metas();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getServletPath();
-        System.out.println(action);
         String idParameter = request.getParameter("id");
         int id;
 
