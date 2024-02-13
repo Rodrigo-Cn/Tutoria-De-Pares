@@ -1,12 +1,11 @@
 package main.controller;
 
-
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import main.dao.TutoradoDao;
 import main.dao.TutoriaDao;
 import main.model.Tutorado;
@@ -14,18 +13,33 @@ import main.model.Tutoria;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import main.model.*;
+import main.dao.*;
 
-@WebServlet(urlPatterns = {"/tutoradohome", "/edicaoTutorado", "/loginTutoriaTutorado","/realizarEdicaoDoTutorado", "/voltarParaMainTutorado", "/entrarTutoriaTutorado"})
+@WebServlet(urlPatterns = {"/tutoradohome", "/edicaoTutorado", "/loginTutoriaTutorado","/realizarEdicaoDoTutorado", "/voltarParaMainTutorado", "/entrarTutoriaTutorado", "/carregarMetasTutorado", "/criarMetaTutorado"})
 public class TutoradoControl extends HttpServlet {
     Tutorado tutorado = new Tutorado();
     ArrayList<Tutoria> tutorias = new ArrayList<>();
     TutoradoDao tutoradoDao = new TutoradoDao();
     private static TutoriaDao tutoriaDao = new TutoriaDao();
     private static Tutoria tutoria = new Tutoria();
+    MetasDao metasDao = new MetasDao();
+    Metas metas = new Metas();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getServletPath();
-        int id = Integer.parseInt(request.getParameter("id"));
+        System.out.println(action);
+        String idParameter = request.getParameter("id");
+        int id;
 
+        if (idParameter != null && !idParameter.isEmpty()) {
+            try {
+                id = Integer.parseInt(idParameter);
+            } catch (NumberFormatException e) {
+                id = tutorado.getId();
+            }
+        } else {
+            id =  tutorado.getId();
+        }
 
         if (action.equals("/tutoradohome"))
         {
@@ -50,6 +64,14 @@ public class TutoradoControl extends HttpServlet {
         else if(action.equals(("/entrarTutoriaTutorado")))
         {
             irParaTutoriaTutorado(request,response,id);
+        }
+        else if(action.equals("/carregarMetasTutorado"))
+        {
+            irParaMetasTutorado(request,response,id);
+        }
+        else if(action.equals("/criarMetaTutorado"))
+        {
+            criarMetaTutorado(request,response, id);
         }
         else
         {
@@ -80,6 +102,7 @@ public class TutoradoControl extends HttpServlet {
         request.setAttribute("semestre",tutorado.getSemestre());
         request.setAttribute("deficiencia",tutorado.getTipoDeDeficiencia());
         request.setAttribute("matricula",tutorado.getMatricula());
+        request.setAttribute("tutorado",tutorado);
         RequestDispatcher rd = request.getRequestDispatcher("edicaoTutorado.jsp");
         rd.forward(request,response);
     }
@@ -125,5 +148,38 @@ public class TutoradoControl extends HttpServlet {
 
         RequestDispatcher rd = request.getRequestDispatcher("tutoriaTutorado.jsp");
         rd.forward(request,response);
+    }
+
+    protected void irParaMetasTutorado(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        tutorado.setId(id);
+        tutoradoDao.selecionarTutorado(tutorado);
+        request.setAttribute("tutorado", tutorado);
+
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        RequestDispatcher rd = request.getRequestDispatcher("metasTutorado.jsp");
+        rd.forward(request,response);
+    }
+
+    protected void criarMetaTutorado(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigo"));
+        String titulo = request.getParameter("nome-criar");
+        metasDao.criarMeta(codigoTutoria, titulo);
+
+        tutoria = tutoriaDao.retornaTutoria(codigoTutoria);
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        tutorado.setId(id);
+        tutoradoDao.selecionarTutorado(tutorado);
+        request.setAttribute("tutorado", tutorado);
+
+        RequestDispatcher rd = request.getRequestDispatcher("metasTutorado.jsp");
+        rd.forward(request,response);
+
     }
 }

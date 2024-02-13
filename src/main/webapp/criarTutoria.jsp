@@ -87,7 +87,7 @@
                     </div>
 
 
-                <% if (request.getAttribute("mensagem") != null) { %>
+                <% if (request.getAttribute("mensagem") != null && !request.getAttribute("mensagem").equals("sucesso")) { %>
                     <div class="mensagem" id="mensagemDoBack">
                         <h3> <%= request.getAttribute("mensagem") %> </h3>
                     </div>
@@ -98,6 +98,23 @@
                     <button id="button-submit" type="submit">
                         CRIAR
                     </button>
+
+
+                                      <% if (request.getAttribute("mensagem") != null && request.getAttribute("mensagem").equals("sucesso")) { %>
+
+                                          <div class="popup" id="popup">
+                                          <script>
+                                           let popup = document.getElementById("popup");
+                                           popup.classList.add("open-popup");
+                                           </script>
+                                              <img src="imagens/criarTutoria/404-tick.png">
+                                              <h2>Tutoria criada!</h2>
+                                              <h4>Compartilhe essas informações com o tutor e o tutorado: </h4>
+                                              <p>Senha: <%= request.getAttribute("senha") %> </p>
+                                              <p>Código da tutoria: <%= request.getAttribute("codigo") %> </p>
+                                              <button type="button" onclick="closePopUp()">Voltar</button>
+                                          </div>
+                                      <% } %>
                 </footer>
                 </form>
 
@@ -126,5 +143,6 @@
     <script src="menu-entrar-tutoria.js"></script>
     <script src="barra-lateral.js"></script>
     <script src="cards.js"></script>
+    <script src="scripts/criarTutoria/popup.js"></script>
 </body>
 </html>

@@ -6,19 +6,21 @@ import main.model.Professor;
 import main.model.Tutoria;
 
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import main.model.*;
+import main.dao.*;
 
-@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor", "/entrarTutoriaProfessor"})
+@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor", "/entrarTutoriaProfessor", "/carregarMetasProfessor", "/criarMetaProfessor", "/selecionaMetaProfessor", "/editarMetaProfessor", "/deletarMetaProfessor"})
 public class ProfessorControl extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -29,12 +31,25 @@ public class ProfessorControl extends HttpServlet
     private static Tutoria tutoria = new Tutoria();
     private static DisciplinaDao disciplinaDao = new DisciplinaDao();
     private static Disciplina disciplina = new Disciplina();
+    MetasDao metasDao = new MetasDao();
+    Metas metas = new Metas();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         String action = request.getServletPath();
-        int id = Integer.parseInt(request.getParameter("id"));
+        String idParameter = request.getParameter("id");
+        int id;
+
+        if (idParameter != null && !idParameter.isEmpty()) {
+            try {
+                id = Integer.parseInt(idParameter);
+            } catch (NumberFormatException e) {
+                id = professor.getId();
+            }
+        } else {
+            id =  professor.getId();
+        }
 
         if(action.equals("/professorhome"))
         {
@@ -59,6 +74,30 @@ public class ProfessorControl extends HttpServlet
         else if(action.equals(("/entrarTutoriaProfessor")))
         {
             irParaTutoriaProfessor(request,response,id);
+        }
+        else if(action.equals("/carregarMetasProfessor"))
+        {
+            irParaMetasProfessor(request,response,id);
+        }
+        else if(action.equals("/criarMetaProfessor"))
+        {
+            criarMetaProfessor(request,response, id);
+        }
+        else if(action.equals("/selecionaMetaProfessor"))
+        {
+            selecionaMeta(request,response, id);
+        }
+        else if(action.equals("/editarMetaProfessor"))
+        {
+            editarMeta(request,response, id);
+        }
+        else if(action.equals("/deletarMetaProfessor"))
+        {
+            deletarMeta(request,response, id);
+        }
+        else
+        {
+            response.sendRedirect("login.jsp");
         }
     }
 
@@ -96,6 +135,7 @@ public class ProfessorControl extends HttpServlet
         request.setAttribute("senha",professor.getSenha());
         request.setAttribute("nome",professor.getNome());
         request.setAttribute("email",professor.getEmail());
+        request.setAttribute("professor", professor);
         RequestDispatcher rd = request.getRequestDispatcher("edicaoProfessor.jsp");
         rd.forward(request,response);
     }
@@ -119,5 +159,74 @@ public class ProfessorControl extends HttpServlet
         rd.forward(request,response);
     }
 
+    protected void irParaMetasProfessor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        professor.setId(id);
+        professorDao.selecionarProfessor(professor);
+        request.setAttribute("professor", professor);
+
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        RequestDispatcher rd = request.getRequestDispatcher("metasProfessor.jsp");
+        rd.forward(request,response);
+    }
+
+    protected void criarMetaProfessor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigo"));
+        String titulo = request.getParameter("nome-criar");
+        metasDao.criarMeta(codigoTutoria, titulo);
+
+        tutoria = tutoriaDao.retornaTutoria(codigoTutoria);
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        professor.setId(id);
+        professorDao.selecionarProfessor(professor);
+        request.setAttribute("professor", professor);
+
+        RequestDispatcher rd = request.getRequestDispatcher("metasProfessor.jsp");
+        rd.forward(request,response);
+
+    }
+
+    protected void selecionaMeta(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
+        metasDao.selecionaMeta(metas);
+        request.setAttribute("metas",  metas);
+
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        professor.setId(id);
+        professorDao.selecionarProfessor(professor);
+        request.setAttribute("professor", professor);
+
+        RequestDispatcher rd = request.getRequestDispatcher("editarMetasProfessor.jsp");
+        rd.forward(request,response);
+
+    }
+
+    protected void editarMeta(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+
+        metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
+        metas.setTitulo(request.getParameter("nome-criar"));
+
+        metasDao.atualizarMeta(metas);
+
+        response.sendRedirect("carregarMetasProfessor?id="+id+"&codigo="+Integer.parseInt(request.getParameter("codigo")));
+    }
+
+    protected void deletarMeta(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
+        metasDao.excluirMeta(metas);
+        response.sendRedirect("carregarMetasProfessor?id="+id+"&codigo="+Integer.parseInt(request.getParameter("codigo")));
+    }
 
 }

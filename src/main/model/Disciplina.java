@@ -4,6 +4,7 @@ public class Disciplina {
     private String nome;
     private int codigo;
     private Professor professor;
+
     public Disciplina(){
 
     }
