@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="main.model.Tutorado" %>
+<%@ page import="main.dao.TutoradoDao" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,6 +54,12 @@
       <div> <a href="voltarParaMainTutorado?id=<%= request.getParameter("id")%>"> <img src="imagens/cadastro/Frame 1.png" id="navbar-image" alt="frame.png"> </a></div>
       <div id="navbar-name"> <a href="voltarParaMainTutorado?id=<%= request.getParameter("id")%>"> <p>Tutoria</p><p>De</p><p>Pares</p> </a></div>
     </div>
+
+     <div id="navbar-inicio">
+                          <a href="voltarParaMainTutorado?id=<%= request.getParameter("id")%>" style="margin-top: 3.4%;"><img  id="navbar-image2" class="tracking-in-expand-forward-top" src="imagens/cadastrarNapne/icons8-voltar-67.png" alt="icons8-casa-384.png"></a>
+                          <img class="iniciar-barra tracking-in-expand-forward-top" id="navbar-image3" src="imagens/tutoradohome/icons8-usuario-96.png" alt="">
+                          <h2 class="iniciar-barra2 tracking-in-expand-forward-top" id="navbar-name2"><%= ((Tutorado) request.getAttribute("tutorado")).getNome().split(" ")[0] %></h2>
+                          </div>
   </div>
 
   <div id="container-main">

@@ -21,7 +21,7 @@
             <div id="nav-zone">
                 <div id="nav-lateral-image"><a href=""><img src="imagens/napnehome/icons8-usuário-homem-com-círculo-100.png" alt="icons8-usuário-homem-com-círculo-100.png"></a></div>
                 <div id="nav-lateral-name"><a href=""><p><%= ((RepresentanteNapne) request.getAttribute("representante")).getNome() %></p></a></div>
-                <div id="nav-lateral-option1"><a href="edicaoNapne?id=<%= request.getParameter("id")%>">Editar Perfil</a></div>
+                <div id="nav-lateral-option1"><a href="edicaoNapne?id=<%=((RepresentanteNapne) request.getAttribute("representante")).getId()%>">Editar Perfil</a></div>
                 <div id="nav-lateral-option2"><a href="irCriarTutoria?id=<%= ((RepresentanteNapne) request.getAttribute("representante")).getId() %>">Nova Tutoria</a></div>
                 <div id="nav-lateral-option2"><a href="telacadastronapne?id=<%= ((RepresentanteNapne) request.getAttribute("representante")).getId() %>">Cadastrar Profissional</a></div>
                 <div id="nav-lateral-option2"><a href="menudisciplinas?id=<%= ((RepresentanteNapne) request.getAttribute("representante")).getId() %>">Menu de Disciplinas</a></div>

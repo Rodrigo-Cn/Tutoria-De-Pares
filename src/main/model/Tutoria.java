@@ -1,4 +1,5 @@
 package main.model;
+import java.util.ArrayList;
 
 public class Tutoria {
     private int codigo;
@@ -6,18 +7,20 @@ public class Tutoria {
     private Tutor tutor;
     private Tutorado tutorado;
     private Disciplina disciplina;
+    private ArrayList<Metas> metas = new ArrayList<>();
     public Tutoria(){
 
     }
     public Tutoria(int codigo, String senha){
 
     }
-    public Tutoria(int codigo, String senha, Tutor tutor, Tutorado tutorado, Disciplina disciplina){
+    public Tutoria(int codigo, String senha, Tutor tutor, Tutorado tutorado, Disciplina disciplina, ArrayList<Metas> metas){
         this.codigo = codigo;
         this.senha = senha;
         this.tutor = tutor;
         this.tutorado = tutorado;
         this.disciplina = disciplina;
+        this.metas = metas;
     }
 
     public void setCodigo(int codigo) {
@@ -58,5 +61,13 @@ public class Tutoria {
 
     public Disciplina getDisciplina() {
         return disciplina;
+    }
+
+    public ArrayList<Metas> getMetas() {
+        return metas;
+    }
+
+    public void setMetas(Metas metas) {
+        this.metas.add(metas);
     }
 }

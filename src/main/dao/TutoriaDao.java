@@ -441,5 +441,30 @@ public class TutoriaDao {
         }
     }
 
+    public static Tutoria selecionaUltimaTutoria(Tutoria tutoria)
+    {
+        ConectionDB con = new ConectionDB();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT t.codigo, t.senha FROM tutoria t INNER JOIN (SELECT MAX(codigo) as ultimo_codigo FROM tutoria) max_t ON t.codigo = max_t.ultimo_codigo";
+        try
+        {
+            ps = con.conectar().prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next())
+            {
+                tutoria.setCodigo(rs.getInt(1));
+                tutoria.setSenha(rs.getString(2));
+            }
+            ps.close();
+            return tutoria;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        return tutoria;
+    }
+
 
 }

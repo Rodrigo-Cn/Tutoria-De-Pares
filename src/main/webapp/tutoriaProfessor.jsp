@@ -46,7 +46,8 @@
                   %>
                 </div>
                 <div class="section-dados">Tutorado: <%= ((Tutoria) request.getAttribute("tutoria")).getTutorado().getNome() != null ? ((Tutoria) request.getAttribute("tutoria")).getTutorado().getNome() : "Não Cadastrado" %></div>
-                <div id="section-buttons"><a href=""><input class="buttons" type="button" value="Metas"></a><a href=""><input class="buttons" type="button" value="Atendimentos"></a></div>          
+                <div id="section-buttons"><a href="carregarMetasProfessor?id=<%=((Professor) request.getAttribute("professor")).getId()%>&codigo=<%=((Tutoria) request.getAttribute("tutoria")).getCodigo()%>"><input class="buttons" type="button" value="Metas"></a><a href=""><input class="buttons" type="button" value="Atendimentos"></a></div>
+
             </div>
         </div>
 

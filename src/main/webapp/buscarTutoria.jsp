@@ -50,7 +50,7 @@
                 <% if (tutorias != null && tutorias.size() > 0) { %>
                     <% for (int i = 0; i < tutorias.size(); i++) { %>
                         <div class="card">
-                            <a href="entraremtutoria?codigo=<%= tutorias.get(i).getCodigo() %>"><h1 id="card-titulo"><%= tutorias.get(i).getDisciplina().getNome() %></h1></a>
+                            <a href="entraremtutoria?codigo=<%= tutorias.get(i).getCodigo()%>"><h1 id="card-titulo"><%= tutorias.get(i).getDisciplina().getNome() %></h1></a>
                             <h4 class="card-section">Tutor:  <%= tutorias.get(i).getTutor() != null ? tutorias.get(i).getTutor().getNome() : "Tutor não cadastrado" %></h4>
                             <h4 class="card-section">Tutorado: <%= tutorias.get(i).getTutorado() != null ? tutorias.get(i).getTutorado().getNome() : "Tutorado não cadastrado" %></h4>
                         </div>
