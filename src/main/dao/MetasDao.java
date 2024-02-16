@@ -11,7 +11,7 @@ public class MetasDao {
         ConectionDB con = new ConectionDB();;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT titulo, codigo_metas FROM tutoria INNER JOIN metas ON codigo_tutoria=?";
+        String sql = "SELECT titulo, codigo_metas FROM metas WHERE codigo_tutoria=?";
 
         try
         {
@@ -21,7 +21,7 @@ public class MetasDao {
 
             while(rs.next())
             {
-                Metas meta = new Metas();
+                Meta meta = new Meta();
                 meta.setTitulo(rs.getString(1));
                 meta.setCodigo(rs.getInt(2));
                 tutoria.setMetas(meta);
@@ -54,7 +54,7 @@ public class MetasDao {
         }
     }
 
-    public static void selecionaMeta(Metas meta)
+    public static void selecionaMeta(Meta meta)
     {
         String sql = "SELECT * FROM metas WHERE codigo_metas=?";
         ConectionDB con = new ConectionDB();
@@ -69,7 +69,7 @@ public class MetasDao {
 
             if(rs.next())
             {
-                meta.setCodigo(rs.getInt(1));
+                //meta.setCodigo(rs.getInt(1));
                 meta.setTitulo(rs.getString(2));
             }
         }
@@ -80,7 +80,7 @@ public class MetasDao {
 
     }
 
-    public static void atualizarMeta(Metas meta)
+    public static void atualizarMeta(Meta meta)
     {
         String sql = "UPDATE metas SET titulo=? WHERE codigo_metas=?";
         ConectionDB con = new ConectionDB();
@@ -101,7 +101,7 @@ public class MetasDao {
         }
 
     }
-    public static void excluirMeta(Metas meta)
+    public static void excluirMeta(Meta meta)
     {
         String sql = "DELETE FROM metas WHERE codigo_metas=?";
         ConectionDB con = new ConectionDB();
@@ -121,8 +121,6 @@ public class MetasDao {
         }
 
     }
-
-
 
 }
 

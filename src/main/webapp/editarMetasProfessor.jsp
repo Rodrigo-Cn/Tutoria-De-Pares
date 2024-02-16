@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="main.model.Professor" %>
 <%@ page import="main.model.Tutoria" %>
-<%@ page import="main.model.Metas" %>
+<%@ page import="main.model.Meta" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
     <script src="scripts/meta/editarmeta.js" defer></script>
     <script src="scripts/meta/criarmeta.js" defer></script>
     <%
-    Metas metas = (Metas) request.getAttribute("metas");
+    Meta metas = (Meta) request.getAttribute("metas");
     %>
     <div id="corpo-editar-meta" style="display: flex">
         <form class="editar-meta" action="editarMetaProfessor" id="editarMeta" onsubmit="return validarFormulario()">

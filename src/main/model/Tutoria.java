@@ -7,14 +7,14 @@ public class Tutoria {
     private Tutor tutor;
     private Tutorado tutorado;
     private Disciplina disciplina;
-    private ArrayList<Metas> metas = new ArrayList<>();
+    private ArrayList<Meta> metas = new ArrayList<>();
     public Tutoria(){
 
     }
     public Tutoria(int codigo, String senha){
 
     }
-    public Tutoria(int codigo, String senha, Tutor tutor, Tutorado tutorado, Disciplina disciplina, ArrayList<Metas> metas){
+    public Tutoria(int codigo, String senha, Tutor tutor, Tutorado tutorado, Disciplina disciplina, ArrayList<Meta> metas){
         this.codigo = codigo;
         this.senha = senha;
         this.tutor = tutor;
@@ -63,11 +63,11 @@ public class Tutoria {
         return disciplina;
     }
 
-    public ArrayList<Metas> getMetas() {
+    public ArrayList<Meta> getMetas() {
         return metas;
     }
 
-    public void setMetas(Metas metas) {
+    public void setMetas(Meta metas) {
         this.metas.add(metas);
     }
 }

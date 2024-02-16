@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="main.model.RepresentanteNapne" %>
 <%@ page import="main.model.Tutoria" %>
-<%@ page import="main.model.Metas" %>
+<%@ page import="main.model.Meta" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +78,7 @@
                     <hr width="100%">
                     </div>
                         <div class="card-icones">
-                         <a href="" style="font-size: 1.3rem; margin-right: 12%;"><img class="icone-card" src="imagens/metas/icons8-bate-papo-cheio-96.png" alt=""> <%= ((Tutoria) request.getAttribute("tutoria")).getMetas().get(i).getMensagens().size() %> </a>
+                         <a href="carregarMensagensNapne?codigoMeta=<%=((Tutoria) request.getAttribute("tutoria")).getMetas().get(i).getCodigo()%>&codigoTutoria=<%=((Tutoria) request.getAttribute("tutoria")).getCodigo()%>&id=<%= ((RepresentanteNapne) request.getAttribute("representante")).getId() %>" style="font-size: 1.3rem; margin-right: 12%;"><img class="icone-card" src="imagens/metas/icons8-bate-papo-cheio-96.png" alt=""> <%= ((Tutoria) request.getAttribute("tutoria")).getMetas().get(i).getMensagens().size() %> </a>
                          <a class="editar" href="selecionaMetaNapne?codigoMeta=<%=((Tutoria) request.getAttribute("tutoria")).getMetas().get(i).getCodigo()%>&codigoTutoria=<%=((Tutoria) request.getAttribute("tutoria")).getCodigo()%>" style="font-size: 1.3rem; margin-right: 12%;"><img class="icone-card" src="imagens/metas/configu.png" alt=""></a>
                          <a onclick="confirmar(<%= ((Tutoria) request.getAttribute("tutoria")).getMetas().get(i).getCodigo() %>, <%=((Tutoria) request.getAttribute("tutoria")).getCodigo()%>, <%=((RepresentanteNapne) request.getAttribute("representante")).getId()%>)" style="cursor: pointer;"><img class="icone-card" src="imagens/metas/icons8-lixo-100.png" alt=""></a>
                        </div>
