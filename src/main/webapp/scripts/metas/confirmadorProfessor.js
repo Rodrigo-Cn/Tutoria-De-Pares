@@ -16,6 +16,6 @@ function confirmar(codigoMeta, codigo, id) {
     var botaoSim = document.getElementById("sim");
     botaoSim.addEventListener("click", function() {
 
-        window.location.href = "deletarMetaNapne?codigoMeta=" + codigoMeta + "&codigo=" + codigo + "&id=" + id;
+        window.location.href = "deletarMetaProfessor?codigoMeta=" + codigoMeta + "&codigo=" + codigo + "&id=" + id;
     });
 }

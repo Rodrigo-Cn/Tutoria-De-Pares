@@ -1,5 +1,4 @@
-function confirmar(codigoMeta, codigo, id) {
-
+function confirmar(codigoMeta, codigo, id, codigoMensagem) {
     let elemento = document.getElementById("corpo-deletar-meta");
         elemento.classList.add("abrir-deletar");
 
@@ -10,12 +9,15 @@ function confirmar(codigoMeta, codigo, id) {
         function desativartela(event){
             event.preventDefault();
             elemento.classList.remove("abrir-deletar");
+
+
         }
 
 
     var botaoSim = document.getElementById("sim");
     botaoSim.addEventListener("click", function() {
 
-        window.location.href = "deletarMetaNapne?codigoMeta=" + codigoMeta + "&codigo=" + codigo + "&id=" + id;
+
+    window.location.href = "deletarMensagemNapne?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigo + "&id=" + id + "&codigoMensagem=" + codigoMensagem;
     });
 }

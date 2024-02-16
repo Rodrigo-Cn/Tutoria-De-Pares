@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import main.model.*;
 import main.dao.*;
 
-@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor", "/entrarTutoriaProfessor", "/carregarMetasProfessor", "/criarMetaProfessor", "/selecionaMetaProfessor", "/editarMetaProfessor", "/deletarMetaProfessor"})
+@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor", "/entrarTutoriaProfessor", "/carregarMetasProfessor", "/criarMetaProfessor", "/selecionaMetaProfessor", "/editarMetaProfessor", "/deletarMetaProfessor", "/carregarMensagensProfessor", "/enviarMensagemProfessor", "/selecionaMensagemProfessor", "/editarMensagemProfessor", "/deletarMensagemProfessor"})
 public class ProfessorControl extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -31,8 +31,11 @@ public class ProfessorControl extends HttpServlet
     private static Tutoria tutoria = new Tutoria();
     private static DisciplinaDao disciplinaDao = new DisciplinaDao();
     private static Disciplina disciplina = new Disciplina();
-    MetasDao metasDao = new MetasDao();
-    Metas metas = new Metas();
+    private static MetasDao metasDao = new MetasDao();
+    private static Meta metas = new Meta();
+    private static MensagemDao mensagemDao = new MensagemDao();
+    private static Mensagem mensagem = new Mensagem();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -94,6 +97,26 @@ public class ProfessorControl extends HttpServlet
         else if(action.equals("/deletarMetaProfessor"))
         {
             deletarMeta(request,response, id);
+        }
+        else if(action.equals("/carregarMensagensProfessor"))
+        {
+            irParaMensagensProfessor(request,response, id);
+        }
+        else if(action.equals("/enviarMensagemProfessor"))
+        {
+            enviarMensagem(request,response, id);
+        }
+        else if(action.equals("/selecionaMensagemProfessor"))
+        {
+            selecionaMensagem(request,response, id);
+        }
+        else if(action.equals("/editarMensagemProfessor"))
+        {
+            editarMensagem(request,response, id);
+        }
+        else if(action.equals("/deletarMensagemProfessor"))
+        {
+            deletarMensagem(request,response, id);
         }
         else
         {
@@ -167,6 +190,11 @@ public class ProfessorControl extends HttpServlet
 
         tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
         metasDao.cadastraMetasNaTutoria(tutoria);
+
+        for(Meta i: tutoria.getMetas())
+        {
+            mensagemDao.cadastrarMensagensNaMeta(i);
+        }
         request.setAttribute("tutoria", tutoria);
 
         RequestDispatcher rd = request.getRequestDispatcher("metasProfessor.jsp");
@@ -187,9 +215,7 @@ public class ProfessorControl extends HttpServlet
         professorDao.selecionarProfessor(professor);
         request.setAttribute("professor", professor);
 
-        RequestDispatcher rd = request.getRequestDispatcher("metasProfessor.jsp");
-        rd.forward(request,response);
-
+        response.sendRedirect("carregarMetasProfessor?id=" + id + "&codigo=" + codigoTutoria);
     }
 
     protected void selecionaMeta(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
@@ -225,8 +251,100 @@ public class ProfessorControl extends HttpServlet
     protected void deletarMeta(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
-        metasDao.excluirMeta(metas);
+        mensagemDao.cadastrarMensagensNaMeta(metas);
+
+        if(metas.getMensagens().isEmpty())
+        {
+            metasDao.excluirMeta(metas);
+        }
+        else
+        {
+            for(Mensagem i: metas.getMensagens())
+            {
+                mensagemDao.deletarMensagem(i);
+            }
+            metasDao.excluirMeta(metas);
+        }
         response.sendRedirect("carregarMetasProfessor?id="+id+"&codigo="+Integer.parseInt(request.getParameter("codigo")));
+    }
+    protected void irParaMensagensProfessor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Meta meta2 = new Meta();
+        meta2.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
+        metasDao.selecionaMeta(meta2);
+        mensagemDao.cadastrarMensagensNaMeta(meta2);
+        request.setAttribute("meta", meta2);
+
+        professor.setId(id);
+        professorDao.selecionarProfessor(professor);
+        request.setAttribute("professor", professor);
+
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        RequestDispatcher rd = request.getRequestDispatcher("mensagensProfessor.jsp");
+        rd.forward(request,response);
+    }
+
+    protected void enviarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Mensagem mensagem2 = new Mensagem();
+        String mensagem = request.getParameter("mensagemUsuario");
+        int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
+
+        mensagem2.setMsg(mensagem);
+        mensagem2.setCodigoMeta(codigoMeta);
+        mensagem2.setUsuario(mensagemDao.defineUsuarioDaMensagem(id));
+
+        mensagemDao.criarMensagem(mensagem2);
+
+        response.sendRedirect("carregarMensagensProfessor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
+    }
+
+    protected void selecionaMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Meta meta2 = new Meta();
+        meta2.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
+        metasDao.selecionaMeta(meta2);
+        mensagemDao.cadastrarMensagensNaMeta(meta2);
+        request.setAttribute("meta", meta2);
+
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        professor.setId(id);
+        professorDao.selecionarProfessor(professor);
+        request.setAttribute("professor", professor);
+
+        mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagemDao.selecionaMensagem(mensagem);
+        request.setAttribute("mensagem", mensagem);
+
+        RequestDispatcher rd = request.getRequestDispatcher("editarMensagemProfessor.jsp");
+        rd.forward(request,response);
+    }
+
+    protected void editarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        mensagem.setCodigoMeta(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagem.setMsg(request.getParameter("mensagem"));
+        mensagemDao.atualizarMensagem(mensagem);
+        int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
+        response.sendRedirect("carregarMensagensProfessor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
+    }
+
+    protected void deletarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagemDao.deletarMensagem(mensagem);
+
+        int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
+        response.sendRedirect("carregarMensagensProfessor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
 
 }

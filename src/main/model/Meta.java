@@ -1,17 +1,17 @@
 package main.model;
 import java.util.ArrayList;
 
-public class Metas {
+public class Meta {
     private String titulo;
     private int codigo;
     private ArrayList<Mensagem> mensagens = new ArrayList<>();
 
-    public Metas()
+    public Meta()
     {
 
     }
 
-    public Metas(String titulo, int codigo, ArrayList<Mensagem> mensagens )
+    public Meta(String titulo, int codigo, ArrayList<Mensagem> mensagens )
     {
         this.titulo = titulo;
         this.codigo = codigo;

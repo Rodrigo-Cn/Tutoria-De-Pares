@@ -25,7 +25,7 @@ import main.dao.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina", "/entraremtutoria", "/carregarMetasNapne", "/criarMetaNapne", "/selecionaMetaNapne", "/editarMetaNapne", "/deletarMetaNapne"})
+@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina", "/entraremtutoria", "/carregarMetasNapne", "/criarMetaNapne", "/selecionaMetaNapne", "/editarMetaNapne", "/deletarMetaNapne", "/carregarMensagensNapne", "/enviarMensagemNapne", "/selecionaMensagemNapne", "/editarMensagemNapne", "/deletarMensagemNapne"})
 public class RepresentanteNapneControl extends HttpServlet {
     RepresentanteNapne representanteNapne = new RepresentanteNapne();
     RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
@@ -39,7 +39,9 @@ public class RepresentanteNapneControl extends HttpServlet {
     DisciplinaDao disciplinaDao = new DisciplinaDao();
     UsuarioDao usuarioDao = new UsuarioDao();
     MetasDao metasDao = new MetasDao();
-    Metas metas = new Metas();
+    Meta metas = new Meta();
+    Mensagem mensagem = new Mensagem();
+    MensagemDao mensagemDao = new MensagemDao();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String action = request.getServletPath();
@@ -128,6 +130,26 @@ public class RepresentanteNapneControl extends HttpServlet {
         else if(action.equals("/deletarMetaNapne"))
         {
             deletarMeta(request,response, id);
+        }
+        else if(action.equals("/carregarMensagensNapne"))
+        {
+            irParaMensagensNapne(request,response, id);
+        }
+        else if(action.equals("/enviarMensagemNapne"))
+        {
+            enviarMensagem(request,response, id);
+        }
+        else if(action.equals("/selecionaMensagemNapne"))
+        {
+            selecionaMensagem(request,response, id);
+        }
+        else if(action.equals("/editarMensagemNapne"))
+        {
+            editarMensagem(request,response, id);
+        }
+        else if(action.equals("/deletarMensagemNapne"))
+        {
+            deletarMensagem(request,response, id);
         }
         else
         {
@@ -503,6 +525,11 @@ public class RepresentanteNapneControl extends HttpServlet {
 
         tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
         metasDao.cadastraMetasNaTutoria(tutoria);
+
+        for(Meta i: tutoria.getMetas())
+        {
+            mensagemDao.cadastrarMensagensNaMeta(i);
+        }
         request.setAttribute("tutoria", tutoria);
 
         RequestDispatcher rd = request.getRequestDispatcher("metasNapne.jsp");
@@ -511,20 +538,26 @@ public class RepresentanteNapneControl extends HttpServlet {
 
     protected void criarMetaNapne(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
+        Tutoria tutoria3 = new Tutoria();
+        MetasDao metasDao2 = new MetasDao();
+
         int codigoTutoria = Integer.parseInt(request.getParameter("codigo"));
         String titulo = request.getParameter("nome-criar");
-        metasDao.criarMeta(codigoTutoria, titulo);
 
-        tutoria = tutoriaDao.retornaTutoria(codigoTutoria);
-        metasDao.cadastraMetasNaTutoria(tutoria);
-        request.setAttribute("tutoria", tutoria);
+        metasDao2.criarMeta(codigoTutoria, titulo);
+
+        tutoria3 = tutoriaDao.retornaTutoria(codigoTutoria);
+        metasDao2.cadastraMetasNaTutoria(tutoria3);
+        request.setAttribute("tutoria", tutoria3);
+        
 
         representanteNapne.setId(id);
         representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
         request.setAttribute("representante", representanteNapne);
 
-        RequestDispatcher rd = request.getRequestDispatcher("metasNapne.jsp");
-        rd.forward(request,response);
+
+        response.sendRedirect("carregarMetasNapne?id=" + id + "&codigo=" + codigoTutoria);
+
 
     }
 
@@ -561,10 +594,103 @@ public class RepresentanteNapneControl extends HttpServlet {
     protected void deletarMeta(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
-        metasDao.excluirMeta(metas);
+
+        mensagemDao.cadastrarMensagensNaMeta(metas);
+
+        if(metas.getMensagens().isEmpty())
+        {
+            metasDao.excluirMeta(metas);
+        }
+        else
+        {
+            for(Mensagem i: metas.getMensagens())
+            {
+                mensagemDao.deletarMensagem(i);
+            }
+            metasDao.excluirMeta(metas);
+        }
+
         response.sendRedirect("carregarMetasNapne?id="+id+"&codigo="+Integer.parseInt(request.getParameter("codigo")));
     }
 
+    protected void irParaMensagensNapne(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Meta meta2 = new Meta();
+        meta2.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
+        metasDao.selecionaMeta(meta2);
+        mensagemDao.cadastrarMensagensNaMeta(meta2);
+        request.setAttribute("meta", meta2);
 
+        representanteNapne.setId(id);
+        representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
+        request.setAttribute("representante", representanteNapne);
+
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        RequestDispatcher rd = request.getRequestDispatcher("mensagensNapne.jsp");
+        rd.forward(request,response);
+    }
+
+    protected void enviarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Mensagem mensagem2 = new Mensagem();
+        String mensagem = request.getParameter("mensagemUsuario");
+        int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
+
+        mensagem2.setMsg(mensagem);
+        mensagem2.setCodigoMeta(codigoMeta);
+        mensagem2.setUsuario(mensagemDao.defineUsuarioDaMensagem(id));
+
+        mensagemDao.criarMensagem(mensagem2);
+
+        response.sendRedirect("carregarMensagensNapne?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
+    }
+
+    protected void selecionaMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Meta meta2 = new Meta();
+        meta2.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
+        metasDao.selecionaMeta(meta2);
+        mensagemDao.cadastrarMensagensNaMeta(meta2);
+        request.setAttribute("meta", meta2);
+
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        representanteNapne.setId(id);
+        representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
+        request.setAttribute("representante", representanteNapne);
+
+        mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagemDao.selecionaMensagem(mensagem);
+        request.setAttribute("mensagem", mensagem);
+
+        RequestDispatcher rd = request.getRequestDispatcher("editarMensagemNapne.jsp");
+        rd.forward(request,response);
+    }
+
+    protected void editarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        mensagem.setCodigoMeta(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagem.setMsg(request.getParameter("mensagem"));
+        mensagemDao.atualizarMensagem(mensagem);
+        int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
+        response.sendRedirect("carregarMensagensNapne?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
+    }
+
+    protected void deletarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagemDao.deletarMensagem(mensagem);
+
+        int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
+        response.sendRedirect("carregarMensagensNapne?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
+    }
 
 }
