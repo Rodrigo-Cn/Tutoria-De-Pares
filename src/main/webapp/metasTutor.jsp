@@ -45,7 +45,7 @@
                               <hr width="100%">
                               </div>
                               <div class="card-icones">
-                                    <a href="" style="font-size: 1.3rem; margin-right: 12%;"><img class="icone-card" src="imagens/metas/icons8-bate-papo-cheio-96.png" alt=""> 0 </a>
+                                    <a href="" style="font-size: 1.3rem;"><img class="icone-card" src="imagens/metas/icons8-bate-papo-cheio-96.png" alt=""> 0 </a>
                                 </div>
                              </div>
 
