@@ -132,6 +132,6 @@
     </div>
     </div>
 
-    <script src="scripts/mensagens/apagarMensagem.js"></script>
+    <script src="scripts/mensagens/apagarmensagem.js"></script>
 </body>
 </html>

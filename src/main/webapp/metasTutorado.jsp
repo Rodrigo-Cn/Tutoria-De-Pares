@@ -16,16 +16,6 @@
     <script src="scripts/meta/editarmeta.js" defer></script>
     <script src="scripts/meta/criarmeta.js" defer></script>
 
-    <div id="corpo-criar-meta">
-        <form class="editar-meta" action="criarMetaTutorado" id="criarMeta">
-            <div class="titulo-editar-meta"><div class="titulo-editar">Criar Meta</div><img id="fechar-criar-meta" src="imagens/metas/icons8-fechar-janela-48.png" alt=""></div>
-            <input type="hidden" name="codigo" value="<%= ((Tutoria) request.getAttribute("tutoria")).getCodigo() %>" id="codigo">
-            <input name="nome-criar" class="text-editar-meta" type="text" id="titulo-meta">
-            <h3 id="mensagemErro" style="color: red"></h3>
-            <input class="button-editar-meta" type="button" value="Criar" id="botao-enviar">
-        </form>
-    </div>
-
     <div id="corpo-deletar-meta" class="corpo-deletar-meta">
         <div class="editar-meta">
          <div class="titulo-editar-meta"><div class="titulo-editar">Confirmar a exclusão?</div><img style="cursor: pointer;" id="fechar-deletar-meta" src="imagens/metas/icons8-fechar-janela-48.png" alt=""></div>
@@ -51,9 +41,7 @@
                 <img src="imagens/metas/icons8-goals-64.png" alt="">
                 <h1>Metas</h1>
             </div>
-            <div id="criar-meta">
-                <a href=""><input id="button-section" type="button" value="Criar uma Meta"></a>
-            </div>
+
             <div id="section-cards">
 
             <% if(((Tutoria) request.getAttribute("tutoria")).getMetas().size() == 0) { %>

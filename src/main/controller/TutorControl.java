@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/tutorhome", "/edicaoTutor", "/loginTutoriaTutor", "/realizarEdicaoDoTutor", "/voltarParaMainTutor", "/entrarTutoriaTutor", "/carregarMetasTutor", "/carregarMensagensTutor", "/enviarMensagemTutor", "/selecionaMensagemTutor", "/editarMensagemTutor", "/deletarMensagemTutor"})
+@WebServlet(urlPatterns = {"/tutorhome", "/edicaoTutor", "/loginTutoriaTutor", "/realizarEdicaoDoTutor", "/voltarParaMainTutor", "/entrarTutoriaTutor", "/criarMetaTutor", "/carregarMetasTutor", "/carregarMensagensTutor", "/enviarMensagemTutor", "/selecionaMensagemTutor", "/editarMensagemTutor", "/deletarMensagemTutor"})
 public class TutorControl extends HttpServlet {
     Tutor tutor = new Tutor();
     ArrayList<Tutoria> tutorias = new ArrayList<>();
@@ -70,6 +70,10 @@ public class TutorControl extends HttpServlet {
         else if(action.equals("/carregarMetasTutor"))
         {
             irParaMetasTutor(request,response,id);
+        }
+        else if(action.equals("/criarMetaTutor"))
+        {
+            criarMetaTutor(request,response, id);
         }
         else if(action.equals("/carregarMensagensTutor"))
         {
@@ -163,6 +167,23 @@ public class TutorControl extends HttpServlet {
         request.setAttribute("tutor", tutor);
         RequestDispatcher rd = request.getRequestDispatcher("tutoriaTutor.jsp");
         rd.forward(request,response);
+    }
+
+    protected void criarMetaTutor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigo"));
+        String titulo = request.getParameter("nome-criar");
+        metasDao.criarMeta(codigoTutoria, titulo);
+
+        tutoria = tutoriaDao.retornaTutoria(codigoTutoria);
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        tutor.setId(id);
+        tutorDao.selecionarTutor(tutor);
+        request.setAttribute("tutorado", tutor);
+
+        response.sendRedirect("carregarMetasTutor?id=" + id + "&codigo=" + codigoTutoria);
     }
 
     protected void irParaMetasTutor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
