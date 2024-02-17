@@ -1,11 +1,16 @@
 package main.controller;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import main.dao.DisciplinaDao;
 import main.dao.RepresentanteNapneDao;
 import main.dao.TutoriaDao;
@@ -13,6 +18,7 @@ import main.dao.UsuarioDao;
 import main.dao.TutorDao;
 import main.dao.TutoradoDao;
 import main.model.Disciplina;
+import main.model.Meta;
 import main.model.Professor;
 import main.model.RepresentanteNapne;
 import main.model.Tutoria;
@@ -23,9 +29,11 @@ import main.dao.*;
 
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina", "/entraremtutoria", "/carregarMetasNapne", "/criarMetaNapne", "/selecionaMetaNapne", "/editarMetaNapne", "/deletarMetaNapne", "/carregarMensagensNapne", "/enviarMensagemNapne", "/selecionaMensagemNapne", "/editarMensagemNapne", "/deletarMensagemNapne"})
+@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina", "/entraremtutoria", "/carregarMetasNapne", "/criarMetaNapne", "/selecionaMetaNapne", "/editarMetaNapne", "/deletarMetaNapne", "/carregarMensagensNapne", "/enviarMensagemNapne", "/selecionaMensagemNapne", "/editarMensagemNapne", "/deletarMensagemNapne", "/carregarAtendimentosNapne", "/gerarRelatorioUnitario", "/gerarRelatorioFinal"})
 public class RepresentanteNapneControl extends HttpServlet {
     RepresentanteNapne representanteNapne = new RepresentanteNapne();
     RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
@@ -150,6 +158,16 @@ public class RepresentanteNapneControl extends HttpServlet {
         else if(action.equals("/deletarMensagemNapne"))
         {
             deletarMensagem(request,response, id);
+        }
+        else if(action.equals("/carregarAtendimentosNapne"))
+        {
+            telaAtendimentos(request,response, id);
+        }
+        else if(action.equals("/gerarRelatorioUnitario")) {
+            gerarRelatorioUnitario(request,response, id);
+        }
+        else if(action.equals("/gerarRelatorioFinal")) {
+            gerarRelatorioFinal(request,response, id);
         }
         else
         {
@@ -692,5 +710,185 @@ public class RepresentanteNapneControl extends HttpServlet {
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
         response.sendRedirect("carregarMensagensNapne?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
+    protected void telaAtendimentos(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        ArrayList<Atendimento> atendimentos = new ArrayList<>();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimentos = atendimentoDao.retornarAtendimentos(Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("codigo",Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("representante", representanteNapne);
+        request.setAttribute("atendimentos",atendimentos);
+        RequestDispatcher rd = request.getRequestDispatcher("atendimentoNapne.jsp");
+        rd.forward(request,response);
+    }
+    protected void gerarRelatorioUnitario(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimento = atendimentoDao.retornarAtendimentoUnico(Integer.parseInt(request.getParameter("id")));
+        Document document = new Document();
+        try{
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition","inline;filename="+"Relatório.pdf");
+            PdfWriter.getInstance(document,response.getOutputStream());
+            document.open();
+            document.addTitle("Relatório Tutoria de Pares");
+            document.addAuthor("Sistema Tutória de Pares");
+            document.addKeywords("Java, IText , Project, Tutoria de Pares");
+            document.addSubject("add/edit document");
+            document.addCreator("Rodrigo Costa e Samuel Araújo");
+            ServletContext context = getServletContext();
+            String imagePath = context.getRealPath("/imagens/pdf/brasao.png");
+            Image imagem = Image.getInstance(imagePath);
+            imagem.setAlignment(Element.ALIGN_MIDDLE);
+            imagem.scaleToFit(70, 70);
+            document.add(imagem);
+            Paragraph institutoParagrafo = new Paragraph("INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA BAIANO.");
+            institutoParagrafo.setAlignment(Element.ALIGN_CENTER);
+            Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN, 19, BaseColor.BLACK);
+            institutoParagrafo.setFont(font);
+            document.add(institutoParagrafo);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            Paragraph titulo = new Paragraph("RELATÓRIO DE AVALIAÇÃO SEMANAL DO NAPNE:");
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            titulo.setFont(font);
+            titulo.setSpacingAfter(13f);
+            document.add(titulo);
+            PdfPTable tabela = new PdfPTable(1);
+            Font fontCelula = FontFactory.getFont(FontFactory.TIMES_ROMAN, 15, BaseColor.BLACK);
+            PdfPCell cell1 = new PdfPCell(new Phrase("Disciplina: "+tutoria.getDisciplina().getNome(),fontCelula));
+            cell1.setMinimumHeight(20f);
+            tabela.addCell(cell1);
+            PdfPCell cell2 = new PdfPCell(new Phrase("Data: "+atendimento.getData(),fontCelula));
+            cell2.setMinimumHeight(20f);
+            tabela.addCell(cell2);
+            PdfPCell cell3 = new PdfPCell(new Phrase("Tutor: "+tutoria.getTutor().getNome(),fontCelula));
+            cell3.setMinimumHeight(20f);
+            tabela.addCell(cell3);
+            PdfPCell cell4 = new PdfPCell(new Phrase("Tutorado: "+tutoria.getTutorado().getNome(),fontCelula));
+            cell4.setMinimumHeight(20f);
+            tabela.addCell(cell4);
+            PdfPCell cell5 = new PdfPCell(new Phrase("Docente: "+tutoria.getDisciplina().getProfessor().getNome(),fontCelula));
+            cell5.setMinimumHeight(20f);
+            tabela.addCell(cell5);
+            PdfPCell cell6 = new PdfPCell(new Phrase("Conteúdo Tratado: "+atendimento.getConteudo(),fontCelula));
+            cell6.setMinimumHeight(20f);
+            tabela.addCell(cell6);
+            document.add(tabela);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            Font fonte14 = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14);
+            Paragraph discursoParagraph = new Paragraph();
+            discursoParagraph.add(new Phrase("Eu, "+representanteNapne.getNome()+", declaro que o Tutor "+tutoria.getTutor().getNome() +" cumpriu a atividade semanal com carga horária de "+ atendimento.getCargaHoraria() +" hora(s), realizando todas as atividades planejadas.", fonte14));
+            discursoParagraph.add(Chunk.NEWLINE);
+            discursoParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
+            discursoParagraph.setIndentationLeft(70f);
+            discursoParagraph.setIndentationRight(70f);
+            document.add(discursoParagraph);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dataAtual = sdf.format(new Date());
+            Font fontecidade = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14, BaseColor.BLACK);
+            Paragraph cidadeDataParagraph = new Paragraph("Guanambi - Bahia, "+ dataAtual+ ".",fontecidade);
+            cidadeDataParagraph.setAlignment(Element.ALIGN_CENTER);
+            document.add(cidadeDataParagraph);
+            document.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    protected void gerarRelatorioFinal(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
 
+        ArrayList<Atendimento> atendimentos = new ArrayList<>();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimentos = atendimentoDao.retornarAtendimentos(Integer.parseInt(request.getParameter("codigo")));
+        Document document = new Document();
+        try{
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition","inline;filename="+"Relatório.pdf");
+            PdfWriter.getInstance(document,response.getOutputStream());
+            document.open();
+            document.addTitle("Relatório Tutoria de Pares");
+            document.addAuthor("Sistema Tutória de Pares");
+            document.addKeywords("Java, IText , Project, Tutoria de Pares");
+            document.addSubject("add/edit document");
+            document.addCreator("Rodrigo Costa e Samuel Araújo");
+            ServletContext context = getServletContext();
+            String imagePath = context.getRealPath("/imagens/pdf/brasao.png");
+            Image imagem = Image.getInstance(imagePath);
+            imagem.setAlignment(Element.ALIGN_MIDDLE);
+            imagem.scaleToFit(70, 70);
+            document.add(imagem);
+            Paragraph institutoParagrafo = new Paragraph("INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA BAIANO.");
+            institutoParagrafo.setAlignment(Element.ALIGN_CENTER);
+            Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN, 19, BaseColor.BLACK);
+            institutoParagrafo.setFont(font);
+            document.add(institutoParagrafo);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            Paragraph titulo = new Paragraph("RELATÓRIO DE TODOS ATENDIMENTOS DA TUTORIA:");
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            titulo.setFont(font);
+            titulo.setSpacingAfter(13f);
+            document.add(titulo);
+            PdfPTable tabela = new PdfPTable(1);
+            Font fontCelula = FontFactory.getFont(FontFactory.TIMES_ROMAN, 15, BaseColor.BLACK);
+            PdfPCell cell1 = new PdfPCell(new Phrase("Disciplina: "+tutoria.getDisciplina().getNome(),fontCelula));
+            cell1.setMinimumHeight(20f);
+            tabela.addCell(cell1);
+            PdfPCell cell3 = new PdfPCell(new Phrase("Tutor: "+tutoria.getTutor().getNome(),fontCelula));
+            cell3.setMinimumHeight(20f);
+            tabela.addCell(cell3);
+            PdfPCell cell4 = new PdfPCell(new Phrase("Tutorado: "+tutoria.getTutorado().getNome(),fontCelula));
+            cell4.setMinimumHeight(20f);
+            tabela.addCell(cell4);
+            PdfPCell cell5 = new PdfPCell(new Phrase("Docente: "+tutoria.getDisciplina().getProfessor().getNome(),fontCelula));
+            cell5.setMinimumHeight(20f);
+            tabela.addCell(cell5);
+            document.add(tabela);
+            document.add(Chunk.NEWLINE);
+            PdfPTable tabela2 = new PdfPTable(3);
+            Font fonteNegrito = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+            tabela2.addCell(new Phrase("Conteúdo", fonteNegrito));
+            tabela2.addCell(new Phrase("Carga Horária (Horas)", fonteNegrito));
+            tabela2.addCell(new Phrase("Dias", fonteNegrito));
+            int totalDeHoras=0;
+            int totalDeDias=0;
+            for (int i=0; i<atendimentos.size(); i++){
+                tabela2.addCell(atendimentos.get(i).getConteudo());
+                tabela2.addCell(Integer.toString(atendimentos.get(i).getCargaHoraria()));
+                tabela2.addCell(atendimentos.get(i).getData());
+                totalDeHoras+=atendimentos.get(i).getCargaHoraria();
+                totalDeDias++;
+            }
+            tabela2.addCell(new Phrase("Total", fonteNegrito));
+            tabela2.addCell(Integer.toString(totalDeHoras));
+            tabela2.addCell(Integer.toString(totalDeDias));
+            document.add(tabela2);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            Font fonte14 = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14);
+            Paragraph discursoParagraph = new Paragraph();
+            discursoParagraph.add(new Phrase("Eu, "+representanteNapne.getNome()+", declaro que esse documento é oficial.", fonte14));
+            discursoParagraph.add(Chunk.NEWLINE);
+            discursoParagraph.setAlignment(Element.ALIGN_CENTER);
+            discursoParagraph.setIndentationLeft(70f);
+            discursoParagraph.setIndentationRight(70f);
+            document.add(discursoParagraph);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dataAtual = sdf.format(new Date());
+            Font fontecidade = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14, BaseColor.BLACK);
+            Paragraph cidadeDataParagraph = new Paragraph("Guanambi - Bahia, "+ dataAtual+ ".",fontecidade);
+            cidadeDataParagraph.setAlignment(Element.ALIGN_CENTER);
+            document.add(cidadeDataParagraph);
+            document.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
 }

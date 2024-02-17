@@ -8,6 +8,7 @@ public class Tutoria {
     private Tutorado tutorado;
     private Disciplina disciplina;
     private ArrayList<Meta> metas = new ArrayList<>();
+    private ArrayList<Atendimento> atendimentos = new ArrayList<>();
     public Tutoria(){
 
     }
@@ -69,5 +70,13 @@ public class Tutoria {
 
     public void setMetas(Meta metas) {
         this.metas.add(metas);
+    }
+
+    public void setAtendimentos(ArrayList<Atendimento> atendimentos) {
+        this.atendimentos = atendimentos;
+    }
+
+    public ArrayList<Atendimento> getAtendimentos() {
+        return atendimentos;
     }
 }

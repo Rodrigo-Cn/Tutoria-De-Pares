@@ -1,11 +1,11 @@
 package main.controller;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import main.dao.TutoradoDao;
 import main.dao.TutoriaDao;
 import main.model.Tutorado;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import main.model.*;
 import main.dao.*;
 
-@WebServlet(urlPatterns = {"/tutoradohome", "/edicaoTutorado", "/loginTutoriaTutorado","/realizarEdicaoDoTutorado", "/voltarParaMainTutorado", "/entrarTutoriaTutorado", "/carregarMetasTutorado", "/carregarMensagensTutorado", "/enviarMensagemTutorado", "/selecionaMensagemTutorado", "/editarMensagemTutorado", "/deletarMensagemTutorado"})
+@WebServlet(urlPatterns = {"/tutoradohome", "/edicaoTutorado", "/loginTutoriaTutorado","/realizarEdicaoDoTutorado", "/voltarParaMainTutorado", "/entrarTutoriaTutorado", "/carregarMetasTutorado", "/criarMetaTutorado", "/carregarMensagensTutorado", "/enviarMensagemTutorado", "/selecionaMensagemTutorado", "/editarMensagemTutorado", "/deletarMensagemTutorado", "/carregarAtendimentosTutorado"})
 public class TutoradoControl extends HttpServlet {
     Tutorado tutorado = new Tutorado();
     ArrayList<Tutoria> tutorias = new ArrayList<>();
@@ -70,6 +70,10 @@ public class TutoradoControl extends HttpServlet {
         {
             irParaMetasTutorado(request,response,id);
         }
+        else if(action.equals("/criarMetaTutorado"))
+        {
+            criarMetaTutorado(request,response, id);
+        }
         else if(action.equals("/carregarMensagensTutorado"))
         {
             irParaMensagensTutorado(request,response, id);
@@ -90,6 +94,11 @@ public class TutoradoControl extends HttpServlet {
         {
             deletarMensagem(request,response, id);
         }
+        else if(action.equals("/carregarAtendimentosTutorado"))
+        {
+            telaAtendimentos(request,response, id);
+        }
+
         else
         {
             response.sendRedirect("login.jsp");
@@ -187,6 +196,22 @@ public class TutoradoControl extends HttpServlet {
         rd.forward(request,response);
     }
 
+    protected void criarMetaTutorado(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigo"));
+        String titulo = request.getParameter("nome-criar");
+        metasDao.criarMeta(codigoTutoria, titulo);
+
+        tutoria = tutoriaDao.retornaTutoria(codigoTutoria);
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        tutorado.setId(id);
+        tutoradoDao.selecionarTutorado(tutorado);
+        request.setAttribute("tutorado", tutorado);
+
+        response.sendRedirect("carregarMetasTutorado?id=" + id + "&codigo=" + codigoTutoria);
+    }
     protected void irParaMensagensTutorado(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         Meta meta2 = new Meta();
@@ -265,5 +290,17 @@ public class TutoradoControl extends HttpServlet {
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
         response.sendRedirect("carregarMensagensTutorado?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
+    }
+
+    protected void telaAtendimentos(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        ArrayList<Atendimento> atendimentos = new ArrayList<>();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimentos = atendimentoDao.retornarAtendimentos(Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("codigo",Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("tutorado", tutorado);
+        request.setAttribute("atendimentos",atendimentos);
+        RequestDispatcher rd = request.getRequestDispatcher("atendimentoTutorado.jsp");
+        rd.forward(request,response);
     }
 }

@@ -1,13 +1,19 @@
 package main.controller;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import main.dao.TutorDao;
 import main.dao.TutoriaDao;
+import main.model.Meta;
 import main.model.Tutor;
 import main.model.Tutoria;
 import main.model.*;
@@ -15,9 +21,11 @@ import main.dao.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-@WebServlet(urlPatterns = {"/tutorhome", "/edicaoTutor", "/loginTutoriaTutor", "/realizarEdicaoDoTutor", "/voltarParaMainTutor", "/entrarTutoriaTutor", "/criarMetaTutor", "/carregarMetasTutor", "/carregarMensagensTutor", "/enviarMensagemTutor", "/selecionaMensagemTutor", "/editarMensagemTutor", "/deletarMensagemTutor"})
+@WebServlet(urlPatterns = {"/tutorhome", "/edicaoTutor", "/loginTutoriaTutor", "/realizarEdicaoDoTutor", "/voltarParaMainTutor", "/entrarTutoriaTutor", "/carregarMetasTutor", "/carregarMensagensTutor", "/enviarMensagemTutor", "/selecionaMensagemTutor", "/editarMensagemTutor", "/deletarMensagemTutor", "/carregarAtendimentosTutor","/gerarRelatorioFinalTutor"})
 public class TutorControl extends HttpServlet {
     Tutor tutor = new Tutor();
     ArrayList<Tutoria> tutorias = new ArrayList<>();
@@ -71,10 +79,6 @@ public class TutorControl extends HttpServlet {
         {
             irParaMetasTutor(request,response,id);
         }
-        else if(action.equals("/criarMetaTutor"))
-        {
-            criarMetaTutor(request,response, id);
-        }
         else if(action.equals("/carregarMensagensTutor"))
         {
             irParaMensagensTutor(request,response, id);
@@ -94,6 +98,13 @@ public class TutorControl extends HttpServlet {
         else if(action.equals("/deletarMensagemTutor"))
         {
             deletarMensagem(request,response, id);
+        }
+        else if(action.equals("/carregarAtendimentosTutor"))
+        {
+            telaAtendimentos(request,response, id);
+        }
+        else if(action.equals("/gerarRelatorioFinalTutor")) {
+            gerarRelatorioFinal(request,response, id);
         }
         else
         {
@@ -167,23 +178,6 @@ public class TutorControl extends HttpServlet {
         request.setAttribute("tutor", tutor);
         RequestDispatcher rd = request.getRequestDispatcher("tutoriaTutor.jsp");
         rd.forward(request,response);
-    }
-
-    protected void criarMetaTutor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
-    {
-        int codigoTutoria = Integer.parseInt(request.getParameter("codigo"));
-        String titulo = request.getParameter("nome-criar");
-        metasDao.criarMeta(codigoTutoria, titulo);
-
-        tutoria = tutoriaDao.retornaTutoria(codigoTutoria);
-        metasDao.cadastraMetasNaTutoria(tutoria);
-        request.setAttribute("tutoria", tutoria);
-
-        tutor.setId(id);
-        tutorDao.selecionarTutor(tutor);
-        request.setAttribute("tutorado", tutor);
-
-        response.sendRedirect("carregarMetasTutor?id=" + id + "&codigo=" + codigoTutoria);
     }
 
     protected void irParaMetasTutor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
@@ -285,5 +279,108 @@ public class TutorControl extends HttpServlet {
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
         response.sendRedirect("carregarMensagensTutor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
-}
+    protected void telaAtendimentos(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        ArrayList<Atendimento> atendimentos = new ArrayList<>();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimentos = atendimentoDao.retornarAtendimentos(Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("codigo",Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("tutor", tutor);
+        request.setAttribute("atendimentos",atendimentos);
+        RequestDispatcher rd = request.getRequestDispatcher("atendimentoTutor.jsp");
+        rd.forward(request,response);
+    }
+    protected void gerarRelatorioFinal(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
 
+        ArrayList<Atendimento> atendimentos = new ArrayList<>();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimentos = atendimentoDao.retornarAtendimentos(Integer.parseInt(request.getParameter("codigo")));
+        Document document = new Document();
+        try{
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition","inline;filename="+"Relatório.pdf");
+            PdfWriter.getInstance(document,response.getOutputStream());
+            document.open();
+            document.addTitle("Relatório Tutoria de Pares");
+            document.addAuthor("Sistema Tutória de Pares");
+            document.addKeywords("Java, IText , Project, Tutoria de Pares");
+            document.addSubject("add/edit document");
+            document.addCreator("Rodrigo Costa e Samuel Araújo");
+            ServletContext context = getServletContext();
+            String imagePath = context.getRealPath("/imagens/pdf/brasao.png");
+            Image imagem = Image.getInstance(imagePath);
+            imagem.setAlignment(Element.ALIGN_MIDDLE);
+            imagem.scaleToFit(70, 70);
+            document.add(imagem);
+            Paragraph institutoParagrafo = new Paragraph("INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA BAIANO.");
+            institutoParagrafo.setAlignment(Element.ALIGN_CENTER);
+            Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN, 19, BaseColor.BLACK);
+            institutoParagrafo.setFont(font);
+            document.add(institutoParagrafo);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            Paragraph titulo = new Paragraph("RELATÓRIO DE TODOS ATENDIMENTOS DA TUTORIA:");
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            titulo.setFont(font);
+            titulo.setSpacingAfter(13f);
+            document.add(titulo);
+            PdfPTable tabela = new PdfPTable(1);
+            Font fontCelula = FontFactory.getFont(FontFactory.TIMES_ROMAN, 15, BaseColor.BLACK);
+            PdfPCell cell1 = new PdfPCell(new Phrase("Disciplina: "+tutoria.getDisciplina().getNome(),fontCelula));
+            cell1.setMinimumHeight(20f);
+            tabela.addCell(cell1);
+            PdfPCell cell3 = new PdfPCell(new Phrase("Tutor: "+tutoria.getTutor().getNome(),fontCelula));
+            cell3.setMinimumHeight(20f);
+            tabela.addCell(cell3);
+            PdfPCell cell4 = new PdfPCell(new Phrase("Tutorado: "+tutoria.getTutorado().getNome(),fontCelula));
+            cell4.setMinimumHeight(20f);
+            tabela.addCell(cell4);
+            PdfPCell cell5 = new PdfPCell(new Phrase("Docente: "+tutoria.getDisciplina().getProfessor().getNome(),fontCelula));
+            cell5.setMinimumHeight(20f);
+            tabela.addCell(cell5);
+            document.add(tabela);
+            document.add(Chunk.NEWLINE);
+            PdfPTable tabela2 = new PdfPTable(3);
+            Font fonteNegrito = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+            tabela2.addCell(new Phrase("Conteúdo", fonteNegrito));
+            tabela2.addCell(new Phrase("Carga Horária (Horas)", fonteNegrito));
+            tabela2.addCell(new Phrase("Dias", fonteNegrito));
+            int totalDeHoras=0;
+            int totalDeDias=0;
+            for (int i=0; i<atendimentos.size(); i++){
+                tabela2.addCell(atendimentos.get(i).getConteudo());
+                tabela2.addCell(Integer.toString(atendimentos.get(i).getCargaHoraria()));
+                tabela2.addCell(atendimentos.get(i).getData());
+                totalDeHoras+=atendimentos.get(i).getCargaHoraria();
+                totalDeDias++;
+            }
+            tabela2.addCell(new Phrase("Total", fonteNegrito));
+            tabela2.addCell(Integer.toString(totalDeHoras));
+            tabela2.addCell(Integer.toString(totalDeDias));
+            document.add(tabela2);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            Font fonte14 = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14);
+            Paragraph discursoParagraph = new Paragraph();
+            discursoParagraph.add(new Phrase("Documento não oficial, usado apenas como meio de vizualização.", fonte14));
+            discursoParagraph.add(Chunk.NEWLINE);
+            discursoParagraph.setAlignment(Element.ALIGN_CENTER);
+            discursoParagraph.setIndentationLeft(70f);
+            discursoParagraph.setIndentationRight(70f);
+            document.add(discursoParagraph);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dataAtual = sdf.format(new Date());
+            Font fontecidade = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14, BaseColor.BLACK);
+            Paragraph cidadeDataParagraph = new Paragraph("Guanambi - Bahia, "+ dataAtual+ ".",fontecidade);
+            cidadeDataParagraph.setAlignment(Element.ALIGN_CENTER);
+            document.add(cidadeDataParagraph);
+            document.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+}
