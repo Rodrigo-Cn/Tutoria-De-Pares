@@ -466,5 +466,27 @@ public class TutoriaDao {
         return tutoria;
     }
 
+    public static void editarTutoria(Tutoria tutoria)
+    {
+        ConectionDB con = new ConectionDB();
+        PreparedStatement ps = null;
+        String sql = "UPDATE tutoria SET senha=?, id_tutor=?, id_tutorado=? WHERE codigo=?";
+
+        try
+        {
+            ps = con.conectar().prepareStatement(sql);
+            ps.setString(1, tutoria.getSenha());
+            ps.setInt(2, tutoria.getTutor().getId());
+            ps.setInt(3, tutoria.getTutorado().getId());
+            ps.setInt(4, tutoria.getCodigo());
+            ps.executeUpdate();
+            ps.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
 
 }

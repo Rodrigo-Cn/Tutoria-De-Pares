@@ -42,7 +42,7 @@
                 <img id="title-section-image" src="imagens/atendimentoAdm/icons8-atendimento-100.png" alt="atendimento-100.png">Atendimentos
             </div>
             <div id="options-section">
-                <a href="" id="a"><img id="options-section-criar" src="imagens/atendimentoAdm/icons8-mais-100.png" alt=""></a>
+                <a href="irCriarAtendimentoTutor?codigo=<%=request.getAttribute("codigo")%>" id="a"><img id="options-section-criar" src="imagens/atendimentoAdm/icons8-mais-100.png" alt=""></a>
                 <% if (atendimentos.size() > 0) { %>
                     <a id="b" href="gerarRelatorioFinalTutor?codigo=<%= request.getAttribute("codigo") %>"><input  id="options-section-button" type="button" value="Relatório Final"></a>
                 <% } else{ %>

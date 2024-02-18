@@ -55,6 +55,90 @@
     font-size: 1.4rem;
 }
 
+.corpo-deletar-meta{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    visibility: hidden;
+}
+
+.abrir-deletar{
+   display: flex;
+   visibility: visible;
+
+}
+#fechar-criar-meta{
+    cursor: pointer;
+}
+.editar-meta{
+    display: flex;
+    flex-direction: column;
+    justify-content:first baseline;
+    align-items: center;
+    width: 30%;
+    height: 40%;
+    background-color: rgb(242, 247, 252);
+    border-radius: 10PX;
+}
+
+.titulo-editar-meta{
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: first baseline;
+}
+
+.text-editar-meta:focus{
+    border-radius:5px;
+    margin-top: 3%;
+    height: 12%;
+    width: 83%;
+    border: 3px rgb(14, 83, 83) solid;
+    box-shadow: 0px 0px 4px 2px black;
+    font-size: 1.2rem;
+}
+.button-editar-meta{
+    cursor: pointer;
+    border-radius:5px;
+    margin-top: 8.5%;
+    height: 12%;
+    width: 35%;
+    font-size: 1.2rem;
+    background-color: rgb(14, 83, 83);
+    color: white;
+    border: 3px white solid;
+}
+.button-editar-meta:hover{
+    cursor: pointer;
+    border-radius:5px;
+    margin-top: 8.5%;
+    height: 13%;
+    width: 36%;
+    font-size: 1.2rem;
+    background-color: white;
+    color: rgb(14, 83, 83);
+    border: 3px rgb(14, 83, 83) solid;
+    transition: 0.5s;
+}
+
+.titulo-editar{
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        margin-left: 10%;
+        color: rgb(14, 83, 83);
+    }
+
 #corpo-criar-meta {
     display: none;
     flex-direction: column;

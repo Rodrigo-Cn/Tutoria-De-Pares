@@ -1,4 +1,4 @@
-function confirmar(codigoMeta, codigo, id, codigoMensagem) {
+function confirmar(codigoTutoria, id_atendimento) {
     let elemento = document.getElementById("corpo-deletar-meta");
         elemento.classList.add("abrir-deletar");
 
@@ -18,6 +18,6 @@ function confirmar(codigoMeta, codigo, id, codigoMensagem) {
     botaoSim.addEventListener("click", function() {
 
 
-    window.location.href = "deletarAtendimentoNapne?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigo + "&id=" + id + "&codigoMensagem=" + codigoMensagem;
+    window.location.href = "deletarAtendimentoNapne?codigoTutoria=" + codigoTutoria + "&idAtendimento=" + id_atendimento;
     });
 }
