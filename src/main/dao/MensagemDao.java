@@ -31,7 +31,7 @@ public class MensagemDao
                 mensagem.setCodigoMensagem(rs.getInt(3));
 
                 idUsuario = rs.getInt(4);
-                mensagem.setUsuario(defineUsuarioDaMensagem(idUsuario));
+                mensagem.setUsuario(usuarioDao.retornaNomeIdUsuario(idUsuario));
 
                 meta.setMensagens(mensagem);
             }
@@ -40,51 +40,6 @@ public class MensagemDao
         catch (Exception e)
         {
             System.out.println(e);
-        }
-    }
-
-    public static Usuario defineUsuarioDaMensagem(int idUsuario)
-    {
-        UsuarioDao usuarioDao = new UsuarioDao();
-        ProfessorDao professorDao = new ProfessorDao();
-        TutoradoDao tutoradoDao = new TutoradoDao();
-        TutorDao tutorDao = new TutorDao();
-        RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
-
-        int cargoDoUsuario = usuarioDao.lerTipoUsuarioDisciplina(idUsuario);
-
-        if(cargoDoUsuario==1)
-        {
-            Professor professor = new Professor();
-            professor.setId(idUsuario);
-            professorDao.selecionarProfessor(professor);
-            return professor;
-        }
-        else if(cargoDoUsuario==2)
-        {
-            Tutor tutor = new Tutor();
-            tutor.setId(idUsuario);
-            tutorDao.selecionarTutor(tutor);
-            return tutor;
-
-        }
-        else if(cargoDoUsuario==3)
-        {
-            Tutorado tutorado = new Tutorado();
-            tutorado.setId(idUsuario);
-            tutoradoDao.selecionarTutorado(tutorado);
-            return tutorado;
-        }
-        else if(cargoDoUsuario==4)
-        {
-            RepresentanteNapne representanteNapne = new RepresentanteNapne();
-            representanteNapne.setId(idUsuario);
-            representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
-            return representanteNapne;
-        }
-        else
-        {
-            return null;
         }
     }
 

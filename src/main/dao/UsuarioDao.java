@@ -125,4 +125,33 @@ public class UsuarioDao {
         }
     }
 
+    public Usuario retornaNomeIdUsuario(int id)
+    {
+        Tutor tutor = new Tutor();
+        ConectionDB con = new ConectionDB();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT nome,id FROM usuario WHERE id=?";
+
+        try
+        {
+            ps = con.conectar().prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if(rs.next())
+            {
+                tutor.setNome(rs.getString(1));
+                tutor.setId(rs.getInt(2));
+            }
+            rs.close();
+            return tutor;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+
 }

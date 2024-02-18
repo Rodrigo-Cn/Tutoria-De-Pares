@@ -668,6 +668,10 @@ public class RepresentanteNapneControl extends HttpServlet {
 
     protected void enviarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
+        RepresentanteNapne representanteNapne = new RepresentanteNapne();
+        representanteNapne.setId(id);
+        representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
+
         Mensagem mensagem2 = new Mensagem();
         String mensagem = request.getParameter("mensagemUsuario");
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
@@ -675,7 +679,7 @@ public class RepresentanteNapneControl extends HttpServlet {
 
         mensagem2.setMsg(mensagem);
         mensagem2.setCodigoMeta(codigoMeta);
-        mensagem2.setUsuario(mensagemDao.defineUsuarioDaMensagem(id));
+        mensagem2.setUsuario(representanteNapne);
 
         mensagemDao.criarMensagem(mensagem2);
 

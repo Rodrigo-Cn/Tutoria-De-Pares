@@ -313,6 +313,10 @@ public class ProfessorControl extends HttpServlet
 
     protected void enviarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
+        Professor professor = new Professor();
+        professor.setId(id);
+        professorDao.selecionarProfessor(professor);
+
         Mensagem mensagem2 = new Mensagem();
         String mensagem = request.getParameter("mensagemUsuario");
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
@@ -320,7 +324,7 @@ public class ProfessorControl extends HttpServlet
 
         mensagem2.setMsg(mensagem);
         mensagem2.setCodigoMeta(codigoMeta);
-        mensagem2.setUsuario(mensagemDao.defineUsuarioDaMensagem(id));
+        mensagem2.setUsuario(professor);
 
         mensagemDao.criarMensagem(mensagem2);
 
