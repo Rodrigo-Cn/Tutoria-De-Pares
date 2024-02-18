@@ -16,6 +16,13 @@
 <link rel="stylesheet" href="styles/atendimentoAdm/atendimento.css">
 <body>
 
+   <div id="corpo-deletar-meta" class="corpo-deletar-meta">
+        <div class="editar-meta">
+         <div class="titulo-editar-meta"><div class="titulo-editar">Confirmar a exclusão?</div><img style="cursor: pointer;" id="fechar-deletar-meta" src="imagens/metas/icons8-fechar-janela-48.png" alt=""></div>
+         <input class="button-editar-meta" type="button" value="Sim" id="sim">
+        </div>
+    </div>
+
         <div id="navbar">
             <div id="navbar-logo">
                 <div><img src="imagens/atendimentoAdm/Frame 1.png" id="navbar-image" class="tracking-in-expand-forward-top" alt="frame.png"></div>
@@ -42,7 +49,7 @@
                 <img id="title-section-image" src="imagens/atendimentoAdm/icons8-atendimento-100.png" alt="atendimento-100.png">Atendimentos
             </div>
             <div id="options-section">
-                <a href="" id="a"><img id="options-section-criar" src="imagens/atendimentoAdm/icons8-mais-100.png" alt=""></a>
+                <a href="irCriarAtendimentoProfessor?codigo=<%=request.getAttribute("codigo")%>" id="a"><img id="options-section-criar" src="imagens/atendimentoAdm/icons8-mais-100.png" alt=""></a>
                 <% if (atendimentos.size() > 0) { %>
                     <a id="b" href="gerarRelatorioFinalProfessor?codigo=<%= request.getAttribute("codigo") %>"><input  id="options-section-button" type="button" value="Relatório Final"></a>
                 <% } else{ %>
@@ -63,7 +70,7 @@
                 <div class="card">
                     <div class="card-title">
                         <div class="card-title1">• <%= atendimentos.get(i).getConteudo() %></div>
-                        <div class="card-title2"><a href="gerarRelatorioUnitarioProfessor?id=<%= atendimentos.get(i).getId() %>" target="_blank"><img src="imagens/atendimentoAdm/icons8-relatório-100.png" alt="icons8-relatório-100.png"></a><a href=""><img src="imagens/atendimentoAdm/icons8-configuração-100.png" alt=""></a><a href=""><img src="imagens/atendimentoAdm/icons8-lixo-100.png" alt=""></a></div>
+                        <div class="card-title2"><a href="gerarRelatorioUnitarioProfessor?id=<%= atendimentos.get(i).getId() %>" target="_blank"><img src="imagens/atendimentoAdm/icons8-relatório-100.png" alt="icons8-relatório-100.png"></a><a href=""><img src="imagens/atendimentoAdm/icons8-configuração-100.png" alt=""></a><a onclick="confirmar(<%= request.getAttribute("codigo") %>, <%= atendimentos.get(i).getId()%>)"><img src="imagens/atendimentoAdm/icons8-lixo-100.png" alt=""></a></div>
                     </div>
                     <div class="card-section">
                            <div>Data: <%= atendimentos.get(i).getData() %></div>
@@ -97,6 +104,7 @@
             </div>
         </div>
     </div>
+<script src="scripts/atendimento/deletarAtendimentoProfessor.js"></script>
 
 </body>
 </html>

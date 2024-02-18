@@ -4,13 +4,13 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import main.dao.TutorDao;
 import main.dao.TutoriaDao;
 import main.model.Meta;
@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-@WebServlet(urlPatterns = {"/tutorhome", "/edicaoTutor", "/loginTutoriaTutor", "/realizarEdicaoDoTutor", "/voltarParaMainTutor", "/entrarTutoriaTutor", "/carregarMetasTutor", "/carregarMensagensTutor", "/enviarMensagemTutor", "/selecionaMensagemTutor", "/editarMensagemTutor", "/deletarMensagemTutor", "/carregarAtendimentosTutor","/gerarRelatorioFinalTutor"})
+@WebServlet(urlPatterns = {"/tutorhome", "/edicaoTutor", "/loginTutoriaTutor", "/realizarEdicaoDoTutor", "/voltarParaMainTutor", "/entrarTutoriaTutor", "/criarMetaTutor", "/carregarMetasTutor", "/carregarMensagensTutor", "/enviarMensagemTutor", "/selecionaMensagemTutor", "/editarMensagemTutor", "/deletarMensagemTutor", "/carregarAtendimentosTutor","/gerarRelatorioFinalTutor", "/irCriarAtendimentoTutor", "/criarAtendimentoTutor"})
 public class TutorControl extends HttpServlet {
     Tutor tutor = new Tutor();
     ArrayList<Tutoria> tutorias = new ArrayList<>();
@@ -79,6 +79,10 @@ public class TutorControl extends HttpServlet {
         {
             irParaMetasTutor(request,response,id);
         }
+        else if(action.equals("/criarMetaTutor"))
+        {
+            criarMetaTutor(request,response, id);
+        }
         else if(action.equals("/carregarMensagensTutor"))
         {
             irParaMensagensTutor(request,response, id);
@@ -105,6 +109,13 @@ public class TutorControl extends HttpServlet {
         }
         else if(action.equals("/gerarRelatorioFinalTutor")) {
             gerarRelatorioFinal(request,response, id);
+        }
+        else if(action.equals("/irCriarAtendimentoTutor"))
+        {
+            irCriarAtendimento(request,response, id);
+        }
+        else if(action.equals("/criarAtendimentoTutor")) {
+            criarAtendimento(request,response, id);
         }
         else
         {
@@ -383,5 +394,47 @@ public class TutorControl extends HttpServlet {
         }
     }
 
-}
+    protected void criarMetaTutor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        int codigoTutoria = Integer.parseInt(request.getParameter("codigo"));
+        String titulo = request.getParameter("nome-criar");
+        metasDao.criarMeta(codigoTutoria, titulo);
 
+        tutoria = tutoriaDao.retornaTutoria(codigoTutoria);
+        metasDao.cadastraMetasNaTutoria(tutoria);
+        request.setAttribute("tutoria", tutoria);
+
+        tutor.setId(id);
+        tutorDao.selecionarTutor(tutor);
+        request.setAttribute("tutor", tutor);
+
+        response.sendRedirect("carregarMetasTutor?id=" + id + "&codigo=" + codigoTutoria);
+    }
+
+    protected void irCriarAtendimento(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        request.setAttribute("tutoria", tutoria);
+        request.setAttribute("tutor", tutor);
+        RequestDispatcher rd = request.getRequestDispatcher("criarAtendimentoTutor.jsp");
+        rd.forward(request, response);
+    }
+
+    protected void criarAtendimento(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+
+        atendimento.setData(request.getParameter("date"));
+        atendimento.setHorario(request.getParameter("horario"));
+        atendimento.setCargaHoraria(Integer.parseInt(request.getParameter("cargaHoraria")));
+        atendimento.setLocal(request.getParameter("local"));
+        atendimento.setConteudo(request.getParameter("conteudoTratado"));
+
+        atendimentoDao.criarAtendimento(atendimento, Integer.parseInt(request.getParameter("codigo")));
+        int id_atendimento = atendimentoDao.retornaUltimoIdAtendimento();
+        atendimento.setId(id_atendimento);
+
+        response.sendRedirect("carregarAtendimentosTutor?id=" + id + "&codigo=" + Integer.parseInt(request.getParameter("codigo")));
+    }
+
+}

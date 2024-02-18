@@ -4,13 +4,13 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import main.dao.DisciplinaDao;
 import main.dao.RepresentanteNapneDao;
 import main.dao.TutoriaDao;
@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina", "/entraremtutoria", "/carregarMetasNapne", "/criarMetaNapne", "/selecionaMetaNapne", "/editarMetaNapne", "/deletarMetaNapne", "/carregarMensagensNapne", "/enviarMensagemNapne", "/selecionaMensagemNapne", "/editarMensagemNapne", "/deletarMensagemNapne", "/carregarAtendimentosNapne", "/gerarRelatorioUnitario", "/gerarRelatorioFinal"})
+@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina", "/entraremtutoria", "/carregarMetasNapne", "/criarMetaNapne", "/selecionaMetaNapne", "/editarMetaNapne", "/deletarMetaNapne", "/carregarMensagensNapne", "/enviarMensagemNapne", "/selecionaMensagemNapne", "/editarMensagemNapne", "/deletarMensagemNapne", "/carregarAtendimentosNapne", "/gerarRelatorioUnitario", "/gerarRelatorioFinal", "/editarTutoriaNapne", "/realizarEdicaoTutoria", "/irCriarAtendimentoNapne", "/criarAtendimentoNapne", "/deletarAtendimentoNapne"})
 public class RepresentanteNapneControl extends HttpServlet {
     RepresentanteNapne representanteNapne = new RepresentanteNapne();
     RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
@@ -168,6 +168,21 @@ public class RepresentanteNapneControl extends HttpServlet {
         }
         else if(action.equals("/gerarRelatorioFinal")) {
             gerarRelatorioFinal(request,response, id);
+        }
+        else if(action.equals("/editarTutoriaNapne")) {
+            editarTutoria(request,response, id);
+        }
+        else if(action.equals("/realizarEdicaoTutoria")) {
+            realizarEdicaoTutoria(request,response, id);
+        }
+        else if(action.equals("/irCriarAtendimentoNapne")) {
+            irCriarAtendimentoNapne(request,response, id);
+        }
+        else if(action.equals("/criarAtendimentoNapne")) {
+            criarAtendimentoNapne(request,response, id);
+        }
+        else if(action.equals("/deletarAtendimentoNapne")) {
+            deletarAtendimentoNapne(request,response, id);
         }
         else
         {
@@ -891,4 +906,132 @@ public class RepresentanteNapneControl extends HttpServlet {
             System.out.println(e);
         }
     }
+
+    protected void editarTutoria(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        TutoriaDao tutoriaDao = new TutoriaDao();
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        request.setAttribute("tutoria", tutoria);
+        request.setAttribute("representante", representanteNapne);
+
+        RequestDispatcher rd = request.getRequestDispatcher("editarTutoriaNapne.jsp");
+        rd.forward(request,response);
+    }
+
+    protected void realizarEdicaoTutoria(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        TutoriaDao tutoriaDao = new TutoriaDao();
+        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
+
+        Integer idTutor = definirIdDeTutor(request,response);
+        Integer idTutorado = definirIdDeTutorado(request,response);
+
+        if(usuarioDao.verificaSeUsuarioExiste(idTutor) && usuarioDao.verificaSeUsuarioExiste(idTutorado))
+        {
+
+            if(idTutorado!=null)
+            {
+                if(usuarioDao.lerTipoUsuarioDisciplina(idTutorado) != 3)
+                {
+                    request.setAttribute("mensagem", "Coloque apenas ID de tutorado no campo do tutorado!");
+                    request.setAttribute("tutoria", tutoria);
+                    request.setAttribute("representante", representanteNapne);
+                    RequestDispatcher rd = request.getRequestDispatcher("editarTutoriaNapne.jsp");
+                    rd.forward(request,response);
+                    return;
+                }
+            }
+
+            if(idTutor!=null)
+            {
+                if(usuarioDao.lerTipoUsuarioDisciplina(idTutor) != 2)
+                {
+                    request.setAttribute("mensagem", "Coloque apenas ID de tutor no compo do tutor!");
+                    request.setAttribute("tutoria", tutoria);
+                    request.setAttribute("representante", representanteNapne);
+                    RequestDispatcher rd = request.getRequestDispatcher("editarTutoriaNapne.jsp");
+                    return;
+                }
+            }
+            tutorado.setId(idTutorado);
+            tutoradoDao.selecionarTutorado(tutorado) ;
+            tutoria.setTutorado(tutorado);
+            tutor.setId(idTutor);
+            tutorDao.selecionarTutor(tutor) ;
+            tutoria.setTutor(tutor);
+            tutoria.setSenha(request.getParameter("senha"));
+            tutoriaDao.editarTutoria(tutoria);
+            request.setAttribute("tutoria", tutoria);
+            request.setAttribute("representante", representanteNapne);
+            RequestDispatcher rd = request.getRequestDispatcher("tutoriaNapne.jsp");
+            rd.forward(request,response);
+
+        }
+        else if(usuarioDao.verificaSeUsuarioExiste(idTutor) == false && usuarioDao.verificaSeUsuarioExiste(idTutorado) == true)
+        {
+            request.setAttribute("mensagem", "Tutor inserido não existe!");
+            request.setAttribute("tutoria", tutoria);
+            request.setAttribute("representante", representanteNapne);
+            RequestDispatcher rd = request.getRequestDispatcher("editarTutoriaNapne.jsp");
+            rd.forward(request, response);
+            return;
+        }
+        else if(usuarioDao.verificaSeUsuarioExiste(idTutor) == true && usuarioDao.verificaSeUsuarioExiste(idTutorado) == false)
+        {
+            request.setAttribute("mensagem", "Tutorado inserido não existe!");
+            request.setAttribute("tutoria", tutoria);
+            request.setAttribute("representante", representanteNapne);
+            RequestDispatcher rd = request.getRequestDispatcher("editarTutoriaNapne.jsp");
+            rd.forward(request, response);
+            return;
+        }
+        else
+        {
+            request.setAttribute("mensagem", "Tanto o tutor quando o tutorado inseridos não existem!");
+            request.setAttribute("tutoria", tutoria);
+            request.setAttribute("representante", representanteNapne);
+            RequestDispatcher rd = request.getRequestDispatcher("editarTutoriaNapne.jsp");
+            rd.forward(request, response);
+            return;
+        }
+
+    }
+
+    protected void irCriarAtendimentoNapne(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        request.setAttribute("tutoria", tutoria);
+        request.setAttribute("representante", representanteNapne);
+        RequestDispatcher rd = request.getRequestDispatcher("criarAtendimentoNapne.jsp");
+        rd.forward(request, response);
+    }
+
+    protected void criarAtendimentoNapne(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+
+        atendimento.setData(request.getParameter("date"));
+        atendimento.setHorario(request.getParameter("horario"));
+        atendimento.setCargaHoraria(Integer.parseInt(request.getParameter("cargaHoraria")));
+        atendimento.setLocal(request.getParameter("local"));
+        atendimento.setConteudo(request.getParameter("conteudoTratado"));
+
+        atendimentoDao.criarAtendimento(atendimento, Integer.parseInt(request.getParameter("codigo")));
+        int id_atendimento = atendimentoDao.retornaUltimoIdAtendimento();
+        atendimento.setId(id_atendimento);
+
+        response.sendRedirect("carregarAtendimentosNapne?id=" + id + "&codigo=" + Integer.parseInt(request.getParameter("codigo")));
+    }
+
+    protected void deletarAtendimentoNapne(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimento.setId(Integer.parseInt(request.getParameter("idAtendimento")));
+        atendimentoDao.deletarAtendimento(atendimento);
+
+        response.sendRedirect("carregarAtendimentosNapne?id=" + id + "&codigo=" + Integer.parseInt(request.getParameter("codigoTutoria")));
+    }
+
+
 }

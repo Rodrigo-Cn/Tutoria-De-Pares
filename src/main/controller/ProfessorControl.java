@@ -4,7 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import jakarta.servlet.ServletContext;
+import javax.servlet.ServletContext;
 import main.dao.*;
 import main.model.Disciplina;
 import main.model.Meta;
@@ -12,12 +12,12 @@ import main.model.Professor;
 import main.model.Tutoria;
 
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.Date;
 
 import main.model.*;
 
-@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor", "/entrarTutoriaProfessor", "/carregarMetasProfessor", "/criarMetaProfessor", "/selecionaMetaProfessor", "/editarMetaProfessor", "/deletarMetaProfessor", "/carregarMensagensProfessor", "/enviarMensagemProfessor", "/selecionaMensagemProfessor", "/editarMensagemProfessor", "/deletarMensagemProfessor", "/carregarAtendimentosProfessor", "/gerarRelatorioUnitarioProfessor", "/gerarRelatorioFinalProfessor"})
+@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor", "/entrarTutoriaProfessor", "/carregarMetasProfessor", "/criarMetaProfessor", "/selecionaMetaProfessor", "/editarMetaProfessor", "/deletarMetaProfessor", "/carregarMensagensProfessor", "/enviarMensagemProfessor", "/selecionaMensagemProfessor", "/editarMensagemProfessor", "/deletarMensagemProfessor", "/carregarAtendimentosProfessor", "/gerarRelatorioUnitarioProfessor", "/gerarRelatorioFinalProfessor", "/irCriarAtendimentoProfessor", "/criarAtendimentoProfessor", "/deletarAtendimentoProfessor"})
 public class ProfessorControl extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -132,6 +132,15 @@ public class ProfessorControl extends HttpServlet
         }
         else if(action.equals("/gerarRelatorioFinalProfessor")) {
             gerarRelatorioFinal(request,response, id);
+        }
+        else if(action.equals("/irCriarAtendimentoProfessor")) {
+            irCriarAtendimento(request,response, id);
+        }
+        else if(action.equals("/criarAtendimentoProfessor")) {
+            criarAtendimento(request,response, id);
+        }
+        else if(action.equals("/deletarAtendimentoProfessor")) {
+            deletarAtendimento(request,response, id);
         }
         else
         {
@@ -542,5 +551,41 @@ public class ProfessorControl extends HttpServlet
         }catch (Exception e){
             System.out.println(e);
         }
+    }
+
+    protected void irCriarAtendimento(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        request.setAttribute("tutoria", tutoria);
+        request.setAttribute("professor", professor);
+        RequestDispatcher rd = request.getRequestDispatcher("criarAtendimentoProfessor.jsp");
+        rd.forward(request, response);
+    }
+
+    protected void criarAtendimento(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+
+        atendimento.setData(request.getParameter("date"));
+        atendimento.setHorario(request.getParameter("horario"));
+        atendimento.setCargaHoraria(Integer.parseInt(request.getParameter("cargaHoraria")));
+        atendimento.setLocal(request.getParameter("local"));
+        atendimento.setConteudo(request.getParameter("conteudoTratado"));
+
+        atendimentoDao.criarAtendimento(atendimento, Integer.parseInt(request.getParameter("codigo")));
+        int id_atendimento = atendimentoDao.retornaUltimoIdAtendimento();
+        atendimento.setId(id_atendimento);
+
+        response.sendRedirect("carregarAtendimentosProfessor?id=" + id + "&codigo=" + Integer.parseInt(request.getParameter("codigo")));
+    }
+
+    protected void deletarAtendimento(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimento.setId(Integer.parseInt(request.getParameter("idAtendimento")));
+        atendimentoDao.deletarAtendimento(atendimento);
+
+        response.sendRedirect("carregarAtendimentosProfessor?id=" + id + "&codigo=" + Integer.parseInt(request.getParameter("codigoTutoria")));
     }
 }
