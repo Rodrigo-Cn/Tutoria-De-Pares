@@ -375,6 +375,8 @@ public class RepresentanteNapneControl extends HttpServlet {
     }
     protected void criarTutoria(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
+        /* AQUI EXISTEM VÁRIAS CONDIÇÕES QUE IMPEDEM QUE O USUÁRIO COMETA ERROS AO CRIAR UMA TUTORIA.
+           POR EXEMPLO, AQUI NÓS IMPEDIMOS QUE IDS DE TUTOR SEJAM INSERIDOS EM TUTORADO E VICE-VERSA. */
         representanteNapne.setId(id);
         representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
         request.setAttribute("representante", representanteNapne);

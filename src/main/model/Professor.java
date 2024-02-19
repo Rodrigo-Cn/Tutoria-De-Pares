@@ -3,7 +3,7 @@ package main.model;
 import java.util.ArrayList;
 
 public class Professor extends Usuario{
-    ArrayList<String> disciplinas = new ArrayList<>();
+    private  ArrayList<String> disciplinas = new ArrayList<>();
     public Professor(){
 
     }

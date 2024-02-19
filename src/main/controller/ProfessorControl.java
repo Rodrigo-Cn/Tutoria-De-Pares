@@ -274,6 +274,7 @@ public class ProfessorControl extends HttpServlet
 
     protected void deletarMeta(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
+        //AQUI AO DELETAR UMA META, É NECESSÁIO APAGAR TODAS AS MENSAGENS QUE ESTÃO NELE ANTES. POR ISSO A CONDIÇÃO E O LAÇODE REPETIÇÃO
         metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
         mensagemDao.cadastrarMensagensNaMeta(metas);
 
