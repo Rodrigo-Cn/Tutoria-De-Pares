@@ -24,12 +24,12 @@ SEGUNDA PARTE: CONECTANDO OS ARQUIVOS COM O INTELIJ
 
 3°: Para conectar o ItextPdf com o Intelij, assista esse vídeo início até o 0:33: https://www.youtube.com/watch?v=LWqduyt1ck0&ab_channel=CodeOpsTech
 
-3°: Agora, vá até o pacote em que as classes controller estão locazliadas. Se o Intelij não reconhecer o servlet mesmo após as conexões, vá nas importações de cada classe (elas ficam no topo do código) e substitua a palavra "jakarta" por "javax" ou vice-versa. 
+4°: Agora, vá até o pacote em que as classes controller estão locazliadas. Se o Intelij não reconhecer o servlet mesmo após as conexões, vá nas importações de cada classe (elas ficam no topo do código) e substitua a palavra "jakarta" por "javax" ou vice-versa. 
 Faça isso com todas as classes Controller.
 
-4°: Acesse o nosso arquivo .txt de nome "sql" e crie tanto o banco de dados quanto as tabelas necessárias. 
+5°: Acesse o nosso arquivo .txt de nome "sql" e crie tanto o banco de dados quanto as tabelas necessárias. 
 
-5°: Direcione-se até a classe "ConnectionDB" que está localizada no pacote "dao". Lá, substitua o driver, o url, o user e a password para que fiquem de acordo com o MySql do seu computador.
+6°: Direcione-se até a classe "ConnectionDB" que está localizada no pacote "dao". Lá, substitua o driver, o url, o user e a password para que fiquem de acordo com o MySql do seu computador.
 
 TERCEIRA ETAPA: EXECUTAR O CÓDIGO:
 
