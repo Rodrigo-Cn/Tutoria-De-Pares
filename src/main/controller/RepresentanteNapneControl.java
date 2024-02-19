@@ -4,13 +4,13 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import main.dao.DisciplinaDao;
 import main.dao.RepresentanteNapneDao;
 import main.dao.TutoriaDao;
@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina", "/entraremtutoria", "/carregarMetasNapne", "/criarMetaNapne", "/selecionaMetaNapne", "/editarMetaNapne", "/deletarMetaNapne", "/carregarMensagensNapne", "/enviarMensagemNapne", "/selecionaMensagemNapne", "/editarMensagemNapne", "/deletarMensagemNapne", "/carregarAtendimentosNapne", "/gerarRelatorioUnitario", "/gerarRelatorioFinal", "/editarTutoriaNapne", "/realizarEdicaoTutoria", "/irCriarAtendimentoNapne", "/criarAtendimentoNapne", "/deletarAtendimentoNapne"})
+@WebServlet(urlPatterns = {"/napnehome","/cadastrarnapne","/telacadastronapne","/buscartutoria", "/edicaoNapne","/realizarEdicaoDoNapne", "/voltarParaMainNapne", "/menudisciplinas", "/criardisciplina", "/buscardisciplina", "/deletardisciplina", "/irCriarTutoria", "/criarTutoria", "/editarDisciplina", "/editandoDisciplina", "/entraremtutoria", "/carregarMetasNapne", "/criarMetaNapne", "/selecionaMetaNapne", "/editarMetaNapne", "/deletarMetaNapne", "/carregarMensagensNapne", "/enviarMensagemNapne", "/selecionaMensagemNapne", "/editarMensagemNapne", "/deletarMensagemNapne", "/carregarAtendimentosNapne", "/gerarRelatorioUnitario", "/gerarRelatorioFinal", "/editarTutoriaNapne", "/realizarEdicaoTutoria", "/irCriarAtendimentoNapne", "/criarAtendimentoNapne", "/deletarAtendimentoNapne", "/editandoAtendimentoNapne", "/editarAtendimentoNapne"})
 public class RepresentanteNapneControl extends HttpServlet {
     RepresentanteNapne representanteNapne = new RepresentanteNapne();
     RepresentanteNapneDao representanteNapneDao = new RepresentanteNapneDao();
@@ -184,6 +184,9 @@ public class RepresentanteNapneControl extends HttpServlet {
         else if(action.equals("/deletarAtendimentoNapne")) {
             deletarAtendimentoNapne(request,response, id);
         }
+        else if(action.equals("/editandoAtendimentoNapne")) {
+            editandoAtendimentoNapne(request,response, id);
+        }
         else
         {
             response.sendRedirect("login.jsp");
@@ -215,6 +218,10 @@ public class RepresentanteNapneControl extends HttpServlet {
         else if (action.equals("/criardisciplina"))
         {
             criarDisciplina(request,response);
+        }
+        else if (action.equals("/editarAtendimentoNapne"))
+        {
+            editarAtendimento(request,response);
         }
         else
         {
@@ -526,7 +533,12 @@ public class RepresentanteNapneControl extends HttpServlet {
                 disciplinaDao.editarDisciplina(disciplina);
                 String mensagem = "Disciplina editada com Sucesso.";
                 request.setAttribute("mensagemErro", mensagem);
-            } else {
+            }  else if (usuarioDao.lerTipoUsuarioDisciplina(disciplina.getProfessor().getId())==0){
+                disciplinaDao.editarDisciplina(disciplina);
+                String mensagem = "Disciplina editada com Sucesso.";
+                request.setAttribute("mensagemErro", mensagem);
+            }
+            else {
                 String mensagem = "Código de Professor está Incorreto.";
                 request.setAttribute("mensagemErro", mensagem);
             }
@@ -1036,6 +1048,28 @@ public class RepresentanteNapneControl extends HttpServlet {
 
         response.sendRedirect("carregarAtendimentosNapne?id=" + id + "&codigo=" + Integer.parseInt(request.getParameter("codigoTutoria")));
     }
-
-
+    protected void editandoAtendimentoNapne(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimento = atendimentoDao.retornarAtendimento(Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("tutoria",tutoria);
+        request.setAttribute("representante",representanteNapne);
+        request.setAttribute("atendimento",atendimento);
+        RequestDispatcher rd = request.getRequestDispatcher("editarAtendimento.jsp");
+        rd.forward(request,response);
+    }
+    protected void editarAtendimento(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimento.setCargaHoraria(Integer.parseInt(request.getParameter("cargaHoraria")));
+        atendimento.setData(request.getParameter("date"));
+        atendimento.setId(Integer.parseInt(request.getParameter("id2")));
+        atendimento.setLocal(request.getParameter("local"));
+        atendimento.setHorario(request.getParameter("horario"));
+        atendimento.setConteudo(request.getParameter("conteudoTratado"));
+        atendimentoDao.editarAtendimento(atendimento);
+        response.sendRedirect("carregarAtendimentosNapne?"+ "codigo=" + tutoria.getCodigo());
+    }
 }

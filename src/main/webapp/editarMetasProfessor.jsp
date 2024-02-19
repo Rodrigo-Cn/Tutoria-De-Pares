@@ -18,7 +18,7 @@
     Meta metas = (Meta) request.getAttribute("metas");
     %>
     <div id="corpo-editar-meta" style="display: flex">
-        <form class="editar-meta" action="editarMetaProfessor" id="editarMeta" onsubmit="return validarFormulario()">
+        <form class="editar-meta" action="editarMetaProfessor" method="post" id="editarMeta" onsubmit="return validarFormulario()">
             <div class="titulo-editar-meta"><div class="titulo-editar">Editar Nome</div> <a href="carregarMetasProfessor?id=<%=((Professor) request.getAttribute("professor")).getId()%>&codigo=<%=((Tutoria) request.getAttribute("tutoria")).getCodigo()%>"> <img id="fechar-editar-meta" src="imagens/metas/icons8-fechar-janela-48.png" alt=""> </a> </div>
              <%
                if (metas != null) { %>

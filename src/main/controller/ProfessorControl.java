@@ -4,7 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import main.dao.*;
 import main.model.Disciplina;
 import main.model.Meta;
@@ -12,12 +12,12 @@ import main.model.Professor;
 import main.model.Tutoria;
 
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.Date;
 
 import main.model.*;
 
-@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor", "/entrarTutoriaProfessor", "/carregarMetasProfessor", "/criarMetaProfessor", "/selecionaMetaProfessor", "/editarMetaProfessor", "/deletarMetaProfessor", "/carregarMensagensProfessor", "/enviarMensagemProfessor", "/selecionaMensagemProfessor", "/editarMensagemProfessor", "/deletarMensagemProfessor", "/carregarAtendimentosProfessor", "/gerarRelatorioUnitarioProfessor", "/gerarRelatorioFinalProfessor", "/irCriarAtendimentoProfessor", "/criarAtendimentoProfessor", "/deletarAtendimentoProfessor"})
+@WebServlet(urlPatterns = {"/professorhome", "/loginTutoriaProfessor", "/voltarParaMainProfessor", "/realizarEdicaoDoProfessor", "/edicaoProfessor", "/entrarTutoriaProfessor", "/carregarMetasProfessor", "/criarMetaProfessor", "/selecionaMetaProfessor", "/editarMetaProfessor", "/deletarMetaProfessor", "/carregarMensagensProfessor", "/enviarMensagemProfessor", "/selecionaMensagemProfessor", "/editarMensagemProfessor", "/deletarMensagemProfessor", "/carregarAtendimentosProfessor", "/gerarRelatorioUnitarioProfessor", "/gerarRelatorioFinalProfessor", "/irCriarAtendimentoProfessor", "/criarAtendimentoProfessor", "/deletarAtendimentoProfessor", "/editandoAtendimentoProfessor", "/editarAtendimentoProfessor"})
 public class ProfessorControl extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -75,10 +75,6 @@ public class ProfessorControl extends HttpServlet
         {
             irParaEdicao(request, response, id);
         }
-        else if(action.equals("/realizarEdicaoDoProfessor"))
-        {
-            atualizarDadosProfessor(request,response, id);
-        }
         else if(action.equals(("/entrarTutoriaProfessor")))
         {
             irParaTutoriaProfessor(request,response,id);
@@ -87,17 +83,9 @@ public class ProfessorControl extends HttpServlet
         {
             irParaMetasProfessor(request,response,id);
         }
-        else if(action.equals("/criarMetaProfessor"))
-        {
-            criarMetaProfessor(request,response, id);
-        }
         else if(action.equals("/selecionaMetaProfessor"))
         {
             selecionaMeta(request,response, id);
-        }
-        else if(action.equals("/editarMetaProfessor"))
-        {
-            editarMeta(request,response, id);
         }
         else if(action.equals("/deletarMetaProfessor"))
         {
@@ -106,10 +94,6 @@ public class ProfessorControl extends HttpServlet
         else if(action.equals("/carregarMensagensProfessor"))
         {
             irParaMensagensProfessor(request,response, id);
-        }
-        else if(action.equals("/enviarMensagemProfessor"))
-        {
-            enviarMensagem(request,response, id);
         }
         else if(action.equals("/selecionaMensagemProfessor"))
         {
@@ -142,9 +126,49 @@ public class ProfessorControl extends HttpServlet
         else if(action.equals("/deletarAtendimentoProfessor")) {
             deletarAtendimento(request,response, id);
         }
+        else if(action.equals("/editandoAtendimentoProfessor")) {
+            editandoAtendimento(request,response);
+        }
         else
         {
             response.sendRedirect("login.jsp");
+        }
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getServletPath();
+        String idParameter = request.getParameter("id");
+        int id;
+
+        if (idParameter != null && !idParameter.isEmpty()) {
+            try {
+                id = Integer.parseInt(idParameter);
+            } catch (NumberFormatException e) {
+                id = professor.getId();
+            }
+        } else {
+            id =  professor.getId();
+        }
+
+        if(action.equals("/editarAtendimentoProfessor"))
+        {
+            editarAtendimento(request,response);
+        }
+        else if(action.equals("/realizarEdicaoDoProfessor"))
+        {
+            atualizarDadosProfessor(request,response, id);
+        }
+        else if(action.equals("/criarMetaProfessor"))
+        {
+            criarMetaProfessor(request,response, id);
+        }
+        else if(action.equals("/editarMetaProfessor"))
+        {
+            editarMeta(request,response, id);
+        }
+        else if(action.equals("/enviarMensagemProfessor"))
+        {
+            enviarMensagem(request,response, id);
         }
     }
 
@@ -591,5 +615,29 @@ public class ProfessorControl extends HttpServlet
         atendimentoDao.deletarAtendimento(atendimento);
 
         response.sendRedirect("carregarAtendimentosProfessor?id=" + id + "&codigo=" + Integer.parseInt(request.getParameter("codigoTutoria")));
+    }
+    protected void editandoAtendimento(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimento = atendimentoDao.retornarAtendimento(Integer.parseInt(request.getParameter("codigo")));
+        request.setAttribute("tutoria",tutoria);
+        request.setAttribute("professor",professor);
+        request.setAttribute("atendimento",atendimento);
+        RequestDispatcher rd = request.getRequestDispatcher("editarAtendimentoProfessor.jsp");
+        rd.forward(request,response);
+    }
+    protected void editarAtendimento(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    {
+        Atendimento atendimento = new Atendimento();
+        AtendimentoDao atendimentoDao = new AtendimentoDao();
+        atendimento.setCargaHoraria(Integer.parseInt(request.getParameter("cargaHoraria")));
+        atendimento.setData(request.getParameter("date"));
+        atendimento.setId(Integer.parseInt(request.getParameter("id2")));
+        atendimento.setLocal(request.getParameter("local"));
+        atendimento.setHorario(request.getParameter("horario"));
+        atendimento.setConteudo(request.getParameter("conteudoTratado"));
+        atendimentoDao.editarAtendimento(atendimento);
+        response.sendRedirect("carregarAtendimentosProfessor?"+ "codigo=" + tutoria.getCodigo());
     }
 }

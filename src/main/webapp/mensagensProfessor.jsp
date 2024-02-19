@@ -98,7 +98,7 @@
             <% } %>
         </div>
 
-        <form id="form-enviar-mgs" action="enviarMensagemProfessor">
+        <form id="form-enviar-mgs" method="post" action="enviarMensagemProfessor">
             <input type="hidden" id="codigoMeta" type="text" name="codigoMeta" value="<%= request.getParameter("codigoMeta") %>">
             <input type="hidden" id="codigoTutoria" type="text" name="codigoTutoria" value="<%= request.getParameter("codigoTutoria") %>">
             <input id="form-text" type="text" placeholder="  Escreva sua mensagem" name="mensagemUsuario">

@@ -73,7 +73,7 @@
                 <div class="card">
                     <div class="card-title">
                         <div class="card-title1">• <%= atendimentos.get(i).getConteudo() %></div>
-                        <div class="card-title2"><a href="gerarRelatorioUnitario?id=<%= atendimentos.get(i).getId() %>" target="_blank"><img src="imagens/atendimentoAdm/icons8-relatório-100.png" alt="icons8-relatório-100.png"></a><a href=""><img src="imagens/atendimentoAdm/icons8-configuração-100.png" alt=""></a><a onclick="onclick=confirmar(<%= request.getAttribute("codigo") %>, <%= atendimentos.get(i).getId()%>)"><img src="imagens/atendimentoAdm/icons8-lixo-100.png" alt=""></a></div>
+                        <div class="card-title2"><a href="gerarRelatorioUnitario?id=<%= atendimentos.get(i).getId() %>" target="_blank"><img src="imagens/atendimentoAdm/icons8-relatório-100.png" alt="icons8-relatório-100.png"></a><a href="editandoAtendimentoNapne?codigo=<%= atendimentos.get(i).getId() %>"><img src="imagens/atendimentoAdm/icons8-configuração-100.png" alt=""></a><a onclick="onclick=confirmar(<%= request.getAttribute("codigo") %>, <%= atendimentos.get(i).getId()%>)"><img src="imagens/atendimentoAdm/icons8-lixo-100.png" alt=""></a></div>
                     </div>
                     <div class="card-section">
                            <div>Data: <%= atendimentos.get(i).getData() %></div>
