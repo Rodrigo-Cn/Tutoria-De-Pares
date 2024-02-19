@@ -128,5 +128,51 @@ public class AtendimentoDao {
             System.out.println(e);
         }
     }
+    public static Atendimento retornarAtendimento(int id){
+        ConectionDB conectionDB = new ConectionDB();
+        Atendimento atendimento = new Atendimento();
+
+        String read = "SELECT * FROM atendimento WHERE id_atendimento = ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement readUser = con.prepareStatement(read);
+            readUser.setInt(1, id);
+            ResultSet rs = readUser.executeQuery();
+
+            if (rs.next()){
+                atendimento.setId(rs.getInt("id_atendimento"));
+                atendimento.setConteudo(rs.getString("conteudo_atendimento"));
+                atendimento.setData(rs.getString("data_atendimento"));
+                atendimento.setLocal(rs.getString("local_atendimento"));
+                atendimento.setHorario(rs.getString("horario_atendimento"));
+                atendimento.setCargaHoraria(rs.getInt("carga_horaria"));
+            }
+            return atendimento;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public static void editarAtendimento(Atendimento atendimento) {
+        ConectionDB conectionDB = new ConectionDB();
+
+        String updateQuery = "UPDATE atendimento SET conteudo_atendimento = ?, data_atendimento = ?, local_atendimento = ?, horario_atendimento = ?, carga_horaria = ? WHERE id_atendimento = ?";
+
+        try {
+            Connection con = conectionDB.conectar();
+            PreparedStatement updateStatement = con.prepareStatement(updateQuery);
+            updateStatement.setString(1, atendimento.getConteudo());
+            updateStatement.setString(2, atendimento.getData());
+            updateStatement.setString(3, atendimento.getLocal());
+            updateStatement.setString(4, atendimento.getHorario());
+            updateStatement.setInt(5, atendimento.getCargaHoraria());
+            updateStatement.setInt(6, atendimento.getId());
+            updateStatement.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

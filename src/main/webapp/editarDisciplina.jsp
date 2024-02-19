@@ -22,7 +22,7 @@
                 <div id="navbar-inicio"> 
                     <a href="menudisciplinas" style="margin-top: 3.4%;"><img  id="navbar-image2" class="tracking-in-expand-forward-top" src="imagens/editarDisciplina/icons8-voltar-67.png" alt="icons8-casa-384.png"></a>
                     <img class="iniciar-barra tracking-in-expand-forward-top" id="navbar-image3" src="imagens/editarDisciplina/icons8-usuário-96.png" alt="">
-                    <h2 class="iniciar-barra2 tracking-in-expand-forward-top" id="navbar-name2">Rodrigo</h2>
+                    <h2 class="iniciar-barra2 tracking-in-expand-forward-top" id="navbar-name2"><%= ((RepresentanteNapne) request.getAttribute("representante")).getNome().split(" ")[0] %></h2>
                 </div>
         </div>
 
