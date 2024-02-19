@@ -18,6 +18,6 @@ function confirmar(codigoMeta, codigo, id, codigoMensagem) {
     botaoSim.addEventListener("click", function() {
 
 
-    window.location.href = "deletarAtendimentoNapne?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigo + "&id=" + id + "&codigoMensagem=" + codigoMensagem;
+    window.location.href = "deletarMensagemNapne?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigo + "&id=" + id + "&codigoMensagem=" + codigoMensagem;
     });
 }
