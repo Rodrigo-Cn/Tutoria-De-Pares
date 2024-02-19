@@ -17,7 +17,7 @@
     <script src="scripts/meta/criarmeta.js" defer></script>
 
     <div id="corpo-criar-meta">
-        <form class="editar-meta" action="criarMetaProfessor" id="criarMeta">
+        <form class="editar-meta" method="post" action="criarMetaProfessor" id="criarMeta">
             <div class="titulo-editar-meta"><div class="titulo-editar">Criar Meta</div><img id="fechar-criar-meta" src="imagens/metas/icons8-fechar-janela-48.png" alt=""></div>
             <input type="hidden" name="codigo" value="<%= ((Tutoria) request.getAttribute("tutoria")).getCodigo() %>" id="codigo">
             <input name="nome-criar" class="text-editar-meta" type="text" id="titulo-meta">

@@ -65,7 +65,7 @@
     <div id="container-conteudo">
       <h1 id="section-titulo">Edi&ccedil;&atilde;o de dados</h1>
       <hr>
-      <form action="realizarEdicaoDoProfessor" id="editarTutorado" name="editarTutor"  onsubmit="return validarFormulario()">
+      <form action="realizarEdicaoDoProfessor" method="post" id="editarTutorado" name="editarTutor"  onsubmit="return validarFormulario()">
 
         <div class="half">
 

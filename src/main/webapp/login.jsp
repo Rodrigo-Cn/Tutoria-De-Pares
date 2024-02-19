@@ -32,7 +32,7 @@
             </div>
             <div class="section-login">
                 <h2 id="text-section">Fa&ccedil;a seu login</h2>
-                <form action="login" id="form-section" name="login">
+                <form action="login" method="post" id="form-section" name="login">
                     <input type="text" id="input-text1" placeholder="   Email" name="email">
                     <img src="imagens/login/olho(1).png" alt="" id="img-password">
                     <input type="password" id="input-text2" placeholder="   Senha" name="senha">
