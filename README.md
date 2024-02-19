@@ -2,6 +2,7 @@ PASSO A PASSO PARA EXECUTAR O SISTEMA DE TUTORIA DE PARES
 
 Obs: Essas instruções pressupõem que você já possui o MySQL instalado. Caso você ainda não o tenha em sua máquina, siga as instruções deste vídeo para instalá-lo: https://www.youtube.com/watch?v=lLXy2Shy9V8&t=179s&ab_channel=Prof.Rog%C3%A9rioNapole%C3%A3oJr.
 
+
 PRIMEIRA PARTE: DOWNLOAD DOS ARQUIVOS NECESSÁRIOS
 
 1°: Instale o IntelliJ através deste link: https://www.jetbrains.com/pt-br/idea/download/?section=windows
