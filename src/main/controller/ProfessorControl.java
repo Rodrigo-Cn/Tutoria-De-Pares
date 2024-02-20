@@ -13,6 +13,7 @@ import main.model.Tutoria;
 
 
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -217,6 +218,7 @@ public class ProfessorControl extends HttpServlet
         professor.setNome(request.getParameter("nome"));
         professor.setEmail(request.getParameter("email"));
         professorDao.editarProfessor(professor);
+
         response.sendRedirect("voltarParaMainProfessor?id="+id);
     }
 
@@ -298,6 +300,7 @@ public class ProfessorControl extends HttpServlet
 
     protected void deletarMeta(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
+        //AQUI AO DELETAR UMA META, É NECESSÁIO APAGAR TODAS AS MENSAGENS QUE ESTÃO NELE ANTES. POR ISSO A CONDIÇÃO E O LAÇODE REPETIÇÃO
         metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
         mensagemDao.cadastrarMensagensNaMeta(metas);
 
@@ -347,10 +350,9 @@ public class ProfessorControl extends HttpServlet
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
 
         mensagem2.setMsg(mensagem);
-        mensagem2.setCodigoMeta(codigoMeta);
         mensagem2.setUsuario(professor);
 
-        mensagemDao.criarMensagem(mensagem2);
+        mensagemDao.criarMensagem(mensagem2, codigoMeta);
 
         response.sendRedirect("carregarMensagensProfessor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
@@ -381,7 +383,7 @@ public class ProfessorControl extends HttpServlet
 
     protected void editarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
-        mensagem.setCodigoMeta(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
         mensagem.setMsg(request.getParameter("mensagem"));
         mensagemDao.atualizarMensagem(mensagem);
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));

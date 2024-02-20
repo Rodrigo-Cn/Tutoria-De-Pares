@@ -10,6 +10,12 @@ public class Tutor extends Usuario{
         super(nome, idade, email, id);
         this.matricula = matricula;
     }
+    public Tutor(String nome, int idade, String email, int id, String senha, String matricula, String curso, int semestre){
+        super(nome, idade, email, id, senha);
+        this.matricula = matricula;
+        this.curso = curso;
+        this.semestre = semestre;
+    }
     public void setCurso(String curso) {
         this.curso = curso;
     }

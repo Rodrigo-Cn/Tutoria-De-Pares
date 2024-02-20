@@ -69,7 +69,6 @@ public class MetasDao {
 
             if(rs.next())
             {
-                //meta.setCodigo(rs.getInt(1));
                 meta.setTitulo(rs.getString(2));
             }
         }

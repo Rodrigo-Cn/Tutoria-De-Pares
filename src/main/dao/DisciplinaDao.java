@@ -21,11 +21,7 @@ public class DisciplinaDao {
             ResultSet rs = readUser.executeQuery();
 
             if (rs.next()) {
-                Disciplina disciplina = new Disciplina();
-
-                disciplina.setNome(rs.getString("nome"));
-                disciplina.setCodigo(rs.getInt("codigo"));
-                disciplina.setProfessor(professorDao.retornarProfessor(rs.getInt("id_professor")));
+                Disciplina disciplina = new Disciplina(rs.getString("nome"),rs.getInt("codigo"),professorDao.retornarProfessor(rs.getInt("id_professor")));
 
                 rs.close();
                 readUser.close();
@@ -140,11 +136,7 @@ public class DisciplinaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()) {
-                Disciplina disciplina = new Disciplina();
-
-                disciplina.setNome(rs.getString("nome"));
-                disciplina.setCodigo(rs.getInt("codigo"));
-                disciplina.setProfessor(professorDao.retornarProfessor(rs.getInt("id_professor")));
+                Disciplina disciplina = new Disciplina(rs.getString("nome"),rs.getInt("codigo"),professorDao.retornarProfessor(rs.getInt("id_professor")));
 
                 disciplinas.add(disciplina);
             }
@@ -174,11 +166,8 @@ public class DisciplinaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()) {
-                Disciplina disciplina = new Disciplina();
+                Disciplina disciplina = new Disciplina(rs.getString("nome"),rs.getInt("codigo"),professorDao.retornarProfessor(rs.getInt("id_professor")));
 
-                disciplina.setNome(rs.getString("nome"));
-                disciplina.setCodigo(rs.getInt("codigo"));
-                disciplina.setProfessor(professorDao.retornarProfessor(rs.getInt("id_professor")));
                 disciplinas.add(disciplina);
 
             }

@@ -29,7 +29,7 @@ public class ProfessorDao {
 
     public static Professor retornarProfessor(int id)
     {
-        Professor professor = new Professor();
+        Professor professor2 = null;
         ConectionDB conectionDB = new ConectionDB();
         String read = "SELECT * FROM usuario WHERE id = ?";
         try {
@@ -39,13 +39,9 @@ public class ProfessorDao {
             ResultSet rs = readUser.executeQuery();
 
             if (rs.next()){
-                professor.setId(rs.getInt("id"));
-                professor.setNome(rs.getString("nome"));
-                professor.setIdade(rs.getInt("idade"));
-                professor.setEmail(rs.getString("email"));
-                professor.setSenha(rs.getString("senha"));
+                professor2 = new Professor(rs.getString("nome"), rs.getInt("idade"), rs.getString("email"), rs.getInt("id"), rs.getString("senha"));
             }
-            return professor;
+            return professor2;
         }catch (Exception e){
             System.out.println(e);
             return null;

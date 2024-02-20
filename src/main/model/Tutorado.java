@@ -10,9 +10,16 @@ public class Tutorado extends Usuario{
     public Tutorado(){
 
     }
-    public Tutorado(String nome, int idade, String email, int id, ArrayList<String> conteudosComDificuldade, String matricula){
+    public Tutorado(String nome, int idade, String email, int id, String matricula){
         super(nome, idade, email, id);
         this.matricula = matricula;
+    }
+    public Tutorado(String nome, int idade, String email, int id, String senha, String matricula, int semestre, String curso, String tipoDeDeficiencia){
+        super(nome, idade, email, id, senha);
+        this.matricula = matricula;
+        this.semestre = semestre;
+        this.curso = curso;
+        this.tipoDeDeficiencia = tipoDeDeficiencia;
     }
     public void setTipoDeDeficiencia(String tipoDeDeficiencia) {
         this.tipoDeDeficiencia = tipoDeDeficiencia;
@@ -37,7 +44,6 @@ public class Tutorado extends Usuario{
     public int getSemestre() {
         return semestre;
     }
-
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;

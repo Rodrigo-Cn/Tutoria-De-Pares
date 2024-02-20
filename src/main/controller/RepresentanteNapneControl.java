@@ -382,6 +382,8 @@ public class RepresentanteNapneControl extends HttpServlet {
     }
     protected void criarTutoria(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
+        /* AQUI EXISTEM VÁRIAS CONDIÇÕES QUE IMPEDEM QUE O USUÁRIO COMETA ERROS AO CRIAR UMA TUTORIA.
+           POR EXEMPLO, AQUI NÓS IMPEDIMOS QUE IDS DE TUTOR SEJAM INSERIDOS EM TUTORADO E VICE-VERSA. */
         representanteNapne.setId(id);
         representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
         request.setAttribute("representante", representanteNapne);
@@ -684,16 +686,16 @@ public class RepresentanteNapneControl extends HttpServlet {
         representanteNapne.setId(id);
         representanteNapneDao.selecionarRepresentanteNapne(representanteNapne);
 
+        Meta meta = new Meta();
         Mensagem mensagem2 = new Mensagem();
         String mensagem = request.getParameter("mensagemUsuario");
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
 
         mensagem2.setMsg(mensagem);
-        mensagem2.setCodigoMeta(codigoMeta);
         mensagem2.setUsuario(representanteNapne);
 
-        mensagemDao.criarMensagem(mensagem2);
+        mensagemDao.criarMensagem(mensagem2, codigoMeta);
 
         response.sendRedirect("carregarMensagensNapne?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
@@ -724,7 +726,7 @@ public class RepresentanteNapneControl extends HttpServlet {
 
     protected void editarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
-        mensagem.setCodigoMeta(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
         mensagem.setMsg(request.getParameter("mensagem"));
         mensagemDao.atualizarMensagem(mensagem);
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));

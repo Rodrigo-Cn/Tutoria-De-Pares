@@ -243,10 +243,10 @@ public class TutorControl extends HttpServlet {
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
 
         mensagem2.setMsg(mensagem);
-        mensagem2.setCodigoMeta(codigoMeta);
+
         mensagem2.setUsuario(tutor);
 
-        mensagemDao.criarMensagem(mensagem2);
+        mensagemDao.criarMensagem(mensagem2, codigoMeta);
 
         response.sendRedirect("carregarMensagensTutor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
@@ -277,7 +277,7 @@ public class TutorControl extends HttpServlet {
 
     protected void editarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
-        mensagem.setCodigoMeta(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
         mensagem.setMsg(request.getParameter("mensagem"));
         mensagemDao.atualizarMensagem(mensagem);
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));

@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 public class RepresentanteNapneDao {
     ConectionDB conectionDB = new ConectionDB();
     public static RepresentanteNapne retornarRepresentanteNapne(int id){
-        RepresentanteNapne representanteNapne = new RepresentanteNapne();
+        RepresentanteNapne representanteNapne = null;
         ConectionDB conectionDB = new ConectionDB();
         String read = "SELECT * FROM usuario WHERE id = ?";
         try {
@@ -19,12 +19,7 @@ public class RepresentanteNapneDao {
             ResultSet rs = readUser.executeQuery();
 
             if (rs.next()){
-                representanteNapne.setId(rs.getInt("id"));
-                representanteNapne.setNome(rs.getString("nome"));
-                representanteNapne.setIdade(rs.getInt("idade"));
-                representanteNapne.setEmail(rs.getString("email"));
-                representanteNapne.setSenha(rs.getString("senha"));
-                representanteNapne.setCargo(rs.getString("cargo"));
+                representanteNapne = new RepresentanteNapne(rs.getString("nome"), rs.getInt("idade"), rs.getString("email"), rs.getInt("id"), rs.getString("senha"), rs.getString("cargo"));
             }
             return representanteNapne;
         }catch (Exception e){

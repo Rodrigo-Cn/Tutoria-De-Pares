@@ -37,15 +37,7 @@ public class TutorDao {
             ResultSet rs = readUser.executeQuery();
 
             if (rs.next()) {
-                Tutor tutor = new Tutor();
-                tutor.setId(rs.getInt("id"));
-                tutor.setNome(rs.getString("nome"));
-                tutor.setIdade(rs.getInt("idade"));
-                tutor.setEmail(rs.getString("email"));
-                tutor.setSenha(rs.getString("senha"));
-                tutor.setCurso(rs.getString("curso"));
-                tutor.setSemestre(rs.getInt("semestre"));
-                tutor.setMatricula(rs.getString("matricula"));
+                Tutor tutor = new Tutor(rs.getString("nome"), rs.getInt("idade"), rs.getString("email"), rs.getInt("id"), rs.getString("senha"), rs.getString("matricula"), rs.getString("curso"), rs.getInt("semestre"));
                 rs.close();
                 readUser.close();
                 con.close();

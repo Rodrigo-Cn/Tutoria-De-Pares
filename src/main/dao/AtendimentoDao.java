@@ -22,13 +22,7 @@ public class AtendimentoDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()){
-                Atendimento atendimento = new Atendimento();
-                atendimento.setId(rs.getInt("id_atendimento"));
-                atendimento.setConteudo(rs.getString("conteudo_atendimento"));
-                atendimento.setData(rs.getString("data_atendimento"));
-                atendimento.setLocal(rs.getString("local_atendimento"));
-                atendimento.setHorario(rs.getString("horario_atendimento"));
-                atendimento.setCargaHoraria(rs.getInt("carga_horaria"));
+                Atendimento atendimento = new Atendimento(rs.getInt("id_atendimento"),rs.getString("conteudo_atendimento"),rs.getString("data_atendimento"),rs.getString("local_atendimento"),rs.getString("horario_atendimento"),rs.getInt("carga_horaria"));
                 atendimentos.add(atendimento);
             }
             return atendimentos;

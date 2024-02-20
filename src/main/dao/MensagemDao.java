@@ -43,18 +43,18 @@ public class MensagemDao
         }
     }
 
-    public static void criarMensagem(Mensagem mensagem)
+    public static void criarMensagem(Mensagem mensagem, int codigoMeta)
     {
         ConectionDB con = new ConectionDB();
         PreparedStatement ps = null;
-        String sql = "INSERT INTO mensagens (mensagem, codigo_metas, id_usuario) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO mensagens (mensagem, id_usuario, codigo_metas) VALUES (?, ?, ?)";
 
         try
         {
             ps = con.conectar().prepareStatement(sql);
             ps.setString(1, mensagem.getMsg());
-            ps.setInt(2, mensagem.getCodigoMeta());
-            ps.setInt(3, mensagem.getUsuario().getId());
+            ps.setInt(2, mensagem.getUsuario().getId());
+            ps.setInt(3, codigoMeta);
             ps.execute();
             ps.close();
         }
@@ -80,7 +80,6 @@ public class MensagemDao
             if(rs.next())
             {
                 mensagem.setMsg(rs.getString(1));
-                mensagem.setCodigoMeta(rs.getInt(2));
                 mensagem.setCodigoMensagem(rs.getInt(3));
             }
         }

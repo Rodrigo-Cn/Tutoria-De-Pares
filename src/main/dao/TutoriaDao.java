@@ -23,11 +23,7 @@ public class TutoriaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()){
-                Tutoria tutoria = new Tutoria();
-                tutoria.setCodigo(rs.getInt(1));
-                tutoria.setSenha(rs.getString(2));
-                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
-                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt(5)));
+                Tutoria tutoria = new Tutoria(rs.getInt(1),rs.getString(2),tutoradoDao.retornarTutorado(rs.getInt(4)), disciplinaDao.retornarDisciplina(rs.getInt(5)));
                 tutorias.add(tutoria);
             }
             return tutorias;
@@ -81,12 +77,7 @@ public class TutoriaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()){
-                Tutoria tutoria = new Tutoria();
-                tutoria.setCodigo(rs.getInt(1));
-                tutoria.setSenha(rs.getString(2));
-                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt(3)));
-                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
-                tutoria.setDisciplina(DisciplinaDao.retornarDisciplina(rs.getInt(5)));
+                Tutoria tutoria = new Tutoria(rs.getInt(1),rs.getString(2),tutorDao.retornarTutor(rs.getInt(3)),tutoradoDao.retornarTutorado(rs.getInt(4)),DisciplinaDao.retornarDisciplina(rs.getInt(5)));
                 tutorias.add(tutoria);
             }
             return tutorias;
@@ -181,12 +172,7 @@ public class TutoriaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()){
-                Tutoria tutoria = new Tutoria();
-                tutoria.setCodigo(rs.getInt(1));
-                tutoria.setSenha(rs.getString(2));
-                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt(3)));
-                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
-                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt(5)));
+                Tutoria tutoria = new Tutoria(rs.getInt(1),rs.getString(2),tutorDao.retornarTutor(rs.getInt(3)),tutoradoDao.retornarTutorado(rs.getInt(4)),DisciplinaDao.retornarDisciplina(rs.getInt(5)));
                 tutorias.add(tutoria);
             }
             return tutorias;
@@ -241,12 +227,7 @@ public class TutoriaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()){
-                Tutoria tutoria = new Tutoria();
-                tutoria.setCodigo(rs.getInt(1));
-                tutoria.setSenha(rs.getString(2));
-                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt(3)));
-                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt(4)));
-                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt(5)));
+                Tutoria tutoria = new Tutoria(rs.getInt(1),rs.getString(2),tutorDao.retornarTutor(rs.getInt(3)),tutoradoDao.retornarTutorado(rs.getInt(4)),DisciplinaDao.retornarDisciplina(rs.getInt(5)));
                 tutorias.add(tutoria);
             }
             return tutorias;
@@ -271,12 +252,7 @@ public class TutoriaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()){
-                Tutoria tutoria = new Tutoria();
-                tutoria.setCodigo(rs.getInt("codigo"));
-                tutoria.setSenha(rs.getString("senha"));
-                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt("id_tutor")));
-                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt("id_tutorado")));
-                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt("codigo_disciplina")));
+                Tutoria tutoria = new Tutoria(rs.getInt(1),rs.getString(2),tutorDao.retornarTutor(rs.getInt(3)),tutoradoDao.retornarTutorado(rs.getInt(4)),DisciplinaDao.retornarDisciplina(rs.getInt(5)));
                 tutorias.add(tutoria);
             }
             return tutorias;
@@ -301,12 +277,7 @@ public class TutoriaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()){
-                Tutoria tutoria = new Tutoria();
-                tutoria.setCodigo(rs.getInt("codigo"));
-                tutoria.setSenha(rs.getString("senha"));
-                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt("id_tutor")));
-                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt("id_tutorado")));
-                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt("codigo_disciplina")));
+                Tutoria tutoria = new Tutoria(rs.getInt(1),rs.getString(2),tutorDao.retornarTutor(rs.getInt(3)),tutoradoDao.retornarTutorado(rs.getInt(4)),DisciplinaDao.retornarDisciplina(rs.getInt(5)));
                 tutorias.add(tutoria);
             }
             return tutorias;
@@ -331,12 +302,7 @@ public class TutoriaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()){
-                Tutoria tutoria = new Tutoria();
-                tutoria.setCodigo(rs.getInt("codigo"));
-                tutoria.setSenha(rs.getString("senha"));
-                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt("id_tutor")));
-                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt("id_tutorado")));
-                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt("codigo_disciplina")));
+                Tutoria tutoria = new Tutoria(rs.getInt(1),rs.getString(2),tutorDao.retornarTutor(rs.getInt(3)),tutoradoDao.retornarTutorado(rs.getInt(4)),DisciplinaDao.retornarDisciplina(rs.getInt(5)));
                 tutorias.add(tutoria);
             }
             return tutorias;
@@ -363,12 +329,7 @@ public class TutoriaDao {
             ResultSet rs = readUser.executeQuery();
 
             while (rs.next()){
-                Tutoria tutoria = new Tutoria();
-                tutoria.setCodigo(rs.getInt("codigo"));
-                tutoria.setSenha(rs.getString("senha"));
-                tutoria.setTutor(tutorDao.retornarTutor(rs.getInt("id_tutor")));
-                tutoria.setTutorado(tutoradoDao.retornarTutorado(rs.getInt("id_tutorado")));
-                tutoria.setDisciplina(disciplinaDao.retornarDisciplina(rs.getInt("codigo_disciplina")));
+                Tutoria tutoria = new Tutoria(rs.getInt(1),rs.getString(2),tutorDao.retornarTutor(rs.getInt(3)),tutoradoDao.retornarTutorado(rs.getInt(4)),DisciplinaDao.retornarDisciplina(rs.getInt(5)));
                 tutorias.add(tutoria);
             }
             return tutorias;

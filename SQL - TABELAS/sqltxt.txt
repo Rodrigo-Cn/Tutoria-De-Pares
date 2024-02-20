@@ -1,0 +1,65 @@
+Base de dados chama javadb.
+
+mude a porta no código java - classe conectionDB, pois eu não uso a padrão.
+
+create table usuario(
+	nome varchar(50) not null,
+    idade int null,
+    email varchar(80) not null,
+    senha varchar(60) not null,
+    id int primary key auto_increment,
+    curso varchar(60) null,
+    semestre int null,
+    matricula varchar(20) null,
+    tipo_de_deficiencia varchar(40) null,
+    cargo varchar(30) null,
+    tipo_de_usuario int,
+    unique (matricula)
+);
+
+CREATE TABLE tutoria(
+	codigo INT PRIMARY KEY NOT NULL auto_increment,
+    senha VARCHAR(50) NOT NULL,
+    id_tutor INT NULL,
+    id_tutorado INT NULL,
+    codigo_disciplina INT NULL,
+    FOREIGN KEY (id_tutor) REFERENCES usuario(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_tutorado) REFERENCES usuario(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (codigo_disciplina) REFERENCES disciplina(codigo) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+create table disciplina(
+	nome varchar(60) not null,
+    codigo int primary key auto_increment,
+    id_professor int null,
+    foreign key (id_professor) references usuario(id)
+    on update cascade on delete cascade
+);
+
+CREATE TABLE metas(
+	codigo_tutoria INT,
+    titulo VARCHAR(50),
+    codigo_metas INT PRIMARY KEY AUTO_INCREMENT,
+    FOREIGN KEY (codigo_tutoria) REFERENCES tutoria(codigo)
+);
+
+CREATE TABLE mensagens(
+	mensagem VARCHAR(50),
+    codigo_metas INT,
+    codigo_mensagem INT PRIMARY KEY auto_increment,
+    id_usuario INT,
+    FOREIGN KEY (codigo_metas) REFERENCES metas(codigo_metas)
+);
+
+create table atendimento(
+	id_atendimento int primary key auto_increment,
+    conteudo_atendimento varchar(50) not null,
+	data_atendimento  varchar(10) not null,
+    local_atendimento varchar(50) not null,
+    horario_atendimento varchar(5) not null,
+    carga_horaria int not null,
+    codigo_tutoria int not null,
+    foreign key (codigo_tutoria) references tutoria(codigo)
+    on delete cascade on update cascade
+);
+

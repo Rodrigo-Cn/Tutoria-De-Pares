@@ -15,6 +15,12 @@ public class Tutoria {
     public Tutoria(int codigo, String senha){
 
     }
+    public Tutoria(int codigo, String senha, Tutorado tutorado, Disciplina disciplina){
+        this.codigo = codigo;
+        this.senha = senha;
+        this.tutorado = tutorado;
+        this.disciplina = disciplina;
+    }
     public Tutoria(int codigo, String senha, Tutor tutor, Tutorado tutorado, Disciplina disciplina, ArrayList<Meta> metas){
         this.codigo = codigo;
         this.senha = senha;
@@ -22,6 +28,13 @@ public class Tutoria {
         this.tutorado = tutorado;
         this.disciplina = disciplina;
         this.metas = metas;
+    }
+    public Tutoria(int codigo, String senha, Tutor tutor, Tutorado tutorado, Disciplina disciplina){
+        this.codigo = codigo;
+        this.senha = senha;
+        this.tutor = tutor;
+        this.tutorado = tutorado;
+        this.disciplina = disciplina;
     }
 
     public void setCodigo(int codigo) {
