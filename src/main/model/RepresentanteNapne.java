@@ -5,9 +5,16 @@ public class RepresentanteNapne extends Usuario{
     public RepresentanteNapne(){
 
     }
-    public RepresentanteNapne(String nome, int idade, String email, int id, String cargo){
+    public RepresentanteNapne(String nome, int idade, String email, int id){
         super(nome, idade, email, id);
         this.cargo = cargo;
+    }
+    public RepresentanteNapne(String nome, int idade, String email, int id, String senha, String cargo){
+        super(nome, idade, email, id, senha);
+        this.cargo = cargo;
+    }
+    public RepresentanteNapne(String nome, int idade, String email, int id, String senha){
+        super(nome, idade, email, id, senha);
     }
     public void setCargo(String cargo) {
         this.cargo = cargo;

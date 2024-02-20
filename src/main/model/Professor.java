@@ -3,13 +3,16 @@ package main.model;
 import java.util.ArrayList;
 
 public class Professor extends Usuario{
-    ArrayList<String> disciplinas = new ArrayList<>();
+    private  ArrayList<String> disciplinas = new ArrayList<>();
     public Professor(){
 
     }
     public Professor(String nome, int idade, String email, int id, ArrayList<String> disciplinas){
         super(nome, idade, email, id);
         this.disciplinas = disciplinas;
+    }
+    public Professor(String nome, int idade, String email, int id, String senha){
+        super(nome, idade, email, id, senha);
     }
     public void adicionarDisciplina(String disciplina) {
         this.disciplinas.add(disciplina);
