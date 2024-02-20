@@ -80,7 +80,6 @@ public class TutoradoDao {
                tutorado.setSemestre(rs.getInt(7));
                tutorado.setMatricula(rs.getString(8));
                tutorado.setTipoDeDeficiencia((rs.getString(9)));
-               tutorado.setCargo(rs.getString(10));
            }
            con.close();
         }

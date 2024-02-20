@@ -6,15 +6,12 @@ public class Tutorado extends Usuario{
     private String tipoDeDeficiencia;
     private String curso;
     private int semestre;
-    private ArrayList<String> conteudosComDificuldade = new ArrayList<>();
     private String matricula;
-    private String cargo;
     public Tutorado(){
 
     }
     public Tutorado(String nome, int idade, String email, int id, ArrayList<String> conteudosComDificuldade, String matricula){
         super(nome, idade, email, id);
-        this.conteudosComDificuldade = conteudosComDificuldade;
         this.matricula = matricula;
     }
     public void setTipoDeDeficiencia(String tipoDeDeficiencia) {
@@ -41,13 +38,6 @@ public class Tutorado extends Usuario{
         return semestre;
     }
 
-    public void setConteudoComDificuldade(String conteudoComDificuldade) {
-        this.conteudosComDificuldade.add(conteudoComDificuldade);
-    }
-
-    public ArrayList<String> getConteudosComDificuldade() {
-        return conteudosComDificuldade;
-    }
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
@@ -60,13 +50,5 @@ public class Tutorado extends Usuario{
     public void cadastrar(String nome, String email, String senha, String matricula) {
         super.cadastrar(nome, email, senha);
         this.matricula = matricula;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
     }
 }
