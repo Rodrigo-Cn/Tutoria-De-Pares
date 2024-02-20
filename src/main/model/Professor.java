@@ -11,6 +11,9 @@ public class Professor extends Usuario{
         super(nome, idade, email, id);
         this.disciplinas = disciplinas;
     }
+    public Professor(String nome, int idade, String email, int id, String senha){
+        super(nome, idade, email, id, senha);
+    }
     public void adicionarDisciplina(String disciplina) {
         this.disciplinas.add(disciplina);
     }

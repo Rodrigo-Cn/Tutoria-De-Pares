@@ -31,7 +31,7 @@ public class TutoradoDao {
 
     public static Tutorado retornarTutorado(int id){
         ConectionDB conectionDB = new ConectionDB();
-        Tutorado tutorado = new Tutorado();
+        Tutorado tutorado = null;
 
         String read = "SELECT * FROM usuario WHERE id = ?";
         try {
@@ -41,15 +41,7 @@ public class TutoradoDao {
             ResultSet rs = readUser.executeQuery();
 
             if (rs.next()){
-                tutorado.setId(rs.getInt("id"));
-                tutorado.setNome(rs.getString("nome"));
-                tutorado.setIdade(rs.getInt("idade"));
-                tutorado.setEmail(rs.getString("email"));
-                tutorado.setSenha(rs.getString("senha"));
-                tutorado.setTipoDeDeficiencia(rs.getString("tipo_de_deficiencia"));
-                tutorado.setCurso(rs.getString("curso"));
-                tutorado.setSemestre(rs.getInt("semestre"));
-                tutorado.setMatricula(rs.getString("matricula"));
+                tutorado = new Tutorado(rs.getString("nome"), rs.getInt("idade"), rs.getString("email"), rs.getInt("id"), rs.getString("senha"), rs.getString("matricula"),rs.getInt("semestre"), rs.getString("curso"), rs.getString("tipo_de_deficiencia"));
             }
             return tutorado;
         }catch (Exception e){
@@ -80,7 +72,7 @@ public class TutoradoDao {
                tutorado.setSemestre(rs.getInt(7));
                tutorado.setMatricula(rs.getString(8));
                tutorado.setTipoDeDeficiencia((rs.getString(9)));
-               tutorado.setCargo(rs.getString(10));
+
            }
            con.close();
         }

@@ -1,11 +1,12 @@
 package main.controller;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import main.dao.TutoradoDao;
 import main.dao.TutoriaDao;
 import main.model.Tutorado;
@@ -218,16 +219,16 @@ public class TutoradoControl extends HttpServlet {
         tutorado.setId(id);
         tutoradoDao.selecionarTutorado(tutorado);
 
+        Meta meta = new Meta();
         Mensagem mensagem2 = new Mensagem();
         String mensagem = request.getParameter("mensagemUsuario");
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
 
         mensagem2.setMsg(mensagem);
-        mensagem2.setCodigoMeta(codigoMeta);
         mensagem2.setUsuario(tutorado);
 
-        mensagemDao.criarMensagem(mensagem2);
+        mensagemDao.criarMensagem(mensagem2, codigoMeta);
 
         response.sendRedirect("carregarMensagensTutorado?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
@@ -258,7 +259,7 @@ public class TutoradoControl extends HttpServlet {
 
     protected void editarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
-        mensagem.setCodigoMeta(Integer.parseInt(request.getParameter("codigoMensagem")));
+        mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
         mensagem.setMsg(request.getParameter("mensagem"));
         mensagemDao.atualizarMensagem(mensagem);
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));

@@ -5,7 +5,7 @@ public class Mensagem
     private String msg;
     private Usuario usuario;
     private int codigoMensagem;
-    private int codigoMeta;
+
 
     public Mensagem()
     {
@@ -43,11 +43,4 @@ public class Mensagem
         this.codigoMensagem = codigoMensagem;
     }
 
-    public int getCodigoMeta() {
-        return codigoMeta;
-    }
-
-    public void setCodigoMeta(int codigoMeta) {
-        this.codigoMeta = codigoMeta;
-    }
 }

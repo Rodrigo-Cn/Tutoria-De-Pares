@@ -14,6 +14,12 @@ public abstract class Usuario {
         this.email = email;
         this.id = id;
     }
+    public Usuario(String nome, int idade, String email, int id, String senha){
+        this.nome = nome;
+        this.idade = idade;
+        this.email = email;
+        this.id = id;
+    }
 
     public void setId(int id) {
         this.id = id;
