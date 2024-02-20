@@ -49,8 +49,9 @@
                     <% for (int i = 0; i < disciplinas.size(); i++) { %>
                         <div class="card">
                             <h1 id="card-titulo"><%= disciplinas.get(i).getNome() %></h1>
-                            <% if (disciplinas.get(i).getProfessor().getNome() != null) { %>
-                                <h4 class="card-section">Professor: <%= disciplinas.get(i).getProfessor().getNome() %></h4>
+                            <h4 class="card-section">Código: <%= disciplinas.get(i).getCodigo() %></h4>
+                            <% if (disciplinas.get(i).getProfessor() != null && disciplinas.get(i).getProfessor().getNome() != null) { %>
+                                 <h4 class="card-section">Professor: <%= disciplinas.get(i).getProfessor().getNome() %></h4>
                             <% } else{%>
                                 <h4 class="card-section">Professor não cadastrado</h4>
                             <% } %>
