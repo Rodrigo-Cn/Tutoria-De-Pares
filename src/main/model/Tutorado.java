@@ -1,5 +1,13 @@
 package main.model;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import main.dao.MensagemDao;
+import main.dao.TutoradoDao;
+import main.dao.TutoriaDao;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Tutorado extends Usuario{
@@ -56,5 +64,25 @@ public class Tutorado extends Usuario{
     public void cadastrar(String nome, String email, String senha, String matricula) {
         super.cadastrar(nome, email, senha);
         this.matricula = matricula;
+    }
+    public void editarTutorado(Tutorado tutorado)
+    {
+        TutoradoDao tutoradoDao = new TutoradoDao();
+        tutoradoDao.editarTutorado(tutorado);
+    }
+    public static void criarMensagem(Mensagem mensagem, int codigoMeta)
+    {
+        MensagemDao mensagemDao = new MensagemDao();
+        mensagemDao.criarMensagem(mensagem,codigoMeta);
+    }
+    public static void atualizarMensagem(Mensagem mensagem)
+    {
+        MensagemDao mensagemDao = new MensagemDao();
+        mensagemDao.atualizarMensagem(mensagem);
+    }
+    public static void deletarMensagem(Mensagem mensagem)
+    {
+        MensagemDao mensagemDao = new MensagemDao();
+        mensagemDao.deletarMensagem(mensagem);
     }
 }

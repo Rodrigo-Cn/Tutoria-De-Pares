@@ -158,7 +158,7 @@ public class TutoradoControl extends HttpServlet {
         tutorado.setSemestre(Integer.parseInt(request.getParameter("semestre")));
         tutorado.setTipoDeDeficiencia(request.getParameter("deficiencia"));
         tutorado.setMatricula(request.getParameter("matricula"));
-        tutoradoDao.editarTutorado(tutorado);
+        tutorado.editarTutorado(tutorado);
         response.sendRedirect("voltarParaMainTutorado?id="+tutorado.getId());
     }
 
@@ -228,7 +228,7 @@ public class TutoradoControl extends HttpServlet {
         mensagem2.setMsg(mensagem);
         mensagem2.setUsuario(tutorado);
 
-        mensagemDao.criarMensagem(mensagem2, codigoMeta);
+        tutorado.criarMensagem(mensagem2, codigoMeta);
 
         response.sendRedirect("carregarMensagensTutorado?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
@@ -261,7 +261,7 @@ public class TutoradoControl extends HttpServlet {
     {
         mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
         mensagem.setMsg(request.getParameter("mensagem"));
-        mensagemDao.atualizarMensagem(mensagem);
+        tutorado.atualizarMensagem(mensagem);
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
         response.sendRedirect("carregarMensagensTutorado?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
@@ -270,7 +270,7 @@ public class TutoradoControl extends HttpServlet {
     protected void deletarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
-        mensagemDao.deletarMensagem(mensagem);
+        tutorado.deletarMensagem(mensagem);
 
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
