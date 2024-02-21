@@ -176,8 +176,8 @@ public class ProfessorControl extends HttpServlet
     protected void iniciarHome(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         request.setAttribute("id",id);
-        professor = professorDao.retornarProfessor(id);
-        tutorias = tutoriaDao.retornarTutoriaParaProfessor(id);
+        professor = professor.retornarProfessor(id);
+        tutorias = professor.retornarTutoriaParaProfessor(id);
         request.setAttribute("professor", professor);
         request.setAttribute("tutorias", tutorias);
         RequestDispatcher rd = request.getRequestDispatcher("professorhome.jsp");
@@ -188,9 +188,9 @@ public class ProfessorControl extends HttpServlet
     {
         disciplina.setCodigo(Integer.parseInt(req.getParameter("codigo")));
 
-        if(disciplinaDao.lerDisciplina(disciplina))
+        if(professor.lerDisciplina(disciplina))
         {
-            disciplinaDao.atualizarDisciplinaProfessor(disciplina, id);
+            professor.atualizarDisciplinaProfessor(disciplina, id);
             resp.sendRedirect("voltarParaMainProfessor?id="+id);
         }
         else
@@ -202,7 +202,7 @@ public class ProfessorControl extends HttpServlet
     protected void irParaEdicao(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         professor.setId(id);
-        professorDao.selecionarProfessor(professor);
+        professor.selecionarProfessor(professor);
         request.setAttribute("id", professor.getId());
         request.setAttribute("senha",professor.getSenha());
         request.setAttribute("nome",professor.getNome());
@@ -217,15 +217,14 @@ public class ProfessorControl extends HttpServlet
         professor.setSenha(request.getParameter("senha"));
         professor.setNome(request.getParameter("nome"));
         professor.setEmail(request.getParameter("email"));
-        professorDao.editarProfessor(professor);
+        professor.editarProfessor(professor);
 
         response.sendRedirect("voltarParaMainProfessor?id="+id);
     }
 
     protected void irParaTutoriaProfessor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
-        TutoriaDao tutoriaDao = new TutoriaDao();
-        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
+        tutoria = professor.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
         request.setAttribute("tutoria", tutoria);
         request.setAttribute("professor", professor);
         RequestDispatcher rd = request.getRequestDispatcher("tutoriaProfessor.jsp");
@@ -235,15 +234,15 @@ public class ProfessorControl extends HttpServlet
     protected void irParaMetasProfessor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         professor.setId(id);
-        professorDao.selecionarProfessor(professor);
+        professor.selecionarProfessor(professor);
         request.setAttribute("professor", professor);
 
-        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
-        metasDao.cadastraMetasNaTutoria(tutoria);
+        tutoria = professor.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
+        professor.cadastraMetasNaTutoria(tutoria);
 
         for(Meta i: tutoria.getMetas())
         {
-            mensagemDao.cadastrarMensagensNaMeta(i);
+            professor.cadastrarMensagensNaMeta(i);
         }
         request.setAttribute("tutoria", tutoria);
 
@@ -255,14 +254,14 @@ public class ProfessorControl extends HttpServlet
     {
         int codigoTutoria = Integer.parseInt(request.getParameter("codigo"));
         String titulo = request.getParameter("nome-criar");
-        metasDao.criarMeta(codigoTutoria, titulo);
+        professor.criarMeta(codigoTutoria, titulo);
 
-        tutoria = tutoriaDao.retornaTutoria(codigoTutoria);
-        metasDao.cadastraMetasNaTutoria(tutoria);
+        tutoria = professor.retornaTutoria(codigoTutoria);
+        professor.cadastraMetasNaTutoria(tutoria);
         request.setAttribute("tutoria", tutoria);
 
         professor.setId(id);
-        professorDao.selecionarProfessor(professor);
+        professor.selecionarProfessor(professor);
         request.setAttribute("professor", professor);
 
         response.sendRedirect("carregarMetasProfessor?id=" + id + "&codigo=" + codigoTutoria);
@@ -271,15 +270,15 @@ public class ProfessorControl extends HttpServlet
     protected void selecionaMeta(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
-        metasDao.selecionaMeta(metas);
+        professor.selecionaMeta(metas);
         request.setAttribute("metas",  metas);
 
-        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
-        metasDao.cadastraMetasNaTutoria(tutoria);
+        tutoria = professor.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        professor.cadastraMetasNaTutoria(tutoria);
         request.setAttribute("tutoria", tutoria);
 
         professor.setId(id);
-        professorDao.selecionarProfessor(professor);
+        professor.selecionarProfessor(professor);
         request.setAttribute("professor", professor);
 
         RequestDispatcher rd = request.getRequestDispatcher("editarMetasProfessor.jsp");
@@ -293,7 +292,7 @@ public class ProfessorControl extends HttpServlet
         metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
         metas.setTitulo(request.getParameter("nome-criar"));
 
-        metasDao.atualizarMeta(metas);
+        professor.atualizarMeta(metas);
 
         response.sendRedirect("carregarMetasProfessor?id="+id+"&codigo="+Integer.parseInt(request.getParameter("codigo")));
     }
@@ -302,19 +301,19 @@ public class ProfessorControl extends HttpServlet
     {
         //AQUI AO DELETAR UMA META, É NECESSÁIO APAGAR TODAS AS MENSAGENS QUE ESTÃO NELE ANTES. POR ISSO A CONDIÇÃO E O LAÇODE REPETIÇÃO
         metas.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
-        mensagemDao.cadastrarMensagensNaMeta(metas);
+        professor.cadastrarMensagensNaMeta(metas);
 
         if(metas.getMensagens().isEmpty())
         {
-            metasDao.excluirMeta(metas);
+            professor.excluirMeta(metas);
         }
         else
         {
             for(Mensagem i: metas.getMensagens())
             {
-                mensagemDao.deletarMensagem(i);
+                professor.deletarMensagem(i);
             }
-            metasDao.excluirMeta(metas);
+            professor.excluirMeta(metas);
         }
         response.sendRedirect("carregarMetasProfessor?id="+id+"&codigo="+Integer.parseInt(request.getParameter("codigo")));
     }
@@ -322,16 +321,16 @@ public class ProfessorControl extends HttpServlet
     {
         Meta meta2 = new Meta();
         meta2.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
-        metasDao.selecionaMeta(meta2);
-        mensagemDao.cadastrarMensagensNaMeta(meta2);
+        professor.selecionaMeta(meta2);
+        professor.cadastrarMensagensNaMeta(meta2);
         request.setAttribute("meta", meta2);
 
         professor.setId(id);
-        professorDao.selecionarProfessor(professor);
+        professor.selecionarProfessor(professor);
         request.setAttribute("professor", professor);
 
-        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
-        metasDao.cadastraMetasNaTutoria(tutoria);
+        tutoria = professor.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        professor.cadastraMetasNaTutoria(tutoria);
         request.setAttribute("tutoria", tutoria);
 
         RequestDispatcher rd = request.getRequestDispatcher("mensagensProfessor.jsp");
@@ -342,7 +341,7 @@ public class ProfessorControl extends HttpServlet
     {
         Professor professor = new Professor();
         professor.setId(id);
-        professorDao.selecionarProfessor(professor);
+        professor.selecionarProfessor(professor);
 
         Mensagem mensagem2 = new Mensagem();
         String mensagem = request.getParameter("mensagemUsuario");
@@ -352,7 +351,7 @@ public class ProfessorControl extends HttpServlet
         mensagem2.setMsg(mensagem);
         mensagem2.setUsuario(professor);
 
-        mensagemDao.criarMensagem(mensagem2, codigoMeta);
+        professor.criarMensagem(mensagem2, codigoMeta);
 
         response.sendRedirect("carregarMensagensProfessor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
@@ -361,20 +360,20 @@ public class ProfessorControl extends HttpServlet
     {
         Meta meta2 = new Meta();
         meta2.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
-        metasDao.selecionaMeta(meta2);
-        mensagemDao.cadastrarMensagensNaMeta(meta2);
+        professor.selecionaMeta(meta2);
+        professor.cadastrarMensagensNaMeta(meta2);
         request.setAttribute("meta", meta2);
 
-        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
-        metasDao.cadastraMetasNaTutoria(tutoria);
+        tutoria = professor.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        professor.cadastraMetasNaTutoria(tutoria);
         request.setAttribute("tutoria", tutoria);
 
         professor.setId(id);
-        professorDao.selecionarProfessor(professor);
+        professor.selecionarProfessor(professor);
         request.setAttribute("professor", professor);
 
         mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
-        mensagemDao.selecionaMensagem(mensagem);
+        professor.selecionaMensagem(mensagem);
         request.setAttribute("mensagem", mensagem);
 
         RequestDispatcher rd = request.getRequestDispatcher("editarMensagemProfessor.jsp");
@@ -385,7 +384,7 @@ public class ProfessorControl extends HttpServlet
     {
         mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
         mensagem.setMsg(request.getParameter("mensagem"));
-        mensagemDao.atualizarMensagem(mensagem);
+        professor.atualizarMensagem(mensagem);
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
         response.sendRedirect("carregarMensagensProfessor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
@@ -394,7 +393,7 @@ public class ProfessorControl extends HttpServlet
     protected void deletarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
-        mensagemDao.deletarMensagem(mensagem);
+        professor.deletarMensagem(mensagem);
 
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
@@ -404,8 +403,7 @@ public class ProfessorControl extends HttpServlet
     protected void telaAtendimentos(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         ArrayList<Atendimento> atendimentos = new ArrayList<>();
-        AtendimentoDao atendimentoDao = new AtendimentoDao();
-        atendimentos = atendimentoDao.retornarAtendimentos(Integer.parseInt(request.getParameter("codigo")));
+        atendimentos = professor.retornarAtendimentos(Integer.parseInt(request.getParameter("codigo")));
         request.setAttribute("codigo",Integer.parseInt(request.getParameter("codigo")));
         request.setAttribute("professor", professor);
         request.setAttribute("atendimentos",atendimentos);
@@ -415,8 +413,7 @@ public class ProfessorControl extends HttpServlet
     protected void gerarRelatorioUnitario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
         Atendimento atendimento = new Atendimento();
-        AtendimentoDao atendimentoDao = new AtendimentoDao();
-        atendimento = atendimentoDao.retornarAtendimentoUnico(Integer.parseInt(request.getParameter("id")));
+        atendimento = professor.retornarAtendimentoUnico(Integer.parseInt(request.getParameter("id")));
         Document document = new Document();
         try{
             response.setContentType("application/pdf");
@@ -494,8 +491,7 @@ public class ProfessorControl extends HttpServlet
     {
 
         ArrayList<Atendimento> atendimentos = new ArrayList<>();
-        AtendimentoDao atendimentoDao = new AtendimentoDao();
-        atendimentos = atendimentoDao.retornarAtendimentos(Integer.parseInt(request.getParameter("codigo")));
+        atendimentos = professor.retornarAtendimentos(Integer.parseInt(request.getParameter("codigo")));
         Document document = new Document();
         try{
             response.setContentType("application/pdf");
@@ -594,7 +590,6 @@ public class ProfessorControl extends HttpServlet
     protected void criarAtendimento(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         Atendimento atendimento = new Atendimento();
-        AtendimentoDao atendimentoDao = new AtendimentoDao();
 
         atendimento.setData(request.getParameter("date"));
         atendimento.setHorario(request.getParameter("horario"));
@@ -602,8 +597,8 @@ public class ProfessorControl extends HttpServlet
         atendimento.setLocal(request.getParameter("local"));
         atendimento.setConteudo(request.getParameter("conteudoTratado"));
 
-        atendimentoDao.criarAtendimento(atendimento, Integer.parseInt(request.getParameter("codigo")));
-        int id_atendimento = atendimentoDao.retornaUltimoIdAtendimento();
+        professor.criarAtendimento(atendimento, Integer.parseInt(request.getParameter("codigo")));
+        int id_atendimento = professor.retornaUltimoIdAtendimento();
         atendimento.setId(id_atendimento);
 
         response.sendRedirect("carregarAtendimentosProfessor?id=" + id + "&codigo=" + Integer.parseInt(request.getParameter("codigo")));
@@ -612,17 +607,15 @@ public class ProfessorControl extends HttpServlet
     protected void deletarAtendimento(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         Atendimento atendimento = new Atendimento();
-        AtendimentoDao atendimentoDao = new AtendimentoDao();
         atendimento.setId(Integer.parseInt(request.getParameter("idAtendimento")));
-        atendimentoDao.deletarAtendimento(atendimento);
+        professor.deletarAtendimento(atendimento);
 
         response.sendRedirect("carregarAtendimentosProfessor?id=" + id + "&codigo=" + Integer.parseInt(request.getParameter("codigoTutoria")));
     }
     protected void editandoAtendimento(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
         Atendimento atendimento = new Atendimento();
-        AtendimentoDao atendimentoDao = new AtendimentoDao();
-        atendimento = atendimentoDao.retornarAtendimento(Integer.parseInt(request.getParameter("codigo")));
+        atendimento = professor.retornarAtendimento(Integer.parseInt(request.getParameter("codigo")));
         request.setAttribute("tutoria",tutoria);
         request.setAttribute("professor",professor);
         request.setAttribute("atendimento",atendimento);
@@ -632,14 +625,13 @@ public class ProfessorControl extends HttpServlet
     protected void editarAtendimento(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
         Atendimento atendimento = new Atendimento();
-        AtendimentoDao atendimentoDao = new AtendimentoDao();
         atendimento.setCargaHoraria(Integer.parseInt(request.getParameter("cargaHoraria")));
         atendimento.setData(request.getParameter("date"));
         atendimento.setId(Integer.parseInt(request.getParameter("id2")));
         atendimento.setLocal(request.getParameter("local"));
         atendimento.setHorario(request.getParameter("horario"));
         atendimento.setConteudo(request.getParameter("conteudoTratado"));
-        atendimentoDao.editarAtendimento(atendimento);
+        professor.editarAtendimento(atendimento);
         response.sendRedirect("carregarAtendimentosProfessor?"+ "codigo=" + tutoria.getCodigo());
     }
 }

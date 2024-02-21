@@ -126,8 +126,8 @@ public class TutorControl extends HttpServlet {
 
     protected void iniciarHome(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException {
         request.setAttribute("id",id);
-        tutor = tutorDao.retornarTutor(id);
-        tutorias = TutoriaDao.retornarTutoriaParaTutor(id);
+        tutor = tutor.retornarTutor(id);
+        tutorias = tutor.retornarTutoriaParaTutor(id);
         request.setAttribute("tutor", tutor);
         request.setAttribute("tutorias", tutorias);
         RequestDispatcher rd = request.getRequestDispatcher("tutorhome.jsp");
@@ -137,7 +137,7 @@ public class TutorControl extends HttpServlet {
     protected void irParaEdicao(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         tutor.setId(id);
-        tutorDao.selecionarTutor(tutor);
+        tutor.selecionarTutor(tutor);
         request.setAttribute("id", tutor.getId());
         request.setAttribute("senha",tutor.getSenha());
         request.setAttribute("nome",tutor.getNome());
@@ -157,9 +157,9 @@ public class TutorControl extends HttpServlet {
         tutoria.setSenha(req.getParameter("senha"));
         int id = Integer.parseInt(req.getParameter("id"));
 
-        if(tutoriaDao.lerTutoria(tutoria))
+        if(tutor.lerTutoria(tutoria))
         {
-            tutoriaDao.atualizarTutoriaTutor(tutoria, id);
+            tutor.atualizarTutoriaTutor(tutoria, id);
             resp.sendRedirect("voltarParaMainTutor?id="+tutor.getId());
         }
         else
@@ -177,14 +177,13 @@ public class TutorControl extends HttpServlet {
         tutor.setCurso(request.getParameter("curso"));
         tutor.setSemestre(Integer.parseInt(request.getParameter("semestre")));
         tutor.setMatricula(request.getParameter("matricula"));
-        tutorDao.editarTutor(tutor);
+        tutor.editarTutor(tutor);
         response.sendRedirect("voltarParaMainTutor?id="+tutor.getId());
     }
 
     protected void irParaTutoriaTutor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
-        TutoriaDao tutoriaDao = new TutoriaDao();
-        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
+        tutoria = tutor.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
         request.setAttribute("tutoria", tutoria);
         request.setAttribute("tutor", tutor);
         RequestDispatcher rd = request.getRequestDispatcher("tutoriaTutor.jsp");
@@ -194,15 +193,15 @@ public class TutorControl extends HttpServlet {
     protected void irParaMetasTutor(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         tutor.setId(id);
-        tutorDao.selecionarTutor(tutor);
+        tutor.selecionarTutor(tutor);
         request.setAttribute("tutor", tutor);
 
-        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
-        metasDao.cadastraMetasNaTutoria(tutoria);
+        tutoria = tutor.retornaTutoria(Integer.parseInt(request.getParameter("codigo")));
+        tutor.cadastraMetasNaTutoria(tutoria);
 
         for(Meta i: tutoria.getMetas())
         {
-            mensagemDao.cadastrarMensagensNaMeta(i);
+            tutor.cadastrarMensagensNaMeta(i);
         }
 
         request.setAttribute("tutoria", tutoria);
@@ -215,16 +214,16 @@ public class TutorControl extends HttpServlet {
     {
         Meta meta2 = new Meta();
         meta2.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
-        metasDao.selecionaMeta(meta2);
-        mensagemDao.cadastrarMensagensNaMeta(meta2);
+        tutor.selecionaMeta(meta2);
+        tutor.cadastrarMensagensNaMeta(meta2);
         request.setAttribute("meta", meta2);
 
         tutor.setId(id);
-        tutorDao.selecionarTutor(tutor);
+        tutor.selecionarTutor(tutor);
         request.setAttribute("tutor", tutor);
 
-        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
-        metasDao.cadastraMetasNaTutoria(tutoria);
+        tutoria = tutor.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        tutor.cadastraMetasNaTutoria(tutoria);
         request.setAttribute("tutoria", tutoria);
 
         RequestDispatcher rd = request.getRequestDispatcher("mensagensTutor.jsp");
@@ -235,7 +234,7 @@ public class TutorControl extends HttpServlet {
     {
         Tutor tutor = new Tutor();
         tutor.setId(id);
-        tutorDao.selecionarTutor(tutor);
+        tutor.selecionarTutor(tutor);
 
         Mensagem mensagem2 = new Mensagem();
         String mensagem = request.getParameter("mensagemUsuario");
@@ -246,7 +245,7 @@ public class TutorControl extends HttpServlet {
 
         mensagem2.setUsuario(tutor);
 
-        mensagemDao.criarMensagem(mensagem2, codigoMeta);
+        tutor.criarMensagem(mensagem2, codigoMeta);
 
         response.sendRedirect("carregarMensagensTutor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
     }
@@ -255,20 +254,20 @@ public class TutorControl extends HttpServlet {
     {
         Meta meta2 = new Meta();
         meta2.setCodigo(Integer.parseInt(request.getParameter("codigoMeta")));
-        metasDao.selecionaMeta(meta2);
-        mensagemDao.cadastrarMensagensNaMeta(meta2);
+        tutor.selecionaMeta(meta2);
+        tutor.cadastrarMensagensNaMeta(meta2);
         request.setAttribute("meta", meta2);
 
-        tutoria = tutoriaDao.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
-        metasDao.cadastraMetasNaTutoria(tutoria);
+        tutoria = tutor.retornaTutoria(Integer.parseInt(request.getParameter("codigoTutoria")));
+        tutor.cadastraMetasNaTutoria(tutoria);
         request.setAttribute("tutoria", tutoria);
 
         tutor.setId(id);
-        tutorDao.selecionarTutor(tutor);
+        tutor.selecionarTutor(tutor);
         request.setAttribute("tutor", tutor);
 
         mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
-        mensagemDao.selecionaMensagem(mensagem);
+        tutor.selecionaMensagem(mensagem);
         request.setAttribute("mensagem", mensagem);
 
         RequestDispatcher rd = request.getRequestDispatcher("editarMensagemTutor.jsp");
@@ -279,7 +278,7 @@ public class TutorControl extends HttpServlet {
     {
         mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
         mensagem.setMsg(request.getParameter("mensagem"));
-        mensagemDao.atualizarMensagem(mensagem);
+        tutor.atualizarMensagem(mensagem);
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
         response.sendRedirect("carregarMensagensTutor?codigoMeta=" + codigoMeta + "&codigoTutoria=" + codigoTutoria + "&id=" + id);
@@ -288,7 +287,7 @@ public class TutorControl extends HttpServlet {
     protected void deletarMensagem(HttpServletRequest request, HttpServletResponse response, int id) throws IOException, ServletException
     {
         mensagem.setCodigoMensagem(Integer.parseInt(request.getParameter("codigoMensagem")));
-        mensagemDao.deletarMensagem(mensagem);
+        tutor.deletarMensagem(mensagem);
 
         int codigoMeta = Integer.parseInt(request.getParameter("codigoMeta"));
         int codigoTutoria = Integer.parseInt(request.getParameter("codigoTutoria"));
@@ -402,14 +401,14 @@ public class TutorControl extends HttpServlet {
     {
         int codigoTutoria = Integer.parseInt(request.getParameter("codigo"));
         String titulo = request.getParameter("nome-criar");
-        metasDao.criarMeta(codigoTutoria, titulo);
+        tutor.criarMeta(codigoTutoria, titulo);
 
-        tutoria = tutoriaDao.retornaTutoria(codigoTutoria);
-        metasDao.cadastraMetasNaTutoria(tutoria);
+        tutoria = tutor.retornaTutoria(codigoTutoria);
+        tutor.cadastraMetasNaTutoria(tutoria);
         request.setAttribute("tutoria", tutoria);
 
         tutor.setId(id);
-        tutorDao.selecionarTutor(tutor);
+        tutor.selecionarTutor(tutor);
         request.setAttribute("tutor", tutor);
 
         response.sendRedirect("carregarMetasTutor?id=" + id + "&codigo=" + codigoTutoria);
@@ -434,7 +433,7 @@ public class TutorControl extends HttpServlet {
         atendimento.setLocal(request.getParameter("local"));
         atendimento.setConteudo(request.getParameter("conteudoTratado"));
 
-        atendimentoDao.criarAtendimento(atendimento, Integer.parseInt(request.getParameter("codigo")));
+        tutor.criarAtendimento(atendimento, Integer.parseInt(request.getParameter("codigo")));
         int id_atendimento = atendimentoDao.retornaUltimoIdAtendimento();
         atendimento.setId(id_atendimento);
 

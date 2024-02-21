@@ -25,7 +25,7 @@ import java.sql.DriverManager;
 
 //CONEXAO DE RODRIGO
 
-public class ConectionDB {
+/*public class ConectionDB {
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String url = "jdbc:mysql://127.0.0.1:3307/javadb?useTimezone=true&serverTimezone=UTC";
     private String user = "root";
@@ -42,7 +42,7 @@ public class ConectionDB {
             return null;
         }
     }
-}
+}*/
 
 //CONEXAO DE SAMUEL NOTEBOOK
 public class ConectionDB {

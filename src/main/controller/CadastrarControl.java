@@ -44,7 +44,7 @@ public class CadastrarControl extends HttpServlet {
         if (tipoDeUsuario.equals("professor")){
 
             professor.cadastrar(request.getParameter("nome"),request.getParameter("email"),request.getParameter("senha"));
-            professorDao.cadastrarProfessor(professor);
+            professor.cadastrarProfessor(professor);
             response.sendRedirect("cadastrar.html");
 
         }else {
