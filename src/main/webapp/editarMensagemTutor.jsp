@@ -15,6 +15,16 @@
 <link rel="stylesheet" href="styles/mensagens/mensagens.css">
 
 <body>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
     <script src="scripts/mensagens/editarmensagem.js" defer></script>
     <%
       Mensagem mensagem = (Mensagem) request.getAttribute("mensagem");

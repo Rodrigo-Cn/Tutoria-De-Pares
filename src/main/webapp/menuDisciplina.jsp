@@ -12,6 +12,16 @@
 <link rel="icon" href="imagens/cadastro/Frame 1.png" type="image/png">
 <link rel="stylesheet" href="styles/menuDisciplinas/menuDisciplina.css">
 <body>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
     <script src="scripts/menuDisciplinas/criar-disciplina.js" defer></script>
     <script src="scripts/menuDisciplinas/buscar-disciplina.js"></script>
 

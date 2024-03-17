@@ -15,7 +15,16 @@
 <link rel="icon" href="imagens/cadastro/Frame 1.png" type="image/png">
 <link rel="stylesheet" href="styles/atendimentoAdm/atendimento.css">
 <body>
-
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
    <div id="corpo-deletar-meta" class="corpo-deletar-meta">
         <div class="editar-meta">
          <div class="titulo-editar-meta"><div class="titulo-editar">Confirmar a exclusão?</div><img style="cursor: pointer;" id="fechar-deletar-meta" src="imagens/metas/icons8-fechar-janela-48.png" alt=""></div>

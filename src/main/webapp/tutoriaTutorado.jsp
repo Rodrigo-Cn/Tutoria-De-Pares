@@ -15,6 +15,16 @@
 <link rel="icon" href="imagens/cadastro/Frame 1.png" type="image/png">
 <link rel="stylesheet" href="styles/tutoriaGenerico/tutoria.css">
 <body>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
         <div id="navbar">
             <div id="navbar-logo">
                 <div><img src="imagens/tutoriaGenerico/Frame 1.png" id="navbar-image" class="tracking-in-expand-forward-top" alt="frame.png"></div>
