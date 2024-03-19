@@ -12,6 +12,16 @@
 <link rel="icon" href="imagens/cadastro/Frame 1.png" type="image/png">
 <link rel="stylesheet" href="styles/napnehome/napne.css">
 <body>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
     <script src="scripts/napnehome/barra-lateral.js"></script>
     <script src="scripts/napnehome/buscar-tutoria.js"></script>
 

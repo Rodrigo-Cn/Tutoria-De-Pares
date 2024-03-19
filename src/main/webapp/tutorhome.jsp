@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="styles/tutorhome/tutor.css">
 </head>
 <body>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
     <script src="scripts/tutorhome/barra-lateral.js"></script>
     <script src="scripts/tutorhome/menu-entrar-tutoria.js"></script>
     <script src="scripts/tutorhome/cards.js" defer></script>
